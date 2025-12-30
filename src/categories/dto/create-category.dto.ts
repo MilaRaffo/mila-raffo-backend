@@ -6,6 +6,7 @@ import {
   IsBoolean,
   IsInt,
 } from 'class-validator';
+import { type UUID } from 'crypto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateCategoryDto {
@@ -26,10 +27,10 @@ export class CreateCategoryDto {
   @IsString()
   description?: string;
 
-  @ApiPropertyOptional({ example: 1, description: 'Parent category ID' })
+  @ApiPropertyOptional({ example: 'M213-12SA-9ZXC-2SDA', description: 'Parent category ID' })
   @IsOptional()
   @IsInt()
-  parentId?: number;
+  parentId?: UUID;
 
   @ApiPropertyOptional({ example: true })
   @IsOptional()

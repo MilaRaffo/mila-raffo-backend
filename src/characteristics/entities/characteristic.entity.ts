@@ -1,13 +1,8 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
-import { Unit } from '../../units/entities/unit.entity';
 import { ProductCharacteristic } from '../../products/entities/product-characteristic.entity';
+import { DataType, MeasureUnits } from '../../common/enums/characteristics.enum';
 
-export enum DataType {
-  TEXT = 'text',
-  NUMBER = 'number',
-  BOOLEAN = 'bool',
-}
 
 @Entity('characteristics')
 export class Characteristic extends BaseEntity {
@@ -21,12 +16,8 @@ export class Characteristic extends BaseEntity {
   })
   dataType: DataType;
 
-  @Column({ type: 'int', nullable: true, name: 'unit_id' })
-  unitId: number | null;
-
-  @ManyToOne(() => Unit, (unit) => unit.characteristics, { nullable: true })
-  @JoinColumn({ name: 'unit_id' })
-  unit?: Unit;
+  @Column({ type: 'enum', enum: MeasureUnits})
+  unit?: MeasureUnits;
 
   @OneToMany(
     () => ProductCharacteristic,

@@ -1,5 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, ApiPropertyOptions } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export function IsRequiredProperty(options?: ApiPropertyOptions) {
@@ -11,7 +11,7 @@ export function IsRequiredProperty(options?: ApiPropertyOptions) {
 
 export function IsOptionalProperty(options?: ApiPropertyOptions) {
   return applyDecorators(
-    ApiProperty({ required: false, ...options }),
+    ApiPropertyOptional(options),
     IsOptional(),
   );
 }

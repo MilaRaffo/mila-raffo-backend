@@ -4,10 +4,10 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
-  ManyToMany,
 } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { ProductCategory } from '../../products/entities/product-category.entity';
+import { type UUID } from 'crypto';
 
 @Entity('categories')
 export class Category extends BaseEntity {
@@ -20,8 +20,8 @@ export class Category extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description?: string;
 
-  @Column({ type: 'int', nullable: true, name: 'parent_id' })
-  parentId: number | null;
+  @Column({ type: 'uuid', nullable: true, name: 'parent_id' })
+  parentId: UUID | null;
 
   @Column({ type: 'boolean', default: true })
   active: boolean;

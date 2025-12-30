@@ -13,6 +13,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { ProductsService } from '../products/products.service';
 import { LeathersService } from '../leathers/leathers.service';
+import { type UUID } from 'crypto';
 
 @Injectable()
 export class VariantsService {
@@ -80,7 +81,7 @@ export class VariantsService {
     };
   }
 
-  async findOne(id: number): Promise<Variant> {
+  async findOne(id: UUID): Promise<Variant> {
     const variant = await this.variantsRepository.findOne({
       where: { id },
       relations: [
@@ -100,8 +101,8 @@ export class VariantsService {
   }
 
   async addLeathersToVariant(
-    variantId: number,
-    leatherIds: number[],
+    variantId: UUID,
+    leatherIds: UUID[],
   ): Promise<Variant> {
     const variant = await this.findOne(variantId);
 
@@ -125,8 +126,8 @@ export class VariantsService {
   }
 
   async removeLeatherFromVariant(
-    variantId: number,
-    leatherId: number,
+    variantId: UUID,
+    leatherId: UUID,
   ): Promise<void> {
     await this.findOne(variantId);
     await this.leathersService.findOne(leatherId);
@@ -135,7 +136,7 @@ export class VariantsService {
   }
 
   async update(
-    id: number,
+    id: UUID,
     updateVariantDto: UpdateVariantDto,
   ): Promise<Variant> {
     const variant = await this.findOne(id);
@@ -167,7 +168,7 @@ export class VariantsService {
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: UUID): Promise<void> {
     const variant = await this.findOne(id);
     await this.variantsRepository.softRemove(variant);
   }

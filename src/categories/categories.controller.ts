@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
+  ParseUUIDPipe
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -23,6 +23,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { type UUID } from 'crypto';
 
 @ApiTags('categories')
 @Controller('categories')
@@ -64,7 +65,7 @@ export class CategoriesController {
   @ApiOperation({ summary: 'Get a category by ID' })
   @ApiResponse({ status: 200, description: 'Category found' })
   @ApiResponse({ status: 404, description: 'Category not found' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.categoriesService.findOne(id);
   }
 
@@ -75,7 +76,7 @@ export class CategoriesController {
     description: 'Category products retrieved successfully',
   })
   @ApiResponse({ status: 404, description: 'Category not found' })
-  findCategoryProducts(@Param('id', ParseIntPipe) id: number) {
+  findCategoryProducts(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.categoriesService.findCategoryProducts(id);
   }
 
@@ -87,7 +88,7 @@ export class CategoriesController {
   @ApiResponse({ status: 200, description: 'Category updated successfully' })
   @ApiResponse({ status: 404, description: 'Category not found' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     return this.categoriesService.update(id, updateCategoryDto);
@@ -100,7 +101,7 @@ export class CategoriesController {
   @ApiOperation({ summary: 'Soft delete a category (Admin only)' })
   @ApiResponse({ status: 200, description: 'Category deleted successfully' })
   @ApiResponse({ status: 404, description: 'Category not found' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.categoriesService.remove(id);
   }
 }

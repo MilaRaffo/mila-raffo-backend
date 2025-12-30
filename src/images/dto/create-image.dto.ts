@@ -1,11 +1,12 @@
-import { IsString, MaxLength, IsOptional, IsInt } from 'class-validator';
+import { IsString, MaxLength, IsOptional, IsInt, IsUUID } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { type UUID } from 'crypto';
 
 export class CreateImageDto {
-  @ApiPropertyOptional({ example: 1, description: 'Variant ID' })
+  @ApiPropertyOptional({ example: 'SD1W-12S2-SF23-123S', description: 'Variant ID' })
   @IsOptional()
-  @IsInt()
-  variantId?: number;
+  @IsUUID()
+  variantId?: UUID;
 
   @ApiProperty({ example: 'https://example.com/images/product1.jpg' })
   @IsString()

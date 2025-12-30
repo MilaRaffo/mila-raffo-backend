@@ -20,7 +20,6 @@ import { ProductsModule } from './products/products.module';
 import { VariantsModule } from './variants/variants.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CharacteristicsModule } from './characteristics/characteristics.module';
-import { UnitsModule } from './units/units.module';
 import { LeathersModule } from './leathers/leathers.module';
 import { ImagesModule } from './images/images.module';
 
@@ -63,7 +62,6 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     VariantsModule,
     CategoriesModule,
     CharacteristicsModule,
-    UnitsModule,
     LeathersModule,
     ImagesModule,
   ],

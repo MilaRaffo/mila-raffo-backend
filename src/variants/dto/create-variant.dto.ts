@@ -4,16 +4,18 @@ import {
   MinLength,
   IsNumber,
   Min,
-  IsInt,
   IsOptional,
   IsArray,
+  IsUUID,
+  ValidateNested,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { type UUID } from 'crypto';
 
 export class CreateVariantDto {
   @ApiProperty({ example: 1 })
-  @IsInt()
-  productId: number;
+  @IsUUID()
+  productId: UUID;
 
   @ApiProperty({ example: 'HB-001-BLK' })
   @IsString()
@@ -33,6 +35,7 @@ export class CreateVariantDto {
   })
   @IsOptional()
   @IsArray()
-  @IsInt({ each: true })
-  leatherIds?: number[];
+  @IsUUID()
+  @ValidateNested({each:true})
+  leatherIds?: UUID[];
 }

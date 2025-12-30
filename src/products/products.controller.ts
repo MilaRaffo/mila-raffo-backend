@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -23,6 +23,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { type UUID } from 'crypto';
 
 @ApiTags('products')
 @Controller('products')
@@ -50,7 +51,7 @@ export class ProductsController {
   @ApiOperation({ summary: 'Get a product by ID' })
   @ApiResponse({ status: 200, description: 'Product found' })
   @ApiResponse({ status: 404, description: 'Product not found' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.productsService.findOne(id);
   }
 
@@ -61,7 +62,7 @@ export class ProductsController {
     description: 'Product variants retrieved successfully',
   })
   @ApiResponse({ status: 404, description: 'Product not found' })
-  findProductVariants(@Param('id', ParseIntPipe) id: number) {
+  findProductVariants(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.productsService.findProductVariants(id);
   }
 
@@ -72,7 +73,7 @@ export class ProductsController {
     description: 'Product characteristics retrieved successfully',
   })
   @ApiResponse({ status: 404, description: 'Product not found' })
-  findProductCharacteristics(@Param('id', ParseIntPipe) id: number) {
+  findProductCharacteristics(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.productsService.findProductCharacteristics(id);
   }
 
@@ -84,7 +85,7 @@ export class ProductsController {
   @ApiResponse({ status: 200, description: 'Product updated successfully' })
   @ApiResponse({ status: 404, description: 'Product not found' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateProductDto: UpdateProductDto,
   ) {
     return this.productsService.update(id, updateProductDto);
@@ -97,7 +98,7 @@ export class ProductsController {
   @ApiOperation({ summary: 'Soft delete a product (Admin only)' })
   @ApiResponse({ status: 200, description: 'Product deleted successfully' })
   @ApiResponse({ status: 404, description: 'Product not found' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.productsService.remove(id);
   }
 }

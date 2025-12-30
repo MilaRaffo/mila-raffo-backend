@@ -11,6 +11,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
+import { type UUID } from 'crypto';
 
 @Injectable()
 export class CategoriesService {
@@ -59,7 +60,7 @@ export class CategoriesService {
     };
   }
 
-  async findOne(id: number): Promise<Category> {
+  async findOne(id: UUID): Promise<Category> {
     const category = await this.categoriesRepository.findOne({
       where: { id },
       relations: ['parent', 'children'],
@@ -91,7 +92,7 @@ export class CategoriesService {
     return categories;
   }
 
-  async findCategoryProducts(id: number): Promise<Category> {
+  async findCategoryProducts(id: UUID): Promise<Category> {
     const category = await this.categoriesRepository.findOne({
       where: { id },
       relations: ['productCategories', 'productCategories.product'],
@@ -105,7 +106,7 @@ export class CategoriesService {
   }
 
   async update(
-    id: number,
+    id: UUID,
     updateCategoryDto: UpdateCategoryDto,
   ): Promise<Category> {
     const category = await this.findOne(id);
@@ -134,7 +135,7 @@ export class CategoriesService {
     return this.categoriesRepository.save(category);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: UUID): Promise<void> {
     const category = await this.findOne(id);
 
     if (category.children && category.children.length > 0) {

@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
+  ParseUUIDPipe
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -23,6 +23,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { type UUID } from 'crypto';
 
 @ApiTags('characteristics')
 @Controller('characteristics')
@@ -58,7 +59,7 @@ export class CharacteristicsController {
   @ApiOperation({ summary: 'Get a characteristic by ID' })
   @ApiResponse({ status: 200, description: 'Characteristic found' })
   @ApiResponse({ status: 404, description: 'Characteristic not found' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.characteristicsService.findOne(id);
   }
 
@@ -73,7 +74,7 @@ export class CharacteristicsController {
   })
   @ApiResponse({ status: 404, description: 'Characteristic not found' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateCharacteristicDto: UpdateCharacteristicDto,
   ) {
     return this.characteristicsService.update(id, updateCharacteristicDto);
@@ -89,7 +90,7 @@ export class CharacteristicsController {
     description: 'Characteristic deleted successfully',
   })
   @ApiResponse({ status: 404, description: 'Characteristic not found' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.characteristicsService.remove(id);
   }
 }

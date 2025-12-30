@@ -39,7 +39,6 @@ async function bootstrap() {
     .addTag('variants', 'Product variants')
     .addTag('categories', 'Category hierarchy')
     .addTag('characteristics', 'Product characteristics')
-    .addTag('units', 'Measurement units')
     .addTag('leathers', 'Leather types')
     .addTag('images', 'Image management')
     .build();

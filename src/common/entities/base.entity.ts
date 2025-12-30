@@ -4,10 +4,11 @@ import {
   DeleteDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import {type UUID } from 'crypto';
 
 export abstract class BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: UUID;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -11,6 +11,7 @@ import { UpdateLeatherDto } from './dto/update-leather.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { ImagesService } from '../images/images.service';
+import { type UUID } from 'crypto';
 
 @Injectable()
 export class LeathersService {
@@ -57,7 +58,7 @@ export class LeathersService {
     };
   }
 
-  async findOne(id: number): Promise<Leather> {
+  async findOne(id: UUID): Promise<Leather> {
     const leather = await this.leathersRepository.findOne({
       where: { id },
       relations: ['image'],
@@ -71,7 +72,7 @@ export class LeathersService {
   }
 
   async update(
-    id: number,
+    id: UUID,
     updateLeatherDto: UpdateLeatherDto,
   ): Promise<Leather> {
     const leather = await this.findOne(id);
@@ -94,7 +95,7 @@ export class LeathersService {
     return this.leathersRepository.save(leather);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: UUID): Promise<void> {
     const leather = await this.findOne(id);
     await this.leathersRepository.softRemove(leather);
   }

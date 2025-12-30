@@ -1,5 +1,7 @@
+import { UUID } from "crypto";
+
 export interface JwtPayload {
-  sub: number;
+  sub: UUID;
   email: string;
   role: string;
 }

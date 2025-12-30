@@ -10,6 +10,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { CategoriesService } from '../categories/categories.service';
 import { CharacteristicsService } from '../characteristics/characteristics.service';
+import { type UUID } from 'crypto';
 
 @Injectable()
 export class ProductsService {
@@ -82,7 +83,7 @@ export class ProductsService {
     };
   }
 
-  async findOne(id: number): Promise<Product> {
+  async findOne(id: UUID): Promise<Product> {
     const product = await this.productsRepository.findOne({
       where: { id },
       relations: [
@@ -102,7 +103,7 @@ export class ProductsService {
     return product;
   }
 
-  async findProductVariants(id: number): Promise<Product> {
+  async findProductVariants(id: UUID): Promise<Product> {
     const product = await this.productsRepository.findOne({
       where: { id },
       relations: ['variants', 'variants.images'],
@@ -115,7 +116,7 @@ export class ProductsService {
     return product;
   }
 
-  async findProductCharacteristics(id: number): Promise<ProductCharacteristic[]> {
+  async findProductCharacteristics(id: UUID): Promise<ProductCharacteristic[]> {
     const product = await this.findOne(id);
     return this.productCharacteristicsRepository.find({
       where: { productId: product.id },
@@ -124,7 +125,7 @@ export class ProductsService {
   }
 
   async update(
-    id: number,
+    id: UUID,
     updateProductDto: UpdateProductDto,
   ): Promise<Product> {
     const product = await this.findOne(id);
@@ -160,14 +161,14 @@ export class ProductsService {
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: UUID): Promise<void> {
     const product = await this.findOne(id);
     await this.productsRepository.softRemove(product);
   }
 
   private async addCategoriesToProduct(
-    productId: number,
-    categoryIds: number[],
+    productId: UUID,
+    categoryIds: UUID[],
   ): Promise<void> {
     for (const categoryId of categoryIds) {
       await this.categoriesService.findOne(categoryId);
@@ -180,8 +181,8 @@ export class ProductsService {
   }
 
   private async addCharacteristicsToProduct(
-    productId: number,
-    characteristics: Array<{ characteristicId: number; value: string }>,
+    productId: UUID,
+    characteristics: Array<{ characteristicId: UUID; value: string }>,
   ): Promise<void> {
     for (const char of characteristics) {
       await this.characteristicsService.findOne(char.characteristicId);

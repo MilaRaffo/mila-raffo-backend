@@ -3,11 +3,12 @@ import { BaseEntity } from '../../common/entities/base.entity';
 import { Product } from '../../products/entities/product.entity';
 import { Image } from '../../images/entities/image.entity';
 import { VariantLeather } from './variant-leather.entity';
+import { type UUID } from 'crypto';
 
 @Entity('variants')
 export class Variant extends BaseEntity {
-  @Column({ type: 'int', name: 'product_id' })
-  productId: number;
+  @Column({ type: 'uuid', name: 'product_id' })
+  productId: UUID;
 
   @Column({ type: 'varchar', length: 100, unique: true })
   sku: string;

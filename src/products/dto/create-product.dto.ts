@@ -8,15 +8,16 @@ import {
   Min,
   IsArray,
   ValidateNested,
-  IsInt,
+  IsUUID,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { type UUID } from 'crypto';
 
 export class ProductCharacteristicDto {
-  @ApiProperty({ example: 1 })
-  @IsInt()
-  characteristicId: number;
+  @ApiProperty({ example: 'fsds3-0sdf-fsdf2-fdsf3' })
+  @IsUUID()
+  characteristicId: UUID;
 
   @ApiProperty({ example: '25' })
   @IsString()
@@ -52,11 +53,12 @@ export class CreateProductDto {
   })
   @IsOptional()
   @IsArray()
-  @IsInt({ each: true })
-  categoryIds?: number[];
+  @ValidateNested({ each: true })
+  @IsUUID(4)
+  categoryIds?: UUID[];
 
   @ApiPropertyOptional({
-    example: [{ characteristicId: 1, value: '25' }],
+    example: [{ characteristicId: 'fsds3-0sdf-fsdf2-fdsf3', value: '25' }],
     type: [ProductCharacteristicDto],
   })
   @IsOptional()

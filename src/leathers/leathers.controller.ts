@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -23,6 +23,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { type UUID } from 'crypto';
 
 @ApiTags('leathers')
 @Controller('leathers')
@@ -51,7 +52,7 @@ export class LeathersController {
   @ApiOperation({ summary: 'Get a leather by ID' })
   @ApiResponse({ status: 200, description: 'Leather found' })
   @ApiResponse({ status: 404, description: 'Leather not found' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.leathersService.findOne(id);
   }
 
@@ -63,7 +64,7 @@ export class LeathersController {
   @ApiResponse({ status: 200, description: 'Leather updated successfully' })
   @ApiResponse({ status: 404, description: 'Leather not found' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateLeatherDto: UpdateLeatherDto,
   ) {
     return this.leathersService.update(id, updateLeatherDto);
@@ -76,7 +77,7 @@ export class LeathersController {
   @ApiOperation({ summary: 'Soft delete a leather (Admin only)' })
   @ApiResponse({ status: 200, description: 'Leather deleted successfully' })
   @ApiResponse({ status: 404, description: 'Leather not found' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.leathersService.remove(id);
   }
 }

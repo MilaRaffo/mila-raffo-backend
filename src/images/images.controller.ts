@@ -12,6 +12,7 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -29,6 +30,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import type { UUID } from 'crypto';
 
 @ApiTags('images')
 @Controller('images')
@@ -74,7 +76,7 @@ export class ImagesController {
   @ApiResponse({ status: 201, description: 'Image uploaded successfully' })
   uploadFile(
     @UploadedFile() file: Express.Multer.File,
-    @Body('variantId') variantId?: number,
+    @Body('variantId') variantId?: UUID,
     @Body('alt') alt?: string,
   ) {
     if (!file) {
@@ -101,7 +103,7 @@ export class ImagesController {
   @Get('variant/:variantId')
   @ApiOperation({ summary: 'Get images by variant ID' })
   @ApiResponse({ status: 200, description: 'Images retrieved successfully' })
-  findByVariant(@Param('variantId', ParseIntPipe) variantId: number) {
+  findByVariant(@Param('variantId', ParseUUIDPipe) variantId: UUID) {
     return this.imagesService.findByVariant(variantId);
   }
 
@@ -109,7 +111,7 @@ export class ImagesController {
   @ApiOperation({ summary: 'Get an image by ID' })
   @ApiResponse({ status: 200, description: 'Image found' })
   @ApiResponse({ status: 404, description: 'Image not found' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.imagesService.findOne(id);
   }
 
@@ -121,7 +123,7 @@ export class ImagesController {
   @ApiResponse({ status: 200, description: 'Image updated successfully' })
   @ApiResponse({ status: 404, description: 'Image not found' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateImageDto: UpdateImageDto,
   ) {
     return this.imagesService.update(id, updateImageDto);
@@ -134,7 +136,7 @@ export class ImagesController {
   @ApiOperation({ summary: 'Soft delete an image (Admin only)' })
   @ApiResponse({ status: 200, description: 'Image deleted successfully' })
   @ApiResponse({ status: 404, description: 'Image not found' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.imagesService.remove(id);
   }
 }

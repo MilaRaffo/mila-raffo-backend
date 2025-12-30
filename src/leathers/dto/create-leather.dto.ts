@@ -1,5 +1,6 @@
-import { IsString, MaxLength, MinLength, IsOptional, IsInt } from 'class-validator';
+import { IsString, MaxLength, MinLength, IsOptional, IsUUID } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { type UUID } from 'crypto';
 
 export class CreateLeatherDto {
   @ApiProperty({ example: 'Italian Napa Leather' })
@@ -14,8 +15,8 @@ export class CreateLeatherDto {
   @MaxLength(50)
   code: string;
 
-  @ApiPropertyOptional({ example: 1, description: 'Image ID' })
+  @ApiPropertyOptional({ example: 'asd2-12as-das2-sa14', description: 'Image ID' })
   @IsOptional()
-  @IsInt()
-  imageId?: number;
+  @IsUUID()
+  imageId?: UUID;
 }

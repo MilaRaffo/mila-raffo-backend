@@ -12,6 +12,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import * as fs from 'fs';
 import * as path from 'path';
+import { UUID } from 'crypto';
 
 @Injectable()
 export class ImagesService {
@@ -27,7 +28,7 @@ export class ImagesService {
 
   async uploadFile(
     file: Express.Multer.File,
-    variantId?: number,
+    variantId?: UUID,
     alt?: string,
   ): Promise<Image> {
     if (!file) {
@@ -78,7 +79,7 @@ export class ImagesService {
     };
   }
 
-  async findOne(id: number): Promise<Image> {
+  async findOne(id: UUID): Promise<Image> {
     const image = await this.imagesRepository.findOne({
       where: { id },
       relations: ['variant'],
@@ -91,20 +92,20 @@ export class ImagesService {
     return image;
   }
 
-  async findByVariant(variantId: number): Promise<Image[]> {
+  async findByVariant(variantId: UUID): Promise<Image[]> {
     return this.imagesRepository.find({
       where: { variantId },
       order: { createdAt: 'ASC' },
     });
   }
 
-  async update(id: number, updateImageDto: UpdateImageDto): Promise<Image> {
+  async update(id: UUID, updateImageDto: UpdateImageDto): Promise<Image> {
     const image = await this.findOne(id);
     Object.assign(image, updateImageDto);
     return this.imagesRepository.save(image);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: UUID): Promise<void> {
     const image = await this.findOne(id);
 
     // Optionally delete the physical file

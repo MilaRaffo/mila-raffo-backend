@@ -88,21 +88,6 @@ This document summarizes the complete backend implementation for the Mila Raffo 
 - Soft delete support
 - Role management (ADMIN/USER)
 
-### ✅ 5. Units Module
-**Location:** `src/units/`
-
-- ✅ `units.module.ts`
-- ✅ `units.service.ts`
-- ✅ `units.controller.ts`
-- ✅ `entities/unit.entity.ts` - Unit entity (name, symbol)
-- ✅ `dto/create-unit.dto.ts`
-- ✅ `dto/update-unit.dto.ts`
-
-**Features:**
-- Measurement units (cm, kg, L, etc.)
-- Used by characteristics
-- Admin-only write operations
-
 ### ✅ 6. Characteristics Module
 **Location:** `src/characteristics/`
 

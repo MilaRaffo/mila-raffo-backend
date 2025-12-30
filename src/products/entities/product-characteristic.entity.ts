@@ -1,14 +1,15 @@
 import { Entity, Column, ManyToOne, JoinColumn, PrimaryColumn } from 'typeorm';
 import { Product } from './product.entity';
 import { Characteristic } from '../../characteristics/entities/characteristic.entity';
+import { type UUID } from 'crypto';
 
 @Entity('product_characteristics')
 export class ProductCharacteristic {
   @PrimaryColumn({ name: 'product_id' })
-  productId: number;
+  productId: UUID;
 
   @PrimaryColumn({ name: 'characteristic_id' })
-  characteristicId: number;
+  characteristicId: UUID;
 
   @Column({ type: 'varchar', length: 500 })
   value: string;

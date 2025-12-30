@@ -97,45 +97,6 @@ Content-Type: application/json
 
 ---
 
-## Units
-
-### Create Unit (Admin Only)
-```bash
-POST /api/v1/units
-Authorization: Bearer ADMIN_ACCESS_TOKEN
-Content-Type: application/json
-
-{
-  "name": "Centimeters",
-  "symbol": "cm"
-}
-```
-
-### Get All Units
-```bash
-GET /api/v1/units?limit=10&offset=0
-```
-
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "name": "Centimeters",
-      "symbol": "cm",
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    }
-  ],
-  "total": 1,
-  "limit": 10,
-  "offset": 0
-}
-```
-
----
-
 ## Characteristics
 
 ### Create Characteristic (Admin Only)

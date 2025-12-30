@@ -9,6 +9,7 @@ import {
   Query,
   UseGuards,
   ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -24,6 +25,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { type UUID } from 'crypto';
 
 @ApiTags('variants')
 @Controller('variants')
@@ -52,7 +54,7 @@ export class VariantsController {
   @ApiOperation({ summary: 'Get a variant by ID' })
   @ApiResponse({ status: 200, description: 'Variant found' })
   @ApiResponse({ status: 404, description: 'Variant not found' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.variantsService.findOne(id);
   }
 
@@ -64,7 +66,7 @@ export class VariantsController {
   @ApiResponse({ status: 200, description: 'Leathers added successfully' })
   @ApiResponse({ status: 404, description: 'Variant or leather not found' })
   addLeathers(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() addLeathersDto: AddLeathersDto,
   ) {
     return this.variantsService.addLeathersToVariant(
@@ -81,8 +83,8 @@ export class VariantsController {
   @ApiResponse({ status: 200, description: 'Leather removed successfully' })
   @ApiResponse({ status: 404, description: 'Variant or leather not found' })
   removeLeather(
-    @Param('id', ParseIntPipe) id: number,
-    @Param('leatherId', ParseIntPipe) leatherId: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
+    @Param('leatherId', ParseIntPipe) leatherId: UUID,
   ) {
     return this.variantsService.removeLeatherFromVariant(id, leatherId);
   }
@@ -95,7 +97,7 @@ export class VariantsController {
   @ApiResponse({ status: 200, description: 'Variant updated successfully' })
   @ApiResponse({ status: 404, description: 'Variant not found' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateVariantDto: UpdateVariantDto,
   ) {
     return this.variantsService.update(id, updateVariantDto);
@@ -108,7 +110,7 @@ export class VariantsController {
   @ApiOperation({ summary: 'Soft delete a variant (Admin only)' })
   @ApiResponse({ status: 200, description: 'Variant deleted successfully' })
   @ApiResponse({ status: 404, description: 'Variant not found' })
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.variantsService.remove(id);
   }
 }
