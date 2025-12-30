@@ -5,13 +5,12 @@ This document provides practical examples of using the Mila Raffo Store API.
 ## Table of Contents
 1. [Authentication](#authentication)
 2. [Users](#users)
-3. [Units](#units)
-4. [Characteristics](#characteristics)
-5. [Categories](#categories)
-6. [Leathers](#leathers)
-7. [Products](#products)
-8. [Variants](#variants)
-9. [Images](#images)
+3. [Characteristics](#characteristics)
+4. [Categories](#categories)
+5. [Leathers](#leathers)
+6. [Products](#products)
+7. [Variants](#variants)
+8. [Images](#images)
 
 ---
 
@@ -108,7 +107,7 @@ Content-Type: application/json
 {
   "name": "Width",
   "dataType": "number",
-  "unitId": 1
+  "unit": "cm"
 }
 ```
 
@@ -292,10 +291,7 @@ GET /api/v1/products?limit=10&offset=0
             "id": 1,
             "name": "Width",
             "dataType": "number",
-            "unit": {
-              "name": "Centimeters",
-              "symbol": "cm"
-            }
+            "unit":  "cm"
           }
         }
       ]
@@ -434,22 +430,13 @@ GET /api/v1/images?limit=20&offset=0
 
 Here's a complete example of creating a product from scratch:
 
-### Step 1: Create Units
-```bash
-POST /api/v1/units
-{
-  "name": "Centimeters",
-  "symbol": "cm"
-}
-```
-
 ### Step 2: Create Characteristics
 ```bash
 POST /api/v1/characteristics
 {
   "name": "Width",
   "dataType": "number",
-  "unitId": 1
+  "unit": "cm"
 }
 
 POST /api/v1/characteristics
