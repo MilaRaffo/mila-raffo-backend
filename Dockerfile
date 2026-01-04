@@ -31,9 +31,6 @@ RUN npm ci --only=production
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Create uploads directory if needed
-RUN mkdir -p uploads
-
 # Expose the application port
 EXPOSE 3000
 

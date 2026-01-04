@@ -134,7 +134,7 @@ docker-compose up -d --build
 Para producción, considera:
 
 1. Usar un archivo `.env.production` con valores seguros
-2. Configurar volúmenes persistentes para uploads
+2. Configurar credenciales de AWS S3 de forma segura
 3. Implementar backups de la base de datos
 4. Usar secretos de Docker en lugar de variables de entorno
 5. Configurar un reverse proxy (nginx) si es necesario

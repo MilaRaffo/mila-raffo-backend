@@ -3,8 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -48,12 +46,6 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
         limit: parseInt(process.env.THROTTLE_LIMIT || '10', 10),
       },
     ]),
-
-    // Static files for uploads
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads',
-    }),
 
     // Feature modules
     AuthModule,

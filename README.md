@@ -10,7 +10,7 @@ Complete e-commerce backend built with NestJS for a luxury leather goods store.
 - **Category Hierarchy**: Nested category tree structure with parent-child relationships
 - **Product Variants**: Support for multiple SKUs, pricing, and leather types per product
 - **Characteristics System**: Flexible product attributes with units (text, number, boolean)
-- **Image Management**: File upload system with variant associations
+- **Image Management**: AWS S3 integration for image storage
 - **Leather Types**: Catalog of leather materials with images
 - **Pagination**: All list endpoints support pagination
 - **Soft Deletes**: Safe deletion with recovery capability
@@ -52,14 +52,26 @@ Complete NestJS e-commerce backend with authentication, products, variants, cate
    - JWT secrets
    - Server port
    - CORS settings
-   - Upload settings
+   - AWS S3 settings (see [S3_SETUP.md](S3_SETUP.md))
 
-4. **Create PostgreSQL database**
+4. **Configure AWS S3**
+   
+   Configure your AWS S3 credentials in `.env`:
+   ```env
+   AWS_S3_REGION=us-east-1
+   AWS_S3_BUCKET=your-bucket-name
+   AWS_ACCESS_KEY_ID=your-access-key
+   AWS_SECRET_ACCESS_KEY=your-secret-key
+   ```
+   
+   See [S3_SETUP.md](S3_SETUP.md) for detailed configuration.
+
+5. **Create PostgreSQL database**
    ```sql
    CREATE DATABASE mila_raffo_store;
    ```
 
-5. **Run the application**
+6. **Run the application**
    ```bash
    # Development mode with hot-reload
    npm run start:dev
