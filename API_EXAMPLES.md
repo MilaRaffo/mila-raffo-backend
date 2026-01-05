@@ -4,13 +4,14 @@ This document provides practical examples of using the Mila Raffo Store API.
 
 ## Table of Contents
 1. [Authentication](#authentication)
-2. [Users](#users)
-3. [Characteristics](#characteristics)
-4. [Categories](#categories)
-5. [Leathers](#leathers)
-6. [Products](#products)
-7. [Variants](#variants)
-8. [Images](#images)
+2. [Roles](#roles)
+3. [Users](#users)
+4. [Characteristics](#characteristics)
+5. [Categories](#categories)
+6. [Leathers](#leathers)
+7. [Products](#products)
+8. [Variants](#variants)
+9. [Images](#images)
 
 ---
 
@@ -33,15 +34,18 @@ Content-Type: application/json
 **Response:**
 ```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
-    "id": 1,
+    "id": "uuid-here",
     "email": "john@example.com",
     "name": "John",
     "lastName": "Doe",
-    "role": "USER"
-  }
+    "role": {
+      "id": "role-uuid",
+      "name": "client"
+    }
+  },
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 
@@ -56,14 +60,132 @@ Content-Type: application/json
 }
 ```
 
-### Refresh Token
+### Admin Login
 ```bash
-POST /api/v1/auth/refresh
+POST /api/v1/auth/admin/login
+Content-Type: application/json
+
+{
+  "email": "admin@milaraffo.com",
+  "password": "AdminPassword123!"
+}
+```
+
+**Note:** This endpoint only allows login for users with ADMIN or SUPERADMIN roles.
+
+### Logout
+```bash
+POST /api/v1/auth/logout
+Authorization: Bearer YOUR_ACCESS_TOKEN
 Content-Type: application/json
 
 {
   "refreshToken": "your-refresh-token-here"
 }
+```
+
+**Response:**
+```json
+{
+  "message": "Logout successful"
+}
+```
+
+**Note:** Both access and refresh tokens will be added to the blacklist and cannot be reused.
+
+### Refresh Token
+```bash
+POST /api/v1/auth/refresh
+Authorization: Bearer YOUR_REFRESH_TOKEN
+Content-Type: application/json
+
+{
+  "refresh_token": "your-refresh-token-here"
+}
+```
+
+**Response:**
+```json
+{
+  "access_token": "new-jwt-token-here"
+}
+```
+
+---
+
+## Roles
+
+**Note:** All role endpoints require SUPERADMIN access.
+
+### Get All Roles
+```bash
+GET /api/v1/roles
+Authorization: Bearer SUPERADMIN_ACCESS_TOKEN
+```
+
+**Response:**
+```json
+[
+  {
+    "id": "uuid-1",
+    "name": "client",
+    "description": "Standard client with basic access",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "uuid-2",
+    "name": "admin",
+    "description": "Administrator with product and user management",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "uuid-3",
+    "name": "superadmin",
+    "description": "Super administrator with full system access",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+]
+```
+
+### Get Role by ID
+```bash
+GET /api/v1/roles/{roleId}
+Authorization: Bearer SUPERADMIN_ACCESS_TOKEN
+```
+
+### Create Role
+```bash
+POST /api/v1/roles
+Authorization: Bearer SUPERADMIN_ACCESS_TOKEN
+Content-Type: application/json
+
+{
+  "name": "manager",
+  "description": "Store manager with extended permissions"
+}
+```
+
+### Update Role
+```bash
+PATCH /api/v1/roles/{roleId}
+Authorization: Bearer SUPERADMIN_ACCESS_TOKEN
+Content-Type: application/json
+
+{
+  "description": "Updated role description"
+}
+```
+
+### Delete Role
+```bash
+DELETE /api/v1/roles/{roleId}
+Authorization: Bearer SUPERADMIN_ACCESS_TOKEN
+```
+
+**Note:** Cannot delete a role that has associated users.
 ```
 
 ---

@@ -25,14 +25,20 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { User } from './entities/user.entity';
 import { Roles } from '../common/decorators/roles.decorator';
 import { GetUser } from '../common/decorators/get-user.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { RoleName } from '../roles/entities/role.entity';
 import { type UUID } from 'crypto';
 
 @ApiTags('users')
+@ApiBearerAuth()
 @Controller('users')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @Roles(RoleName.SUPERADMIN, RoleName.ADMIN)
   @ApiOperation({ summary: 'Create a new user (Admin only in production)' })
   @ApiResponse({ status: 201, description: 'User created successfully' })
   @ApiResponse({ status: 409, description: 'Email already exists' })
@@ -41,6 +47,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles(RoleName.SUPERADMIN, RoleName.ADMIN)
   @ApiOperation({ summary: 'Get all users with pagination' })
   @ApiResponse({ status: 200, description: 'Users retrieved successfully' })
   findAll(@Query() paginationDto: PaginationDto) {
@@ -48,6 +55,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @Roles(RoleName.SUPERADMIN, RoleName.ADMIN)
   @ApiOperation({ summary: 'Get a user by ID' })
   @ApiResponse({ status: 200, description: 'User found' })
   @ApiResponse({ status: 404, description: 'User not found' })
@@ -56,21 +64,24 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @Roles(RoleName.SUPERADMIN, RoleName.ADMIN)
   @ApiOperation({ summary: 'Update a user' })
   @ApiResponse({ status: 200, description: 'User updated successfully' })
   @ApiResponse({ status: 404, description: 'User not found' })
   update(
     @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateUserDto: UpdateUserDto,
+    @GetUser() user: User,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto, user.role.name);
   }
 
   @Delete(':id')
+  @Roles(RoleName.SUPERADMIN, RoleName.ADMIN)
   @ApiOperation({ summary: 'Soft delete a user' })
   @ApiResponse({ status: 200, description: 'User deleted successfully' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  remove(@Param('id', ParseUUIDPipe) id: UUID) {
-    return this.usersService.remove(id);
+  remove(@Param('id', ParseUUIDPipe) id: UUID, @GetUser() user: User) {
+    return this.usersService.remove(id, user.role.name);
   }
 }

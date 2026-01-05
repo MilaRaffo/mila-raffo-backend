@@ -25,6 +25,7 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
+import { RoleName } from '../roles/entities/role.entity';
 import { type UUID } from 'crypto';
 
 @ApiTags('variants')
@@ -34,7 +35,7 @@ export class VariantsController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new variant (Admin only)' })
   @ApiResponse({ status: 201, description: 'Variant created successfully' })
@@ -60,7 +61,7 @@ export class VariantsController {
 
   @Post(':id/leathers')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Add leathers to a variant (Admin only)' })
   @ApiResponse({ status: 200, description: 'Leathers added successfully' })
@@ -77,7 +78,7 @@ export class VariantsController {
 
   @Delete(':id/leathers/:leatherId')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Remove a leather from a variant (Admin only)' })
   @ApiResponse({ status: 200, description: 'Leather removed successfully' })
@@ -91,7 +92,7 @@ export class VariantsController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a variant (Admin only)' })
   @ApiResponse({ status: 200, description: 'Variant updated successfully' })
@@ -105,7 +106,7 @@ export class VariantsController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Soft delete a variant (Admin only)' })
   @ApiResponse({ status: 200, description: 'Variant deleted successfully' })

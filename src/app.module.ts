@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 
@@ -14,6 +15,7 @@ import jwtConfig from './config/jwt.config';
 // Modules
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
 import { ProductsModule } from './products/products.module';
 import { VariantsModule } from './variants/variants.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -39,6 +41,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
       useFactory: () => databaseConfig(),
     }),
 
+    // Scheduled tasks
+    ScheduleModule.forRoot(),
+
     // Rate limiting
     ThrottlerModule.forRoot([
       {
@@ -50,6 +55,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     // Feature modules
     AuthModule,
     UsersModule,
+    RolesModule,
     ProductsModule,
     VariantsModule,
     CategoriesModule,

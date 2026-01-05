@@ -4,10 +4,9 @@ import {
   MinLength,
   MaxLength,
   IsOptional,
-  IsEnum,
+  IsUUID,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserRole } from '../entities/user.entity';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'John' })
@@ -38,8 +37,8 @@ export class CreateUserDto {
   @MaxLength(20)
   phone?: string;
 
-  @ApiPropertyOptional({ enum: UserRole, default: UserRole.USER })
+  @ApiPropertyOptional({ description: 'Role ID (UUID)' })
   @IsOptional()
-  @IsEnum(UserRole)
-  role?: UserRole;
+  @IsUUID()
+  roleId?: string;
 }

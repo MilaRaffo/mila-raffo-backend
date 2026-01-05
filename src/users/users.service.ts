@@ -3,6 +3,7 @@ import {
   NotFoundException,
   ConflictException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { type UUID } from 'crypto';
+import { RoleName } from '../roles/entities/role.entity';
 
 @Injectable()
 export class UsersService {
@@ -73,8 +75,19 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { email } });
   }
 
-  async update(id: UUID, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: UUID, updateUserDto: UpdateUserDto, currentUserRole?: RoleName): Promise<User> {
     const user = await this.findOne(id);
+
+    // Si el usuario actual es admin, verificar que no intente modificar admins o superadmins
+    if (currentUserRole === RoleName.ADMIN) {
+      if (user.role.name === RoleName.ADMIN || user.role.name === RoleName.SUPERADMIN) {
+        throw new ForbiddenException('Admins cannot modify other admins or superadmins');
+      }
+      // Admins no pueden cambiar roles
+      if (updateUserDto.roleId) {
+        throw new ForbiddenException('Admins cannot change user roles');
+      }
+    }
 
     if (updateUserDto.email && updateUserDto.email !== user.email) {
       const existingUser = await this.usersRepository.findOne({
@@ -97,8 +110,16 @@ export class UsersService {
     await this.usersRepository.save(user);
   }
 
-  async remove(id: UUID): Promise<void> {
+  async remove(id: UUID, currentUserRole?: RoleName): Promise<void> {
     const user = await this.findOne(id);
+
+    // Si el usuario actual es admin, verificar que no intente eliminar admins o superadmins
+    if (currentUserRole === RoleName.ADMIN) {
+      if (user.role.name === RoleName.ADMIN || user.role.name === RoleName.SUPERADMIN) {
+        throw new ForbiddenException('Admins cannot delete other admins or superadmins');
+      }
+    }
+
     await this.usersRepository.softRemove(user);
   }
 

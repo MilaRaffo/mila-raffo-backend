@@ -29,8 +29,7 @@ import { UpdateImageDto } from './dto/update-image.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import type { UUID } from 'crypto';
+import { Roles } from '../common/decorators/roles.decorator';import { RoleName } from '../roles/entities/role.entity';import type { UUID } from 'crypto';
 
 @ApiTags('images')
 @Controller('images')
@@ -39,7 +38,7 @@ export class ImagesController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create an image record (Admin only)' })
   @ApiResponse({ status: 201, description: 'Image created successfully' })
@@ -49,7 +48,7 @@ export class ImagesController {
 
   @Post('upload')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
@@ -117,7 +116,7 @@ export class ImagesController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update an image (Admin only)' })
   @ApiResponse({ status: 200, description: 'Image updated successfully' })
@@ -131,7 +130,7 @@ export class ImagesController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
+  @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Soft delete an image (Admin only)' })
   @ApiResponse({ status: 200, description: 'Image deleted successfully' })

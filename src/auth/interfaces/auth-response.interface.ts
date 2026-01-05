@@ -1,4 +1,5 @@
 import { UUID } from "crypto";
+import { RoleName } from '../../roles/entities/role.entity';
 
 export interface AuthResponse {
   accessToken: string;
@@ -8,6 +9,9 @@ export interface AuthResponse {
     email: string;
     name: string;
     lastName: string;
-    role: string;
+    role: {
+      id: UUID;
+      name: RoleName;
+    };
   };
 }
