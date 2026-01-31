@@ -2,9 +2,19 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { LoggerService } from './common/services/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
+
+  // Configure custom logger
+  const logger = app.get(LoggerService);
+  logger.setContext('Bootstrap');
+  app.useLogger(logger);
+
+  logger.log('Starting Mila Raffo Store API...');
 
   // Global prefix
   app.setGlobalPrefix(process.env.API_PREFIX || 'api/v1');
@@ -14,6 +24,8 @@ async function bootstrap() {
     origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
     credentials: true,
   });
+
+  logger.log(`CORS enabled for origin: ${process.env.CORS_ORIGIN || 'http://localhost:4200'}`);
 
   // Global validation pipe
   app.useGlobalPipes(
@@ -55,7 +67,12 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   await app.listen(port);
   
-  console.log(`Application is running on: http://localhost:${port}`);
-  console.log(`Swagger documentation: http://localhost:${port}/api/docs`);
+  logger.log(`Application is running on: http://localhost:${port}`);
+  logger.log(`Swagger documentation: http://localhost:${port}/api/docs`);
+  logger.log(`API prefix: ${process.env.API_PREFIX || 'api/v1'}`);
+  logger.log('Application started successfully');
 }
-bootstrap();
+bootstrap().catch((error) => {
+  console.error('Failed to start application:', error);
+  process.exit(1);
+});

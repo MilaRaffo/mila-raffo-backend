@@ -39,12 +39,19 @@ Complete e-commerce backend built with NestJS for a luxury leather goods store.
 - **Order Tracking**: Real-time order status and delivery updates
 
 ### System Features
+- **Comprehensive Logging**: Professional Winston-based logging system with multiple categories
+  - HTTP request/response logging with timing and user context
+  - Security audit logging (login, access control, token validation)
+  - Business event logging (orders, payments, coupons)
+  - Error logging with stack traces
+  - Daily log rotation with automatic cleanup
+  - Separate log files by category (HTTP, Security, Business, Error)
+  - JSON format for easy analysis and integration with monitoring tools
 - **Pagination**: All list endpoints support pagination
 - **Soft Deletes**: Safe deletion with recovery capability
 - **API Documentation**: Auto-generated Swagger/OpenAPI documentation
 - **Validation**: Request validation with class-validator
 - **Error Handling**: Global exception filters
-- **Logging**: Request/response logging interceptor
 - **Rate Limiting**: Protection against brute force attacks
 - **Scheduled Tasks**: Automatic cleanup and status updates
 
@@ -281,6 +288,19 @@ $ npm run testadmin/login` - Admin login (ADMIN/SUPERADMIN only)
 
 See Swagger documentation for complete API reference.
 
+## � Documentation
+
+### Essential Guides
+- **[S3_SETUP.md](S3_SETUP.md)** - AWS S3 configuration for image storage
+- **[ECOMMERCE_GUIDE.md](ECOMMERCE_GUIDE.md)** - Complete e-commerce features guide
+- **[LOGGING_GUIDE.md](LOGGING_GUIDE.md)** - Comprehensive logging system documentation
+- **[ROLES_GUIDE.md](ROLES_GUIDE.md)** - Role-based access control guide
+- **[TOKEN_BLACKLIST_GUIDE.md](TOKEN_BLACKLIST_GUIDE.md)** - Token management guide
+
+### Quick Start Guides
+- **[ROLES_QUICKSTART.md](ROLES_QUICKSTART.md)** - Quick setup for role system
+- **[TOKEN_BLACKLIST_QUICKSTART.md](TOKEN_BLACKLIST_QUICKSTART.md)** - Quick setup for token blacklist
+
 ## 🔒 Security Features
 
 - **Password hashing** with bcrypt (10 rounds)
@@ -294,6 +314,7 @@ See Swagger documentation for complete API reference.
 - **Soft deletes** for data preservation and audit trails
 - **SQL injection protection** via TypeORM parameterized queries
 - **XSS protection** through input sanitization
+- **Security audit logging** - All authentication and authorization events are logged
 
 ## 📊 Project Structure
 
@@ -311,22 +332,40 @@ src/
 ├── characteristics/   # Product attributes
 ├── leathers/          # Leather types
 ├── images/            # Image management (S3)
-├── promotions/        # Sales & promotions
+├── promotions/        # Sales promotions system
 ├── coupons/           # Discount coupons
-├── addresses/         # User addresses
-├── orders/            # Order management
+├── addresses/         # User address management
+├── orders/            # Order processing & tracking
 ├── payments/          # Payment processing
 ├── common/            # Shared utilities
-│   ├── decorators/    # Custom decorators
+│   ├── decorators/    # Custom decorators (roles, public, log actions)
 │   ├── dto/           # Common DTOs
-│   ├── entities/      # Base entity
 │   ├── filters/       # Exception filters
 │   ├── guards/        # Common guards
-│   ├── interceptors/  # Logging interceptor
+│   ├── interceptors/  # HTTP logging, business logging
+│   ├── services/      # Logger service
 │   └── pipes/         # Validation pipes
 ├── config/            # Configuration files
 └── main.ts            # Application entry point
 ```
+
+## 📋 Logging
+
+The application uses a professional Winston-based logging system that records:
+
+- **HTTP Requests**: All incoming requests with timing, user info, and responses
+- **Security Events**: Login attempts, access denials, token validation
+- **Business Events**: Orders, payments, coupon usage, refunds
+- **Errors**: Complete error logs with stack traces
+
+Logs are stored in the `logs/` directory with daily rotation:
+- `combined-YYYY-MM-DD.log` - All logs (14 days retention)
+- `error-YYYY-MM-DD.log` - Errors only (30 days retention)
+- `http-YYYY-MM-DD.log` - HTTP requests (7 days retention)
+- `security-YYYY-MM-DD.log` - Security events (90 days retention)
+- `business-YYYY-MM-DD.log` - Business events (90 days retention)
+
+See [LOGGING_GUIDE.md](LOGGING_GUIDE.md) for complete documentation.
 
 ## 🎨 Tech Stack
 
@@ -338,6 +377,7 @@ src/
 - class-validator
 - Swagger/OpenAPI
 - bcrypt
+- Winston (logging)
 
 ## Deployment
 

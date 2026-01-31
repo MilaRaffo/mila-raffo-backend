@@ -13,6 +13,7 @@ import { OrderItem } from './entities/order-item.entity';
 import { Variant } from '../variants/entities/variant.entity';
 import { Product } from '../products/entities/product.entity';
 import { CouponsService } from '../coupons/coupons.service';
+import { LoggerService } from '../common/services/logger.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
 
@@ -28,7 +29,10 @@ export class OrdersService {
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
     private readonly couponsService: CouponsService,
-  ) {}
+    private readonly logger: LoggerService,
+  ) {
+    this.logger.setContext('OrdersService');
+  }
 
   async create(createOrderDto: CreateOrderDto, userId: UUID): Promise<Order> {
     const { items, shippingAddress, billingAddress, couponCode, notes } =
@@ -156,14 +160,26 @@ export class OrdersService {
     await this.orderItemRepository.save(itemsToSave);
 
     // Registrar uso de cupón si se aplicó
-    if (couponId && discountAmount > 0) {
+    if (couponId && discountAmount > 0 && validCouponCode) {
       await this.couponsService.recordUsage(
         couponId,
         userId,
         savedOrder.id,
         discountAmount,
       );
+      this.logger.couponUsed(validCouponCode, userId, discountAmount);
     }
+
+    // Log de creación de orden
+    this.logger.orderCreated(savedOrder.id, userId, total);
+    this.logger.log(`Order created successfully`, {
+      orderId: savedOrder.id,
+      orderNumber,
+      userId,
+      itemCount: items.length,
+      total,
+      hasCoupon: !!couponId,
+    });
 
     return this.findOne(savedOrder.id, userId);
   }

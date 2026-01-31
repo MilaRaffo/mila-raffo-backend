@@ -27,10 +27,13 @@ import { CouponsModule } from './coupons/coupons.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
+import { LoggerModule } from './common/services/logger.module';
 
 // Common
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { HttpLoggingInterceptor } from './common/interceptors/http-logging.interceptor';
+import { BusinessLogInterceptor } from './common/interceptors/business-log.interceptor';
 
 @Module({
   imports: [
@@ -56,6 +59,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
         limit: parseInt(process.env.THROTTLE_LIMIT || '10', 10),
       },
     ]),
+
+    // Common modules
+    LoggerModule,
 
     // Feature modules
     AuthModule,
@@ -83,6 +89,14 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: HttpLoggingInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: BusinessLogInterceptor,
     },
   ],
 })

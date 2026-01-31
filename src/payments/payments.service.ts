@@ -14,6 +14,7 @@ import {
 } from './entities/payment.entity';
 import { Order } from '../orders/entities/order.entity';
 import { OrdersService } from '../orders/orders.service';
+import { LoggerService } from '../common/services/logger.service';
 import { PaymentStatus as OrderPaymentStatus } from '../orders/entities/order.entity';
 import { type UUID } from 'crypto';
 
@@ -25,7 +26,10 @@ export class PaymentsService {
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
     private readonly ordersService: OrdersService,
-  ) {}
+    private readonly logger: LoggerService,
+  ) {
+    this.logger.setContext('PaymentsService');
+  }
 
   async create(
     createPaymentDto: CreatePaymentDto,
@@ -82,6 +86,12 @@ export class PaymentsService {
       throw new NotFoundException(`Payment with ID ${paymentId} not found`);
     }
 
+    this.logger.log('Processing test payment', {
+      paymentId,
+      orderId: payment.orderId,
+      amount: payment.amount,
+    });
+
     // Simular procesamiento de pago
     payment.status = PaymentStatus.PROCESSING;
     await this.paymentRepository.save(payment);
@@ -100,6 +110,13 @@ export class PaymentsService {
         payment.orderId,
         OrderPaymentStatus.PAID,
       );
+
+      this.logger.paymentProcessed(
+        payment.id,
+        payment.orderId,
+        payment.amount,
+        'completed',
+      );
     } else {
       payment.status = PaymentStatus.FAILED;
       payment.errorMessage = 'Test payment failed (simulated)';
@@ -110,6 +127,13 @@ export class PaymentsService {
         payment.orderId,
         OrderPaymentStatus.FAILED,
       );
+
+      this.logger.warn('Test payment failed', {
+        paymentId: payment.id,
+        orderId: payment.orderId,
+        amount: payment.amount,
+        reason: 'simulated failure',
+      });
     }
 
     return await this.paymentRepository.save(payment);

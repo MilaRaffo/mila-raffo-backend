@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { RolesService } from '../roles/roles.service';
 import { TokenBlacklistService } from './services/token-blacklist.service';
+import { LoggerService } from '../common/services/logger.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthResponse } from './interfaces/auth-response.interface';
@@ -25,7 +26,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly tokenBlacklistService: TokenBlacklistService,
-  ) {}
+    private readonly logger: LoggerService,
+  ) {
+    this.logger.setContext('AuthService');
+  }
 
   async register(registerDto: RegisterDto): Promise<AuthResponse> {
     try {
@@ -40,6 +44,8 @@ export class AuthService {
         roleId: clientRole.id,
       });
 
+      this.logger.userRegistered(user.id, user.email);
+
       const payload = this.buildPayload(user)
 
       return {
@@ -48,6 +54,10 @@ export class AuthService {
         user: this.mapUserResponse(user),
       };
     } catch (error) {
+      this.logger.error(`Registration failed for email: ${registerDto.email}`, error.stack, {
+        email: registerDto.email,
+        error: error.message,
+      });
       throw new BadRequestException(error.message || 'Registration failed');
     }
   }
@@ -55,28 +65,51 @@ export class AuthService {
   async login(loginDto: LoginDto): Promise<AuthResponse> {
     const { email, password } = loginDto;
 
-    const user = await this.usersService.findByEmail(email);
+    try {
+      const user = await this.usersService.findByEmail(email);
 
-    if (!user) throw new UnauthorizedException('Invalid credentials');
+      if (!user) {
+        this.logger.security('Login attempt failed - User not found', { email });
+        throw new UnauthorizedException('Invalid credentials');
+      }
 
-    const isPasswordValid = await this.usersService.validatePassword(
-      password,
-      user.password,
-    );
+      const isPasswordValid = await this.usersService.validatePassword(
+        password,
+        user.password,
+      );
 
-    if (!isPasswordValid)
-      throw new UnauthorizedException('Invalid credentials');
+      if (!isPasswordValid) {
+        this.logger.security('Login attempt failed - Invalid password', {
+          userId: user.id,
+          email,
+        });
+        throw new UnauthorizedException('Invalid credentials');
+      }
 
-    if (!user.isActive)
-      throw new UnauthorizedException('User account is inactive');
+      if (!user.isActive) {
+        this.logger.security('Login attempt failed - Inactive account', {
+          userId: user.id,
+          email,
+        });
+        throw new UnauthorizedException('User account is inactive');
+      }
 
-    const payload = this.buildPayload(user)
-    
-    return {
-      accessToken: await this.getAccessToken(payload),
-      refreshToken: await this.getRefreshToken(payload),
-      user: this.mapUserResponse(user),
-    };
+      this.logger.userLogin(user.id, user.email);
+
+      const payload = this.buildPayload(user)
+      
+      return {
+        accessToken: await this.getAccessToken(payload),
+        refreshToken: await this.getRefreshToken(payload),
+        user: this.mapUserResponse(user),
+      };
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        throw error;
+      }
+      this.logger.error('Login error', error.stack, { email });
+      throw new UnauthorizedException('Login failed');
+    }
   }
 
   async validateToken(token: string): Promise<JwtPayload> {
@@ -84,7 +117,8 @@ export class AuthService {
       return await this.jwtService.verifyAsync<JwtPayload>(token, {
         secret: this.configService.get<string>('jwt.secret'),
       });
-    } catch {
+    } catch (error) {
+      this.logger.invalidToken(token, error.message);
       throw new UnauthorizedException('Invalid or expired token');
     }
   }
