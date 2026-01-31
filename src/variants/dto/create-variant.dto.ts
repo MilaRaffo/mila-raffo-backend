@@ -8,6 +8,7 @@ import {
   IsArray,
   IsUUID,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { type UUID } from 'crypto';
@@ -27,6 +28,11 @@ export class CreateVariantDto {
   @IsNumber()
   @Min(0)
   price: number;
+
+  @ApiPropertyOptional({ example: true, default: true })
+  @IsOptional()
+  @IsBoolean()
+  isAvailable?: boolean;
 
   @ApiPropertyOptional({
     example: [1, 2],

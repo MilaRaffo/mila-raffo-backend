@@ -75,6 +75,19 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { email } });
   }
 
+  async getProfile(id: UUID): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['addresses'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
+  }
+
   async update(id: UUID, updateUserDto: UpdateUserDto, currentUserRole?: RoleName): Promise<User> {
     const user = await this.findOne(id);
 

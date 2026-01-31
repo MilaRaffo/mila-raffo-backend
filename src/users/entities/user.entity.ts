@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { Exclude } from 'class-transformer';
 import { Role } from '../../roles/entities/role.entity';
+import { Address } from '../../addresses/entities/address.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -27,6 +28,9 @@ export class User extends BaseEntity {
   @ManyToOne(() => Role, (role) => role.users, { eager: true })
   @JoinColumn({ name: 'role_id' })
   role: Role;
+
+  @OneToMany(() => Address, (address) => address.user)
+  addresses: Address[];
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;

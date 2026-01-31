@@ -42,6 +42,11 @@ async function bootstrap() {
     .addTag('characteristics', 'Product characteristics')
     .addTag('leathers', 'Leather types')
     .addTag('images', 'Image management')
+    .addTag('promotions', 'Promotions and sales')
+    .addTag('coupons', 'Discount coupons')
+    .addTag('addresses', 'User addresses')
+    .addTag('orders', 'Order management')
+    .addTag('payments', 'Payment processing')
     .build();
   
   const document = SwaggerModule.createDocument(app, config);

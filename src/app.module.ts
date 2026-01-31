@@ -22,6 +22,11 @@ import { CategoriesModule } from './categories/categories.module';
 import { CharacteristicsModule } from './characteristics/characteristics.module';
 import { LeathersModule } from './leathers/leathers.module';
 import { ImagesModule } from './images/images.module';
+import { PromotionsModule } from './promotions/promotions.module';
+import { CouponsModule } from './coupons/coupons.module';
+import { AddressesModule } from './addresses/addresses.module';
+import { OrdersModule } from './orders/orders.module';
+import { PaymentsModule } from './payments/payments.module';
 
 // Common
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
@@ -62,6 +67,11 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
     CharacteristicsModule,
     LeathersModule,
     ImagesModule,
+    PromotionsModule,
+    CouponsModule,
+    AddressesModule,
+    OrdersModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [

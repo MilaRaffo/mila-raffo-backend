@@ -4,20 +4,49 @@ Complete e-commerce backend built with NestJS for a luxury leather goods store.
 
 ## 🚀 Features
 
-- **Authentication & Authorization**: JWT-based authentication with role-based access control (ADMIN/USER)
-- **User Management**: Complete user CRUD with secure password hashing
+### Core E-commerce
+- **Authentication & Authorization**: JWT-based authentication with role-based access control (CLIENT/ADMIN/SUPERADMIN)
+- **User Management**: Complete user CRUD with secure password hashing and profile management
 - **Product Catalog**: Full product management with variants, categories, and characteristics
 - **Category Hierarchy**: Nested category tree structure with parent-child relationships
-- **Product Variants**: Support for multiple SKUs, pricing, and leather types per product
+- **Product Variants**: Support for multiple SKUs with availability control and leather types per product
 - **Characteristics System**: Flexible product attributes with units (text, number, boolean)
 - **Image Management**: AWS S3 integration for image storage
 - **Leather Types**: Catalog of leather materials with images
+
+### Promotions & Discounts
+- **Promotions System**: Support for percentage, fixed amount, buy X get Y, and free shipping promotions
+- **Coupon Codes**: Unique discount codes with usage limits, date ranges, and per-user restrictions
+- **Stackable Discounts**: Priority-based promotion system
+- **Auto-expiration**: Automatic status updates for expired promotions and coupons
+
+### Order Management
+- **Complete Order Flow**: From cart to delivery tracking
+- **Order States**: Pending, confirmed, processing, shipped, delivered, cancelled, refunded
+- **Address Management**: Separate shipping and billing addresses
+- **Order History**: Full order tracking with item details
+
+### Payment Processing
+- **Test Payment Mode**: Built-in test payment system for development
+- **Gateway Ready**: Prepared for integration with Stripe, PayPal, MercadoPago
+- **Payment States**: Pending, processing, completed, failed, refunded
+- **Webhook Support**: Endpoint ready for payment gateway callbacks
+- **Refund Processing**: Admin-controlled refund system
+
+### User Features
+- **Address Book**: Multiple saved addresses with default selection
+- **User Profile**: Complete profile with order history and saved addresses
+- **Order Tracking**: Real-time order status and delivery updates
+
+### System Features
 - **Pagination**: All list endpoints support pagination
 - **Soft Deletes**: Safe deletion with recovery capability
 - **API Documentation**: Auto-generated Swagger/OpenAPI documentation
 - **Validation**: Request validation with class-validator
 - **Error Handling**: Global exception filters
 - **Logging**: Request/response logging interceptor
+- **Rate Limiting**: Protection against brute force attacks
+- **Scheduled Tasks**: Automatic cleanup and status updates
 
 ## 📋 Prerequisites
 
@@ -128,23 +157,34 @@ $ npm install
 
 ### Core Modules
 
-- **AuthModule**: JWT authentication with access and refresh tokens
-- **UsersModule**: User CRUD operations with role-based permissions
-- **ProductsModule**: Complete product management with categories and characteristics
-- **VariantsModule**: Product variant management with SKUs and leather types
+- **AuthModule**: JWT authentication with access and refresh tokens, token blacklist
+- **UsersModule**: User CRUD operations with role-based permissions and profile management
+- **RolesModule**: Dynamic role management (CLIENT, ADMIN, SUPERADMIN)
+- **ProductsModule**: Complete product management with availability control
+- **VariantsModule**: Product variant management with availability and leather types
 - **CategoriesModule**: Hierarchical category structure with tree support
 - **CharacteristicsModule**: Product attribute definitions with data types
-- **UnitsModule**: Measurement units (cm, kg, L, etc.)
 - **LeathersModule**: Leather type catalog with images
 - **ImagesModule**: File upload system with variant associations
+
+### E-commerce Modules
+
+- **PromotionsModule**: Sales promotions with various discount types
+- **CouponsModule**: Discount coupon system with validation and usage tracking
+- **AddressesModule**: User address management with default selection
+- **OrdersModule**: Complete order lifecycle management
+- **PaymentsModule**: Payment processing with test mode and gateway integration
 
 ## 🗄️ Database Schema
 
 ### Core Tables
-- `users`, `products`, `variants`, `categories`, `characteristics`, `units`, `leathers`, `images`
+- `users`, `roles`, `products`, `variants`, `categories`, `characteristics`, `leathers`, `images`
+
+### E-commerce Tables
+- `promotions`, `coupons`, `coupon_usage`, `addresses`, `orders`, `order_items`, `payments`
 
 ### Junction Tables
-- `product_categories`, `product_characteristics`, `variant_leathers`
+- `product_categories`, `product_characteristics`, `variant_leathers`, `promotion_products`, `promotion_categories`
 
 ## 🔑 Key Environment Variables
 
@@ -181,25 +221,52 @@ $ npm run start:prod
 $ npm run test
 
 # e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## 🎯 Main API Endpoints
-
-### Authentication
-- `POST /auth/register` - Register new user
-- `POST /auth/login` - Login user
+$ npm run testadmin/login` - Admin login (ADMIN/SUPERADMIN only)
 - `POST /auth/refresh` - Refresh access token
+- `POST /auth/logout` - Logout and invalidate tokens
 
-### Products
+### Users
+- `GET /users/profile` - Get current user profile with addresses
+- `GET /users` - List users (Admin only)
+- `PATCH /users/:id` - Update user
+
+### Products & Variants
 - `GET /products` - List products (paginated)
 - `GET /products/:id` - Get product details
 - `GET /products/:id/variants` - Get product variants
 - `POST /products` - Create product (Admin only)
 - `PATCH /products/:id` - Update product (Admin only)
+- `DELETE /products/:id` - Delete product (Admin only)
+
+### Categories
+- `GET /categories` - List categories
+- `GET /categories/tree` - Get category tree
+- `GET /categories/:id/products` - Get products by category
+
+### Promotions & Coupons
+- `GET /promotions/active` - Get active promotions
+- `POST /promotions` - Create promotion (Admin only)
+- `POST /coupons/validate` - Validate coupon code
+- `POST /coupons` - Create coupon (Admin only)
+
+### Addresses
+- `GET /addresses` - Get user addresses
+- `GET /addresses/default` - Get default address
+- `POST /addresses` - Create address
+- `PATCH /addresses/:id/set-default` - Set as default
+
+### Orders
+- `POST /orders` - Create new order
+- `GET /orders` - Get user orders
+- `GET /orders/:id` - Get order details
+- `GET /orders/number/:orderNumber` - Get order by number
+- `PATCH /orders/:id/cancel` - Cancel order
+
+### Payments
+- `POST /payments` - Create payment for order
+- `GET /payments` - Get user payments
+- `GET /payments/order/:orderId` - Get payments for order
+- `PATCH /payments/:id/refund` - Refund payme
 - `DELETE /products/:id` - Delete product (Admin only)
 
 ### Categories
@@ -216,28 +283,47 @@ See Swagger documentation for complete API reference.
 
 ## 🔒 Security Features
 
-- Password hashing with bcrypt
-- JWT tokens (access + refresh)
-- Role-based access control (ADMIN/USER)
-- Input validation on all endpoints
-- Rate limiting
-- CORS configuration
-- Soft deletes for data preservation
+- **Password hashing** with bcrypt (10 rounds)
+- **JWT tokens** (access + refresh) with configurable expiration
+- **Token blacklist** system for logout and revocation
+- **Role-based access control** (CLIENT/ADMIN/SUPERADMIN)
+- **Resource-level permissions** with custom guards
+- **Input validation** on all endpoints with class-validator
+- **Rate limiting** to prevent brute force attacks
+- **CORS** configuration for cross-origin requests
+- **Soft deletes** for data preservation and audit trails
+- **SQL injection protection** via TypeORM parameterized queries
+- **XSS protection** through input sanitization
 
 ## 📊 Project Structure
 
 ```
 src/
 ├── auth/              # Authentication & authorization
-├── users/             # User management
+│   ├── guards/        # JWT, roles, and resource guards
+│   ├── services/      # Token blacklist & cleanup
+│   └── strategies/    # JWT strategy
+├── users/             # User management & profiles
+├── roles/             # Dynamic role management
 ├── products/          # Product catalog
 ├── variants/          # Product variants
 ├── categories/        # Category hierarchy
 ├── characteristics/   # Product attributes
-├── units/             # Measurement units
 ├── leathers/          # Leather types
-├── images/            # Image management
+├── images/            # Image management (S3)
+├── promotions/        # Sales & promotions
+├── coupons/           # Discount coupons
+├── addresses/         # User addresses
+├── orders/            # Order management
+├── payments/          # Payment processing
 ├── common/            # Shared utilities
+│   ├── decorators/    # Custom decorators
+│   ├── dto/           # Common DTOs
+│   ├── entities/      # Base entity
+│   ├── filters/       # Exception filters
+│   ├── guards/        # Common guards
+│   ├── interceptors/  # Logging interceptor
+│   └── pipes/         # Validation pipes
 ├── config/            # Configuration files
 └── main.ts            # Application entry point
 ```

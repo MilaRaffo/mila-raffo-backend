@@ -16,6 +16,9 @@ export class Variant extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
+  @Column({ type: 'boolean', default: true, name: 'is_available' })
+  isAvailable: boolean;
+
   @ManyToOne(() => Product, (product) => product.variants)
   @JoinColumn({ name: 'product_id' })
   product: Product;
