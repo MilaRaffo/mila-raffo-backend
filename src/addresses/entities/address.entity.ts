@@ -1,18 +1,16 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, RelationId } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { User } from '../../users/entities/user.entity';
 import { type UUID } from 'crypto';
 
 @Entity('addresses')
 export class Address extends BaseEntity {
-  @Column({ type: 'uuid', name: 'user_id' })
+  @ManyToOne(() => User, (user) => user.addresses)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @RelationId((address: Address) => address.user)
   userId: UUID;
-
-  @Column({ type: 'varchar', length: 100, name: 'first_name' })
-  firstName: string;
-
-  @Column({ type: 'varchar', length: 100, name: 'last_name' })
-  lastName: string;
 
   @Column({ type: 'varchar', length: 200, name: 'street_address' })
   streetAddress: string;
@@ -41,7 +39,11 @@ export class Address extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   notes?: string;
 
-  @ManyToOne(() => User, (user) => user.addresses)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column({ type: 'decimal', precision: 10, scale: 7, nullable: true })
+  latitude?: string;
+
+  @Column({ type: 'decimal', precision: 10, scale: 7, nullable: true })
+  longitude?: string;
+
 }
+

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, HttpCode, HttpStatus, UnauthorizedException, Req } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, HttpCode, HttpStatus, UnauthorizedException, Req, BadRequestException } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -6,7 +6,6 @@ import { LoginDto } from './dto/login.dto';
 import { LogoutDto } from './dto/logout.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 import { GetUser } from '../common/decorators/get-user.decorator';
 import { User } from '../users/entities/user.entity';
 import { RoleName } from '../roles/entities/role.entity';
@@ -152,8 +151,6 @@ export class AuthController {
 
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtRefreshAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ 
     summary: 'Refresh access token',
     description: 'Generates a new access token using a valid refresh token'
@@ -169,7 +166,15 @@ export class AuthController {
   })
   @ApiResponse({ status: 401, description: 'Invalid, expired, or blacklisted refresh token' })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
-  async refresh(@Body('refresh_token') refreshToken: string) {
+  async refresh(@Body() refreshTokenDto: RefreshTokenDto & { refresh_token?: string }) {
+    const refreshToken = refreshTokenDto.refreshToken ?? refreshTokenDto.refresh_token;
+
+    if (!refreshToken) {
+      throw new BadRequestException(
+        'refreshToken (or refresh_token) is required',
+      );
+    }
+
     return this.authService.refreshToken(refreshToken);
   }
 }

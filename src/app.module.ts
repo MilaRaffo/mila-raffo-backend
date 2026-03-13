@@ -27,6 +27,7 @@ import { CouponsModule } from './coupons/coupons.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
+import { ProfileModule } from './profile/profile.module';
 import { LoggerModule } from './common/services/logger.module';
 
 // Common
@@ -76,8 +77,8 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
     PromotionsModule,
     CouponsModule,
     AddressesModule,
-    OrdersModule,
-    PaymentsModule,
+    OrdersModule,    PaymentsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [
@@ -101,3 +102,4 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
   ],
 })
 export class AppModule {}
+

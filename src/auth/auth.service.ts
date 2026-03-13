@@ -17,6 +17,7 @@ import { User } from '../users/entities/user.entity';
 import { RoleName } from '../roles/entities/role.entity';
 import { TokenType, BlacklistReason } from './entities/token-blacklist.entity';
 import { UUID } from 'crypto';
+import type { StringValue } from 'ms';
 
 @Injectable()
 export class AuthService {
@@ -43,7 +44,7 @@ export class AuthService {
         ...registerDto,
         roleId: clientRole.id,
       });
-
+      
       this.logger.userRegistered(user.id, user.email);
 
       const payload = this.buildPayload(user)
@@ -125,11 +126,17 @@ export class AuthService {
 
   async refreshToken(token: string): Promise<AuthResponse> {
     try {
+      const isBlacklisted = await this.tokenBlacklistService.isBlacklisted(token);
+
+      if (isBlacklisted) {
+        throw new UnauthorizedException('Refresh token has been revoked');
+      }
+
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token, {
         secret: this.configService.get<string>('jwt.refreshSecret'),
       });
 
-      const user = await this.usersService.findOne(payload.sub);
+      const user = await this.usersService.getUserById(payload.sub);
       if (!user || !user.isActive)
         throw new UnauthorizedException('Invalid refresh token');
 
@@ -169,13 +176,24 @@ export class AuthService {
   }
 
   private async getAccessToken(payload: JwtPayload) {
-    const token = await this.jwtService.signAsync(payload);
+    const expiresIn =
+      (this.configService.get<string>('jwt.expiresIn') || '1d') as StringValue;
+
+    const token = await this.jwtService.signAsync(payload, {
+      secret: this.configService.get<string>('jwt.secret'),
+      expiresIn,
+    });
     return token;
   }
 
   private async getRefreshToken(payload: JwtPayload) {
+    const refreshExpiresIn =
+      (this.configService.get<string>('jwt.refreshExpiresIn') ||
+        '14d') as StringValue;
+
     return this.jwtService.signAsync(payload, {
-      expiresIn: '14d',
+      secret: this.configService.get<string>('jwt.refreshSecret'),
+      expiresIn: refreshExpiresIn,
     });
   }
   private mapUserResponse(user: User) {

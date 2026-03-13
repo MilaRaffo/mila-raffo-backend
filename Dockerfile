@@ -38,4 +38,4 @@ EXPOSE 3000
 ENV NODE_ENV=production
 
 # Start the application
-CMD ["node", "dist/main"]
+CMD ["sh", "-c", "node dist/scripts/seed.js && node dist/src/main.js"]

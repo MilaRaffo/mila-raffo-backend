@@ -8,8 +8,6 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
-  ForbiddenException,
   ParseUUIDPipe,
 } from '@nestjs/common';
 import {
@@ -54,13 +52,6 @@ export class UsersController {
     return this.usersService.findAll(paginationDto);
   }
 
-  @Get('profile')
-  @ApiOperation({ summary: 'Get current user profile with addresses' })
-  @ApiResponse({ status: 200, description: 'User profile retrieved successfully' })
-  getProfile(@GetUser() user: User) {
-    return this.usersService.getProfile(user.id);
-  }
-
   @Get(':id')
   @Roles(RoleName.SUPERADMIN, RoleName.ADMIN)
   @ApiOperation({ summary: 'Get a user by ID' })
@@ -92,3 +83,4 @@ export class UsersController {
     return this.usersService.remove(id, user.role.name);
   }
 }
+

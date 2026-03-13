@@ -7,7 +7,7 @@ import {
 import {type UUID } from 'crypto';
 
 export abstract class BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: UUID;
 
   @CreateDateColumn({ name: 'created_at' })

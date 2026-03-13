@@ -11,10 +11,13 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { type UUID } from 'crypto';
 import { RoleName } from '../roles/entities/role.entity';
+import { UserListItemDto } from './dto/user-list-item.dto';
+import { UserDetailDto } from './dto/user-detail.dto';
 
 @Injectable()
 export class UsersService {
@@ -39,30 +42,60 @@ export class UsersService {
       password: hashedPassword,
     });
 
-    return this.usersRepository.save(user);
+    const savedUser = await this.usersRepository.save(user);
+
+    const createdUser = await this.usersRepository.findOne({
+      where: { id: savedUser.id },
+    });
+
+    if (!createdUser) {
+      throw new BadRequestException('User created but could not be loaded');
+    }
+
+    return createdUser;
   }
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<User>> {
+  ): Promise<PaginatedResult<UserListItemDto>> {
     const { limit, offset } = paginationDto;
 
-    const [data, total] = await this.usersRepository.findAndCount({
+    const [users, total] = await this.usersRepository.findAndCount({
       take: limit,
       skip: offset,
       order: { createdAt: 'DESC' },
     });
 
     return {
-      data,
+      data: users.map(UserListItemDto.fromEntity),
       total,
       limit,
       offset,
     };
   }
 
-  async findOne(id: UUID): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { id } });
+  async findOne(id: UUID): Promise<UserDetailDto> {
+    const user = await this.findOneEntity(id);
+    return UserDetailDto.fromEntity(user);
+  }
+
+  async getUserById(id: UUID): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
+  }
+
+  private async findOneEntity(id: UUID): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: ['addresses'],
+    });
 
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
@@ -72,7 +105,12 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.usersRepository.findOne({ where: { email } });
+    return this.usersRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .leftJoinAndSelect('user.role', 'role')
+      .where('user.email = :email', { email })
+      .getOne();
   }
 
   async getProfile(id: UUID): Promise<User> {
@@ -88,15 +126,46 @@ export class UsersService {
     return user;
   }
 
-  async update(id: UUID, updateUserDto: UpdateUserDto, currentUserRole?: RoleName): Promise<User> {
-    const user = await this.findOne(id);
+  async updateProfile(
+    id: UUID,
+    updateProfileDto: UpdateProfileDto,
+  ): Promise<UserDetailDto> {
+    const user = await this.getUserById(id);
 
-    // Si el usuario actual es admin, verificar que no intente modificar admins o superadmins
-    if (currentUserRole === RoleName.ADMIN) {
-      if (user.role.name === RoleName.ADMIN || user.role.name === RoleName.SUPERADMIN) {
-        throw new ForbiddenException('Admins cannot modify other admins or superadmins');
+    if (updateProfileDto.email && updateProfileDto.email !== user.email) {
+      const existingUser = await this.usersRepository.findOne({
+        where: { email: updateProfileDto.email },
+      });
+
+      if (existingUser && existingUser.id !== id) {
+        throw new ConflictException('Email already exists');
       }
-      // Admins no pueden cambiar roles
+    }
+
+    Object.assign(user, updateProfileDto);
+    await this.usersRepository.save(user);
+
+    const updatedUser = await this.findOneEntity(id);
+    return UserDetailDto.fromEntity(updatedUser);
+  }
+
+  async update(
+    id: UUID,
+    updateUserDto: UpdateUserDto,
+    currentUserRole?: RoleName,
+  ): Promise<User> {
+    const user = await this.findOneEntity(id);
+
+    if (currentUserRole === RoleName.ADMIN) {
+      if (
+        user.role.name === RoleName.ADMIN ||
+        user.role.name === RoleName.SUPERADMIN
+      ) {
+        throw new ForbiddenException(
+          'Admins cannot modify other admins or superadmins',
+        );
+      }
+
       if (updateUserDto.roleId) {
         throw new ForbiddenException('Admins cannot change user roles');
       }
@@ -117,19 +186,23 @@ export class UsersService {
   }
 
   async updatePassword(id: UUID, newPassword: string): Promise<void> {
-    const user = await this.findOne(id);
+    const user = await this.findOneEntity(id);
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
     await this.usersRepository.save(user);
   }
 
   async remove(id: UUID, currentUserRole?: RoleName): Promise<void> {
-    const user = await this.findOne(id);
+    const user = await this.findOneEntity(id);
 
-    // Si el usuario actual es admin, verificar que no intente eliminar admins o superadmins
     if (currentUserRole === RoleName.ADMIN) {
-      if (user.role.name === RoleName.ADMIN || user.role.name === RoleName.SUPERADMIN) {
-        throw new ForbiddenException('Admins cannot delete other admins or superadmins');
+      if (
+        user.role.name === RoleName.ADMIN ||
+        user.role.name === RoleName.SUPERADMIN
+      ) {
+        throw new ForbiddenException(
+          'Admins cannot delete other admins or superadmins',
+        );
       }
     }
 

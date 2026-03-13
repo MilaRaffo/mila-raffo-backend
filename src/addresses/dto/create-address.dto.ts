@@ -5,22 +5,12 @@ import {
   MaxLength,
   MinLength,
   Matches,
+  IsLatitude,
+  IsLongitude,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateAddressDto {
-  @ApiProperty({ example: 'John' })
-  @IsString()
-  @MinLength(2)
-  @MaxLength(100)
-  firstName: string;
-
-  @ApiProperty({ example: 'Doe' })
-  @IsString()
-  @MinLength(2)
-  @MaxLength(100)
-  lastName: string;
-
   @ApiProperty({ example: '123 Main St' })
   @IsString()
   @MinLength(5)
@@ -75,4 +65,21 @@ export class CreateAddressDto {
   @IsString()
   @MaxLength(500)
   notes?: string;
+
+  @ApiPropertyOptional({
+    example: -34.603722,
+    description: 'Latitude for map markers (WGS84)',
+  })
+  @IsOptional()
+  @IsLatitude()
+  latitude?: number;
+
+  @ApiPropertyOptional({
+    example: -58.381592,
+    description: 'Longitude for map markers (WGS84)',
+  })
+  @IsOptional()
+  @IsLongitude()
+  longitude?: number;
 }
+

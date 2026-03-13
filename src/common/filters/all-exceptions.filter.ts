@@ -39,9 +39,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
     };
 
     this.logger.error(
-      `${request.method} ${request.url}`,
-      JSON.stringify(errorResponse),
-      exception instanceof Error ? exception.stack : '',
+      `${request.method} ${request.url} ${JSON.stringify(errorResponse)}`,
+      exception instanceof Error ? exception.stack : undefined,
     );
 
     response.status(status).json(errorResponse);

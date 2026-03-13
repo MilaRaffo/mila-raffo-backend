@@ -18,9 +18,8 @@ import { TokenCleanupService } from './services/token-cleanup.service';
     UsersModule,
     RolesModule,
     PassportModule,
-    JwtModule.register({}),
     ConfigModule,
-     PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
 
     JwtModule.registerAsync({
       imports: [ConfigModule],

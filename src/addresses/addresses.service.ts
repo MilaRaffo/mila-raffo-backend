@@ -9,6 +9,7 @@ import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { Address } from './entities/address.entity';
 import { type UUID } from 'crypto';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class AddressesService {
@@ -26,9 +27,13 @@ export class AddressesService {
       await this.unsetDefaultAddresses(userId);
     }
 
+    const { latitude, longitude, ...addressData } = createAddressDto;
+    const normalizedCoordinates = this.normalizeCoordinates(latitude, longitude);
+
     const address = this.addressRepository.create({
-      ...createAddressDto,
-      userId,
+      ...addressData,
+      ...normalizedCoordinates,
+      user: { id: userId } as User,
     });
 
     return await this.addressRepository.save(address);
@@ -36,23 +41,18 @@ export class AddressesService {
 
   async findAllByUser(userId: UUID): Promise<Address[]> {
     return await this.addressRepository.find({
-      where: { userId },
+      where: { user: { id: userId } },
       order: { isDefault: 'DESC', createdAt: 'DESC' },
     });
   }
 
   async findOne(id: UUID, userId: UUID): Promise<Address> {
     const address = await this.addressRepository.findOne({
-      where: { id },
+      where: { id, user: { id: userId } },
     });
 
     if (!address) {
       throw new NotFoundException(`Address with ID ${id} not found`);
-    }
-
-    // Verificar que la dirección pertenece al usuario
-    if (address.userId !== userId) {
-      throw new ForbiddenException('You do not have access to this address');
     }
 
     return address;
@@ -60,7 +60,7 @@ export class AddressesService {
 
   async findDefault(userId: UUID): Promise<Address | null> {
     return await this.addressRepository.findOne({
-      where: { userId, isDefault: true },
+      where: { user: { id: userId }, isDefault: true },
     });
   }
 
@@ -76,7 +76,9 @@ export class AddressesService {
       await this.unsetDefaultAddresses(userId);
     }
 
-    Object.assign(address, updateAddressDto);
+    const { latitude, longitude, ...addressData } = updateAddressDto;
+    const normalizedCoordinates = this.normalizeCoordinates(latitude, longitude);
+    Object.assign(address, addressData, normalizedCoordinates);
     return await this.addressRepository.save(address);
   }
 
@@ -94,10 +96,26 @@ export class AddressesService {
     await this.addressRepository.softRemove(address);
   }
 
+  private normalizeCoordinates(latitude?: number, longitude?: number) {
+    const normalized: { latitude?: string; longitude?: string } = {};
+
+    if (latitude !== undefined) {
+      normalized.latitude = latitude.toString();
+    }
+
+    if (longitude !== undefined) {
+      normalized.longitude = longitude.toString();
+    }
+
+    return normalized;
+  }
+
   private async unsetDefaultAddresses(userId: UUID): Promise<void> {
     await this.addressRepository.update(
-      { userId, isDefault: true },
+      { user: { id: userId }, isDefault: true },
       { isDefault: false },
     );
   }
 }
+
+

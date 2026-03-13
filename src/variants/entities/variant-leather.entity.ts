@@ -1,12 +1,11 @@
-import { Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, ManyToOne, JoinColumn,  Column } from 'typeorm';
 import { Variant } from './variant.entity';
 import { Leather } from '../../leathers/entities/leather.entity';
 import { type UUID } from 'crypto';
+import { BaseEntity } from '../../common/entities/base.entity';
 
 @Entity('variant_leathers')
-export class VariantLeather {
-  @PrimaryGeneratedColumn()
-  id: UUID;
+export class VariantLeather extends BaseEntity {
 
   @Column({ type: 'uuid', name: 'variant_id' })
   variantId: UUID;

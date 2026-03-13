@@ -35,13 +35,14 @@ interface LogMetadata {
   [key: string]: any;
 }
 
+type ContextOrMetadata = string | LogMetadata | undefined;
+
 @Injectable()
 export class LoggerService implements NestLoggerService {
   private logger: winston.Logger;
   private context?: string;
 
-  constructor(context?: string) {
-    this.context = context;
+  constructor() {
     this.logger = this.createLogger();
   }
 
@@ -131,39 +132,87 @@ export class LoggerService implements NestLoggerService {
     this.context = context;
   }
 
-  log(message: string, metadata?: LogMetadata) {
+  private resolveContextAndMetadata(
+    contextOrMetadata?: ContextOrMetadata,
+    metadata?: LogMetadata,
+  ): { context?: string; metadata?: LogMetadata } {
+    if (typeof contextOrMetadata === 'string') {
+      return {
+        context: contextOrMetadata,
+        metadata,
+      };
+    }
+
+    return {
+      context: undefined,
+      metadata: contextOrMetadata || metadata,
+    };
+  }
+
+  log(
+    message: string,
+    contextOrMetadata?: ContextOrMetadata,
+    metadata?: LogMetadata,
+  ) {
+    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+
     this.logger.info(message, {
-      context: this.context,
-      ...metadata,
+      context: resolved.context || this.context,
+      ...(resolved.metadata || {}),
     });
   }
 
-  error(message: string, trace?: string, metadata?: LogMetadata) {
+  error(
+    message: string,
+    trace?: string,
+    contextOrMetadata?: ContextOrMetadata,
+    metadata?: LogMetadata,
+  ) {
+    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+
     this.logger.error(message, {
-      context: this.context,
+      context: resolved.context || this.context,
       trace,
-      ...metadata,
+      ...(resolved.metadata || {}),
     });
   }
 
-  warn(message: string, metadata?: LogMetadata) {
+  warn(
+    message: string,
+    contextOrMetadata?: ContextOrMetadata,
+    metadata?: LogMetadata,
+  ) {
+    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+
     this.logger.warn(message, {
-      context: this.context,
-      ...metadata,
+      context: resolved.context || this.context,
+      ...(resolved.metadata || {}),
     });
   }
 
-  debug(message: string, metadata?: LogMetadata) {
+  debug(
+    message: string,
+    contextOrMetadata?: ContextOrMetadata,
+    metadata?: LogMetadata,
+  ) {
+    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+
     this.logger.debug(message, {
-      context: this.context,
-      ...metadata,
+      context: resolved.context || this.context,
+      ...(resolved.metadata || {}),
     });
   }
 
-  verbose(message: string, metadata?: LogMetadata) {
+  verbose(
+    message: string,
+    contextOrMetadata?: ContextOrMetadata,
+    metadata?: LogMetadata,
+  ) {
+    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+
     this.logger.verbose(message, {
-      context: this.context,
-      ...metadata,
+      context: resolved.context || this.context,
+      ...(resolved.metadata || {}),
     });
   }
 
