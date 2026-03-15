@@ -17,6 +17,8 @@ import { OrdersService } from '../orders/orders.service';
 import { LoggerService } from '../common/services/logger.service';
 import { PaymentStatus as OrderPaymentStatus } from '../orders/entities/order.entity';
 import { type UUID } from 'crypto';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class PaymentsService {
@@ -34,7 +36,7 @@ export class PaymentsService {
   async create(
     createPaymentDto: CreatePaymentDto,
     userId: UUID,
-  ): Promise<Payment> {
+  ): Promise<Record<string, unknown>> {
     const { orderId, method } = createPaymentDto;
 
     // Verificar que la orden existe y pertenece al usuario
@@ -73,10 +75,10 @@ export class PaymentsService {
 
     // Aquí se integrarían otros métodos de pago reales
     // Por ahora, solo devolvemos el pago pendiente
-    return savedPayment;
+    return this.findOne(savedPayment.id, userId);
   }
 
-  async processTestPayment(paymentId: UUID): Promise<Payment> {
+  async processTestPayment(paymentId: UUID): Promise<Record<string, unknown>> {
     const payment = await this.paymentRepository.findOne({
       where: { id: paymentId },
       relations: ['order'],
@@ -136,24 +138,55 @@ export class PaymentsService {
       });
     }
 
-    return await this.paymentRepository.save(payment);
+    await this.paymentRepository.save(payment);
+    return this.findOne(payment.id, payment.userId, true);
   }
 
-  async findAll(userId?: UUID, isAdmin = false) {
+  async findAll(
+    paginationDto: PaginationDto,
+    userId?: UUID,
+    isAdmin = false,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
     const queryBuilder = this.paymentRepository
       .createQueryBuilder('payment')
       .leftJoinAndSelect('payment.order', 'order')
       .leftJoinAndSelect('payment.user', 'user')
+      .skip(offset)
+      .take(limit)
       .orderBy('payment.createdAt', 'DESC');
 
     if (!isAdmin && userId) {
       queryBuilder.where('payment.userId = :userId', { userId });
     }
 
-    return await queryBuilder.getMany();
+    const [data, total] = await queryBuilder.getManyAndCount();
+
+    return {
+      data: data.map((payment) => this.mapPayment(payment)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
+    };
   }
 
-  async findOne(id: UUID, userId?: UUID, isAdmin = false): Promise<Payment> {
+  async findOne(
+    id: UUID,
+    userId?: UUID,
+    isAdmin = false,
+  ): Promise<Record<string, unknown>> {
+    const payment = await this.findOneEntity(id, userId, isAdmin);
+    return this.mapPayment(payment);
+  }
+
+  private async findOneEntity(
+    id: UUID,
+    userId?: UUID,
+    isAdmin = false,
+  ): Promise<Payment> {
     const payment = await this.paymentRepository.findOne({
       where: { id },
       relations: ['order', 'user'],
@@ -172,23 +205,38 @@ export class PaymentsService {
 
   async findByOrder(
     orderId: UUID,
+    paginationDto: PaginationDto,
     userId?: UUID,
     isAdmin = false,
-  ): Promise<Payment[]> {
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
     const queryBuilder = this.paymentRepository
       .createQueryBuilder('payment')
       .where('payment.orderId = :orderId', { orderId })
       .leftJoinAndSelect('payment.order', 'order')
+      .leftJoinAndSelect('payment.user', 'user')
+      .skip(offset)
+      .take(limit)
       .orderBy('payment.createdAt', 'DESC');
 
     if (!isAdmin && userId) {
       queryBuilder.andWhere('payment.userId = :userId', { userId });
     }
 
-    return await queryBuilder.getMany();
+    const [data, total] = await queryBuilder.getManyAndCount();
+
+    return {
+      data: data.map((payment) => this.mapPayment(payment)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
+    };
   }
 
-  async refund(id: UUID, isAdmin: boolean): Promise<Payment> {
+  async refund(id: UUID, isAdmin: boolean): Promise<Record<string, unknown>> {
     if (!isAdmin) {
       throw new ForbiddenException('Only administrators can process refunds');
     }
@@ -215,7 +263,8 @@ export class PaymentsService {
       OrderPaymentStatus.REFUNDED,
     );
 
-    return await this.paymentRepository.save(payment);
+    await this.paymentRepository.save(payment);
+    return this.findOne(payment.id, payment.userId, true);
   }
 
   // Método para webhook de pasarelas de pago (preparado para futuro)
@@ -226,5 +275,36 @@ export class PaymentsService {
     // Aquí se manejarían webhooks de Stripe, PayPal, MercadoPago, etc.
     console.log(`Received webhook from ${provider}:`, payload);
     return { received: true };
+  }
+
+  private mapPayment(payment: Payment): Record<string, unknown> {
+    return {
+      id: payment.id,
+      amount: payment.amount,
+      method: payment.method,
+      status: payment.status,
+      transactionId: payment.transactionId,
+      paymentGatewayResponse: payment.paymentGatewayResponse,
+      errorMessage: payment.errorMessage,
+      processedAt: payment.processedAt,
+      metadata: payment.metadata,
+      order: payment.order
+        ? {
+            id: payment.order.id,
+            orderNumber: payment.order.orderNumber,
+            total: payment.order.total,
+            status: payment.order.status,
+            paymentStatus: payment.order.paymentStatus,
+          }
+        : null,
+      user: payment.user
+        ? {
+            id: payment.user.id,
+            name: payment.user.name,
+            lastName: payment.user.lastName,
+            email: payment.user.email,
+          }
+        : null,
+    };
   }
 }

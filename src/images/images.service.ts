@@ -35,8 +35,20 @@ export class ImagesService {
     this.region = this.configService.get<string>('s3.region', 'us-east-1');
     this.bucket = this.configService.get<string>('s3.bucket') || '';
 
+    // Log S3 configuration (without sensitive data)
+    console.log('[Images] S3 Configuration:', {
+      bucket: this.bucket,
+      region: this.region,
+      hasAccessKeyId: !!accessKeyId,
+      hasSecretAccessKey: !!secretAccessKey,
+    });
+
     if (!this.bucket) {
-      throw new Error('S3 bucket name is not configured');
+      throw new Error('[Images] S3 bucket name is not configured in environment variables');
+    }
+
+    if (!accessKeyId || !secretAccessKey) {
+      console.warn('[Images] AWS credentials not provided - will use IAM role or default credentials');
     }
 
     this.s3Client = new S3Client({
@@ -46,27 +58,41 @@ export class ImagesService {
         secretAccessKey,
       } : undefined,
     });
+
+    console.log('[Images] S3Client initialized successfully');
   }
 
-  async create(createImageDto: CreateImageDto): Promise<Image> {
+  async create(
+    createImageDto: CreateImageDto,
+  ): Promise<Record<string, unknown>> {
     const image = this.imagesRepository.create(createImageDto);
-    return this.imagesRepository.save(image);
+    const savedImage = await this.imagesRepository.save(image);
+    return this.findOne(savedImage.id);
   }
 
   async uploadFile(
     file: Express.Multer.File,
     variantId?: UUID,
     alt?: string,
-  ): Promise<Image> {
+  ): Promise<Record<string, unknown>> {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
 
     try {
+      // Validate S3 configuration
+      if (!this.bucket) {
+        throw new Error('S3 bucket is not configured');
+      }
+
+      console.log(`[Images] Starting S3 upload - Bucket: ${this.bucket}, Region: ${this.region}`);
+
       // Generate unique file name
       const fileExtension = file.originalname.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`;
       const key = `images/${fileName}`;
+
+      console.log(`[Images] File details - Original: ${file.originalname}, Size: ${file.size} bytes, Type: ${file.mimetype}`);
 
       // Upload to S3
       const command = new PutObjectCommand({
@@ -74,13 +100,14 @@ export class ImagesService {
         Key: key,
         Body: file.buffer,
         ContentType: file.mimetype,
-        ACL: 'public-read', // Make the file publicly accessible
       });
 
+      console.log(`[Images] Sending to S3 with key: ${key}`);
       await this.s3Client.send(command);
 
       // Generate public URL
       const url = this.getPublicUrl(key);
+      console.log(`[Images] File uploaded successfully - URL: ${url}`);
 
       // Create image record
       const image = this.imagesRepository.create({
@@ -89,10 +116,33 @@ export class ImagesService {
         alt: alt || file.originalname,
       });
 
-      return this.imagesRepository.save(image);
+      const savedImage = await this.imagesRepository.save(image);
+      return this.findOne(savedImage.id);
     } catch (error) {
-      console.error('Error uploading file to S3:', error);
-      throw new InternalServerErrorException('Failed to upload file to S3');
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorName = error instanceof Error ? error.name : 'UnknownError';
+      
+      console.error(`[Images] S3 Upload Error:`, {
+        name: errorName,
+        message: errorMessage,
+        code: (error as any)?.Code,
+        statusCode: (error as any)?.statusCode,
+        requestId: (error as any)?.RequestId,
+        fullError: error,
+      });
+
+      // Provide more specific error messages
+      if ((error as any)?.Code === 'InvalidAccessKeyId' || (error as any)?.Code === 'SignatureDoesNotMatch') {
+        throw new InternalServerErrorException('AWS credentials are invalid or not configured correctly');
+      }
+      if ((error as any)?.Code === 'NoSuchBucket') {
+        throw new InternalServerErrorException(`S3 bucket "${this.bucket}" does not exist`);
+      }
+      if ((error as any)?.Code === 'AccessDenied') {
+        throw new InternalServerErrorException('Access denied to S3 bucket. Check IAM permissions.');
+      }
+
+      throw new InternalServerErrorException(`Failed to upload file to S3: ${errorMessage}`);
     }
   }
 
@@ -118,8 +168,8 @@ export class ImagesService {
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<Image>> {
-    const { limit, offset } = paginationDto;
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.imagesRepository.findAndCount({
       take: limit,
@@ -129,14 +179,21 @@ export class ImagesService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((image) => this.mapImage(image)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Image> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const image = await this.findOneEntity(id);
+    return this.mapImage(image);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Image> {
     const image = await this.imagesRepository.findOne({
       where: { id },
       relations: ['variant'],
@@ -149,21 +206,41 @@ export class ImagesService {
     return image;
   }
 
-  async findByVariant(variantId: UUID): Promise<Image[]> {
-    return this.imagesRepository.find({
+  async findByVariant(
+    variantId: UUID,
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    const [data, total] = await this.imagesRepository.findAndCount({
       where: { variantId },
+      take: limit,
+      skip: offset,
       order: { createdAt: 'ASC' },
     });
+
+    return {
+      data: data.map((image) => this.mapImage(image)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
+    };
   }
 
-  async update(id: UUID, updateImageDto: UpdateImageDto): Promise<Image> {
-    const image = await this.findOne(id);
+  async update(
+    id: UUID,
+    updateImageDto: UpdateImageDto,
+  ): Promise<Record<string, unknown>> {
+    const image = await this.findOneEntity(id);
     Object.assign(image, updateImageDto);
-    return this.imagesRepository.save(image);
+    await this.imagesRepository.save(image);
+    return this.findOne(id);
   }
 
   async remove(id: UUID): Promise<void> {
-    const image = await this.findOne(id);
+    const image = await this.findOneEntity(id);
 
     // Delete file from S3
     try {
@@ -183,5 +260,19 @@ export class ImagesService {
     }
 
     await this.imagesRepository.softRemove(image);
+  }
+
+  private mapImage(image: Image): Record<string, unknown> {
+    return {
+      id: image.id,
+      url: image.url,
+      alt: image.alt,
+      variant: image.variant
+        ? {
+            id: image.variant.id,
+            sku: image.variant.sku,
+          }
+        : null,
+    };
   }
 }

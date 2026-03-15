@@ -40,10 +40,12 @@ export class AuthService {
         throw new BadRequestException('Client role not found. Please run seed first.');
       }
 
-      const user = await this.usersService.create({
+      const createdUser = await this.usersService.create({
         ...registerDto,
         roleId: clientRole.id,
       });
+
+      const user = await this.usersService.getUserById(createdUser.id);
       
       this.logger.userRegistered(user.id, user.email);
 

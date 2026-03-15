@@ -26,7 +26,9 @@ export class VariantsService {
     private readonly leathersService: LeathersService,
   ) {}
 
-  async create(createVariantDto: CreateVariantDto): Promise<Variant> {
+  async create(
+    createVariantDto: CreateVariantDto,
+  ): Promise<Record<string, unknown>> {
     const existingVariant = await this.variantsRepository.findOne({
       where: { sku: createVariantDto.sku },
     });
@@ -57,8 +59,8 @@ export class VariantsService {
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<Variant>> {
-    const { limit, offset } = paginationDto;
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.variantsRepository.findAndCount({
       take: limit,
@@ -74,14 +76,21 @@ export class VariantsService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((variant) => this.mapVariant(variant)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Variant> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const variant = await this.findOneEntity(id);
+    return this.mapVariant(variant);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Variant> {
     const variant = await this.variantsRepository.findOne({
       where: { id },
       relations: [
@@ -103,8 +112,8 @@ export class VariantsService {
   async addLeathersToVariant(
     variantId: UUID,
     leatherIds: UUID[],
-  ): Promise<Variant> {
-    const variant = await this.findOne(variantId);
+  ): Promise<Record<string, unknown>> {
+    await this.findOneEntity(variantId);
 
     for (const leatherId of leatherIds) {
       await this.leathersService.findOne(leatherId);
@@ -129,7 +138,7 @@ export class VariantsService {
     variantId: UUID,
     leatherId: UUID,
   ): Promise<void> {
-    await this.findOne(variantId);
+    await this.findOneEntity(variantId);
     await this.leathersService.findOne(leatherId);
 
     await this.variantLeathersRepository.delete({ variantId, leatherId });
@@ -138,8 +147,8 @@ export class VariantsService {
   async update(
     id: UUID,
     updateVariantDto: UpdateVariantDto,
-  ): Promise<Variant> {
-    const variant = await this.findOne(id);
+  ): Promise<Record<string, unknown>> {
+    const variant = await this.findOneEntity(id);
 
     if (updateVariantDto.sku && updateVariantDto.sku !== variant.sku) {
       const existingVariant = await this.variantsRepository.findOne({
@@ -169,7 +178,39 @@ export class VariantsService {
   }
 
   async remove(id: UUID): Promise<void> {
-    const variant = await this.findOne(id);
+    const variant = await this.findOneEntity(id);
     await this.variantsRepository.softRemove(variant);
+  }
+
+  private mapVariant(variant: Variant): Record<string, unknown> {
+    return {
+      id: variant.id,
+      sku: variant.sku,
+      price: variant.price,
+      isAvailable: variant.isAvailable,
+      product: variant.product
+        ? {
+            id: variant.product.id,
+            name: variant.product.name,
+          }
+        : null,
+      images: (variant.images ?? []).map((image) => ({
+        url: image.url,
+        alt: image.alt,
+      })),
+      leathers: (variant.variantLeathers ?? []).map((variantLeather) => ({
+        id: variantLeather.leather?.id,
+        name: variantLeather.leather?.name,
+        code: variantLeather.leather?.code,
+        color: variantLeather.leather?.color,
+        isActive: variantLeather.leather?.isActive,
+        image: variantLeather.leather?.image
+          ? {
+              url: variantLeather.leather.image.url,
+              alt: variantLeather.leather.image.alt,
+            }
+          : null,
+      })),
+    };
   }
 }

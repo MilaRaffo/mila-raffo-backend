@@ -21,9 +21,6 @@ export class UserListItemDto {
   @ApiProperty({ example: true })
   isActive: boolean;
 
-  @ApiProperty({ example: '2026-03-12T18:59:45.636Z' })
-  createdAt: Date;
-
   static fromEntity(user: User): UserListItemDto {
     const dto = new UserListItemDto();
     dto.id = user.id;
@@ -32,7 +29,6 @@ export class UserListItemDto {
     dto.email = user.email;
     dto.role = user.role?.name ?? '';
     dto.isActive = user.isActive;
-    dto.createdAt = user.createdAt;
     return dto;
   }
 }

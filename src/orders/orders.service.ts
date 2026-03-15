@@ -16,6 +16,7 @@ import { CouponsService } from '../coupons/coupons.service';
 import { LoggerService } from '../common/services/logger.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class OrdersService {
@@ -34,7 +35,10 @@ export class OrdersService {
     this.logger.setContext('OrdersService');
   }
 
-  async create(createOrderDto: CreateOrderDto, userId: UUID): Promise<Order> {
+  async create(
+    createOrderDto: CreateOrderDto,
+    userId: UUID,
+  ): Promise<Record<string, unknown>> {
     const { items, shippingAddress, billingAddress, couponCode, notes } =
       createOrderDto;
 
@@ -98,9 +102,15 @@ export class OrdersService {
         subtotal,
       );
 
-      if (validation.valid && validation.discount) {
+      const validatedCouponId = validation.coupon?.id;
+
+      if (
+        validation.valid &&
+        validation.discount &&
+        typeof validatedCouponId === 'string'
+      ) {
         discountAmount = validation.discount;
-        couponId = validation.coupon?.id;
+        couponId = validatedCouponId as UUID;
         validCouponCode = couponCode.toUpperCase();
       }
     }
@@ -184,7 +194,11 @@ export class OrdersService {
     return this.findOne(savedOrder.id, userId);
   }
 
-  async findAll(paginationDto: PaginationDto, userId?: UUID, isAdmin = false) {
+  async findAll(
+    paginationDto: PaginationDto,
+    userId?: UUID,
+    isAdmin = false,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
     const { limit = 10, offset = 0 } = paginationDto;
 
     const queryBuilder = this.orderRepository
@@ -203,14 +217,29 @@ export class OrdersService {
     const [data, total] = await queryBuilder.getManyAndCount();
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((order) => this.mapOrder(order)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID, userId?: UUID, isAdmin = false): Promise<Order> {
+  async findOne(
+    id: UUID,
+    userId?: UUID,
+    isAdmin = false,
+  ): Promise<Record<string, unknown>> {
+    const order = await this.findOneEntity(id, userId, isAdmin);
+    return this.mapOrder(order);
+  }
+
+  private async findOneEntity(
+    id: UUID,
+    userId?: UUID,
+    isAdmin = false,
+  ): Promise<Order> {
     const order = await this.orderRepository.findOne({
       where: { id },
       relations: ['items', 'items.variant', 'user'],
@@ -232,7 +261,7 @@ export class OrdersService {
     orderNumber: string,
     userId?: UUID,
     isAdmin = false,
-  ): Promise<Order> {
+  ): Promise<Record<string, unknown>> {
     const order = await this.orderRepository.findOne({
       where: { orderNumber },
       relations: ['items', 'items.variant', 'user'],
@@ -249,7 +278,7 @@ export class OrdersService {
       throw new ForbiddenException('You do not have access to this order');
     }
 
-    return order;
+    return this.mapOrder(order);
   }
 
   async update(
@@ -257,8 +286,8 @@ export class OrdersService {
     updateOrderDto: UpdateOrderDto,
     userId?: UUID,
     isAdmin = false,
-  ): Promise<Order> {
-    const order = await this.findOne(id, userId, isAdmin);
+  ): Promise<Record<string, unknown>> {
+    const order = await this.findOneEntity(id, userId, isAdmin);
 
     // Solo admin puede actualizar status y tracking
     if (!isAdmin && (updateOrderDto.status || updateOrderDto.trackingNumber)) {
@@ -279,11 +308,12 @@ export class OrdersService {
     }
 
     Object.assign(order, updateOrderDto);
-    return await this.orderRepository.save(order);
+    await this.orderRepository.save(order);
+    return this.findOne(id, userId, isAdmin);
   }
 
-  async cancel(id: UUID, userId: UUID): Promise<Order> {
-    const order = await this.findOne(id, userId);
+  async cancel(id: UUID, userId: UUID): Promise<Record<string, unknown>> {
+    const order = await this.findOneEntity(id, userId);
 
     // Solo se puede cancelar si está pending o confirmed
     if (
@@ -295,7 +325,8 @@ export class OrdersService {
     }
 
     order.status = OrderStatus.CANCELLED;
-    return await this.orderRepository.save(order);
+    await this.orderRepository.save(order);
+    return this.findOne(id, userId);
   }
 
   async updatePaymentStatus(
@@ -337,5 +368,70 @@ export class OrdersService {
     const sequence = (count + 1).toString().padStart(4, '0');
 
     return `ORD-${year}${month}${day}-${sequence}`;
+  }
+
+  private mapOrder(order: Order): Record<string, unknown> {
+    return {
+      id: order.id,
+      orderNumber: order.orderNumber,
+      status: order.status,
+      paymentStatus: order.paymentStatus,
+      subtotal: order.subtotal,
+      discountAmount: order.discountAmount,
+      shippingCost: order.shippingCost,
+      taxAmount: order.taxAmount,
+      total: order.total,
+      couponCode: order.couponCode,
+      trackingNumber: order.trackingNumber,
+      shippedAt: order.shippedAt,
+      deliveredAt: order.deliveredAt,
+      notes: order.notes,
+      shippingAddress: {
+        firstName: order.shippingFirstName,
+        lastName: order.shippingLastName,
+        streetAddress: order.shippingStreetAddress,
+        apartment: order.shippingApartment,
+        city: order.shippingCity,
+        stateProvince: order.shippingStateProvince,
+        postalCode: order.shippingPostalCode,
+        country: order.shippingCountry,
+        phone: order.shippingPhone,
+      },
+      billingAddress: {
+        firstName: order.billingFirstName,
+        lastName: order.billingLastName,
+        streetAddress: order.billingStreetAddress,
+        apartment: order.billingApartment,
+        city: order.billingCity,
+        stateProvince: order.billingStateProvince,
+        postalCode: order.billingPostalCode,
+        country: order.billingCountry,
+        phone: order.billingPhone,
+      },
+      user: order.user
+        ? {
+            id: order.user.id,
+            name: order.user.name,
+            lastName: order.user.lastName,
+            email: order.user.email,
+          }
+        : null,
+      items: (order.items ?? []).map((item) => ({
+        id: item.id,
+        productName: item.productName,
+        sku: item.sku,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        subtotal: item.subtotal,
+        discount: item.discount,
+        total: item.total,
+        variant: item.variant
+          ? {
+              id: item.variant.id,
+              sku: item.variant.sku,
+            }
+          : null,
+      })),
+    };
   }
 }

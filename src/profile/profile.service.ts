@@ -12,8 +12,8 @@ export class ProfileService {
   }
 
   async getAddresses(userId: UUID) {
-    const profile = await this.usersService.getProfile(userId);
-    return profile.addresses || [];
+    const profile = await this.usersService.findOne(userId);
+    return (profile as { addresses?: unknown[] }).addresses || [];
   }
 
   updateProfile(userId: UUID, updateProfileDto: UpdateProfileDto) {

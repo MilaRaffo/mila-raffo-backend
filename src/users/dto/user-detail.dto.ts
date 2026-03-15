@@ -39,8 +39,6 @@ class AddressDto {
   @ApiProperty({ nullable: true, example: -58.381592 })
   longitude?: number;
 
-  @ApiProperty()
-  createdAt: Date;
 }
 
 export class UserDetailDto {
@@ -62,9 +60,6 @@ export class UserDetailDto {
   @ApiProperty()
   isActive: boolean;
 
-  @ApiProperty()
-  createdAt: Date;
-
   @ApiProperty({ type: [AddressDto] })
   addresses: AddressDto[];
 
@@ -76,7 +71,6 @@ export class UserDetailDto {
     dto.email = user.email;
     dto.role = user.role?.name ?? '';
     dto.isActive = user.isActive;
-    dto.createdAt = user.createdAt;
     dto.addresses = (user.addresses || []).map((address) => ({
       id: address.id,
       streetAddress: address.streetAddress,
@@ -96,7 +90,6 @@ export class UserDetailDto {
         address.longitude !== undefined && address.longitude !== null
           ? Number(address.longitude)
           : undefined,
-      createdAt: address.createdAt,
     }));
     return dto;
   }

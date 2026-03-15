@@ -10,6 +10,8 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 import { Address } from './entities/address.entity';
 import { type UUID } from 'crypto';
 import { User } from '../users/entities/user.entity';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class AddressesService {
@@ -21,7 +23,7 @@ export class AddressesService {
   async create(
     createAddressDto: CreateAddressDto,
     userId: UUID,
-  ): Promise<Address> {
+  ): Promise<Record<string, unknown>> {
     // Si esta dirección se marca como predeterminada, desmarcar otras
     if (createAddressDto.isDefault) {
       await this.unsetDefaultAddresses(userId);
@@ -36,17 +38,39 @@ export class AddressesService {
       user: { id: userId } as User,
     });
 
-    return await this.addressRepository.save(address);
+    const savedAddress = await this.addressRepository.save(address);
+    return this.findOne(savedAddress.id, userId);
   }
 
-  async findAllByUser(userId: UUID): Promise<Address[]> {
-    return await this.addressRepository.find({
+  async findAllByUser(
+    userId: UUID,
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    const [data, total] = await this.addressRepository.findAndCount({
       where: { user: { id: userId } },
+      take: limit,
+      skip: offset,
       order: { isDefault: 'DESC', createdAt: 'DESC' },
     });
+
+    return {
+      data: data.map((address) => this.mapAddress(address)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
+    };
   }
 
-  async findOne(id: UUID, userId: UUID): Promise<Address> {
+  async findOne(id: UUID, userId: UUID): Promise<Record<string, unknown>> {
+    const address = await this.findOneEntity(id, userId);
+    return this.mapAddress(address);
+  }
+
+  private async findOneEntity(id: UUID, userId: UUID): Promise<Address> {
     const address = await this.addressRepository.findOne({
       where: { id, user: { id: userId } },
     });
@@ -58,18 +82,20 @@ export class AddressesService {
     return address;
   }
 
-  async findDefault(userId: UUID): Promise<Address | null> {
-    return await this.addressRepository.findOne({
+  async findDefault(userId: UUID): Promise<Record<string, unknown> | null> {
+    const address = await this.addressRepository.findOne({
       where: { user: { id: userId }, isDefault: true },
     });
+
+    return address ? this.mapAddress(address) : null;
   }
 
   async update(
     id: UUID,
     updateAddressDto: UpdateAddressDto,
     userId: UUID,
-  ): Promise<Address> {
-    const address = await this.findOne(id, userId);
+  ): Promise<Record<string, unknown>> {
+    const address = await this.findOneEntity(id, userId);
 
     // Si se marca como predeterminada, desmarcar otras
     if (updateAddressDto.isDefault) {
@@ -79,20 +105,22 @@ export class AddressesService {
     const { latitude, longitude, ...addressData } = updateAddressDto;
     const normalizedCoordinates = this.normalizeCoordinates(latitude, longitude);
     Object.assign(address, addressData, normalizedCoordinates);
-    return await this.addressRepository.save(address);
+    await this.addressRepository.save(address);
+    return this.findOne(id, userId);
   }
 
-  async setAsDefault(id: UUID, userId: UUID): Promise<Address> {
-    const address = await this.findOne(id, userId);
+  async setAsDefault(id: UUID, userId: UUID): Promise<Record<string, unknown>> {
+    const address = await this.findOneEntity(id, userId);
 
     await this.unsetDefaultAddresses(userId);
 
     address.isDefault = true;
-    return await this.addressRepository.save(address);
+    await this.addressRepository.save(address);
+    return this.findOne(id, userId);
   }
 
   async remove(id: UUID, userId: UUID): Promise<void> {
-    const address = await this.findOne(id, userId);
+    const address = await this.findOneEntity(id, userId);
     await this.addressRepository.softRemove(address);
   }
 
@@ -115,6 +143,23 @@ export class AddressesService {
       { user: { id: userId }, isDefault: true },
       { isDefault: false },
     );
+  }
+
+  private mapAddress(address: Address): Record<string, unknown> {
+    return {
+      id: address.id,
+      streetAddress: address.streetAddress,
+      apartment: address.apartment,
+      city: address.city,
+      stateProvince: address.stateProvince,
+      postalCode: address.postalCode,
+      country: address.country,
+      phone: address.phone,
+      isDefault: address.isDefault,
+      notes: address.notes,
+      latitude: address.latitude,
+      longitude: address.longitude,
+    };
   }
 }
 

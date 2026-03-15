@@ -12,6 +12,7 @@ import { Coupon, CouponStatus } from './entities/coupon.entity';
 import { CouponUsage } from './entities/coupon-usage.entity';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class CouponsService {
@@ -22,7 +23,9 @@ export class CouponsService {
     private readonly couponUsageRepository: Repository<CouponUsage>,
   ) {}
 
-  async create(createCouponDto: CreateCouponDto): Promise<Coupon> {
+  async create(
+    createCouponDto: CreateCouponDto,
+  ): Promise<Record<string, unknown>> {
     // Verificar si el código ya existe
     const existingCoupon = await this.couponRepository.findOne({
       where: { code: createCouponDto.code.toUpperCase() },
@@ -49,10 +52,13 @@ export class CouponsService {
       code: createCouponDto.code.toUpperCase(),
     });
 
-    return await this.couponRepository.save(coupon);
+    const savedCoupon = await this.couponRepository.save(coupon);
+    return this.findOne(savedCoupon.id);
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
     const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.couponRepository.findAndCount({
@@ -63,14 +69,21 @@ export class CouponsService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((coupon) => this.mapCoupon(coupon)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Coupon> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const coupon = await this.findOneEntity(id);
+    return this.mapCoupon(coupon);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Coupon> {
     const coupon = await this.couponRepository.findOne({
       where: { id },
       relations: ['restrictedToUser'],
@@ -96,8 +109,11 @@ export class CouponsService {
     return coupon;
   }
 
-  async update(id: UUID, updateCouponDto: UpdateCouponDto): Promise<Coupon> {
-    const coupon = await this.findOne(id);
+  async update(
+    id: UUID,
+    updateCouponDto: UpdateCouponDto,
+  ): Promise<Record<string, unknown>> {
+    const coupon = await this.findOneEntity(id);
 
     // Validar fechas si se actualizan
     if (
@@ -112,11 +128,12 @@ export class CouponsService {
     }
 
     Object.assign(coupon, updateCouponDto);
-    return await this.couponRepository.save(coupon);
+    await this.couponRepository.save(coupon);
+    return this.findOne(id);
   }
 
   async remove(id: UUID): Promise<void> {
-    const coupon = await this.findOne(id);
+    const coupon = await this.findOneEntity(id);
     await this.couponRepository.softRemove(coupon);
   }
 
@@ -126,7 +143,7 @@ export class CouponsService {
     cartTotal: number,
   ): Promise<{
     valid: boolean;
-    coupon?: Coupon;
+    coupon?: Record<string, unknown>;
     discount?: number;
     message?: string;
   }> {
@@ -207,7 +224,7 @@ export class CouponsService {
 
     return {
       valid: true,
-      coupon,
+      coupon: this.mapCoupon(coupon),
       discount,
       message: 'Coupon is valid',
     };
@@ -263,5 +280,33 @@ export class CouponsService {
       .where('status = :status', { status: CouponStatus.ACTIVE })
       .andWhere('valid_until < :now', { now })
       .execute();
+  }
+
+  private mapCoupon(coupon: Coupon): Record<string, unknown> {
+    return {
+      id: coupon.id,
+      code: coupon.code,
+      name: coupon.name,
+      description: coupon.description,
+      type: coupon.type,
+      value: coupon.value,
+      minimumPurchase: coupon.minimumPurchase,
+      maximumDiscount: coupon.maximumDiscount,
+      usageLimit: coupon.usageLimit,
+      timesUsed: coupon.timesUsed,
+      usageLimitPerUser: coupon.usageLimitPerUser,
+      validFrom: coupon.validFrom,
+      validUntil: coupon.validUntil,
+      status: coupon.status,
+      isSingleUse: coupon.isSingleUse,
+      restrictedToUser: coupon.restrictedToUser
+        ? {
+            id: coupon.restrictedToUser.id,
+            name: coupon.restrictedToUser.name,
+            lastName: coupon.restrictedToUser.lastName,
+            email: coupon.restrictedToUser.email,
+          }
+        : null,
+    };
   }
 }

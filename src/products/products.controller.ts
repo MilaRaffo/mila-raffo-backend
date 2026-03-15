@@ -63,8 +63,11 @@ export class ProductsController {
     description: 'Product variants retrieved successfully',
   })
   @ApiResponse({ status: 404, description: 'Product not found' })
-  findProductVariants(@Param('id', ParseUUIDPipe) id: UUID) {
-    return this.productsService.findProductVariants(id);
+  findProductVariants(
+    @Param('id', ParseUUIDPipe) id: UUID,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    return this.productsService.findProductVariants(id, paginationDto);
   }
 
   @Get(':id/characteristics')
@@ -74,8 +77,11 @@ export class ProductsController {
     description: 'Product characteristics retrieved successfully',
   })
   @ApiResponse({ status: 404, description: 'Product not found' })
-  findProductCharacteristics(@Param('id', ParseUUIDPipe) id: UUID) {
-    return this.productsService.findProductCharacteristics(id);
+  findProductCharacteristics(
+    @Param('id', ParseUUIDPipe) id: UUID,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    return this.productsService.findProductCharacteristics(id, paginationDto);
   }
 
   @Patch(':id')

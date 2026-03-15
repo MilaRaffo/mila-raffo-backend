@@ -26,7 +26,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<UserDetailDto> {
     const existingUser = await this.usersRepository.findOne({
       where: { email: createUserDto.email },
     });
@@ -44,21 +44,19 @@ export class UsersService {
 
     const savedUser = await this.usersRepository.save(user);
 
-    const createdUser = await this.usersRepository.findOne({
-      where: { id: savedUser.id },
-    });
+    const createdUser = await this.findOneEntity(savedUser.id);
 
     if (!createdUser) {
       throw new BadRequestException('User created but could not be loaded');
     }
 
-    return createdUser;
+    return UserDetailDto.fromEntity(createdUser);
   }
 
   async findAll(
     paginationDto: PaginationDto,
   ): Promise<PaginatedResult<UserListItemDto>> {
-    const { limit, offset } = paginationDto;
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [users, total] = await this.usersRepository.findAndCount({
       take: limit,
@@ -68,9 +66,11 @@ export class UsersService {
 
     return {
       data: users.map(UserListItemDto.fromEntity),
-      total,
-      limit,
-      offset,
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
@@ -153,7 +153,7 @@ export class UsersService {
     id: UUID,
     updateUserDto: UpdateUserDto,
     currentUserRole?: RoleName,
-  ): Promise<User> {
+  ): Promise<UserDetailDto> {
     const user = await this.findOneEntity(id);
 
     if (currentUserRole === RoleName.ADMIN) {
@@ -182,7 +182,9 @@ export class UsersService {
     }
 
     Object.assign(user, updateUserDto);
-    return this.usersRepository.save(user);
+    await this.usersRepository.save(user);
+    const updatedUser = await this.findOneEntity(id);
+    return UserDetailDto.fromEntity(updatedUser);
   }
 
   async updatePassword(id: UUID, newPassword: string): Promise<void> {

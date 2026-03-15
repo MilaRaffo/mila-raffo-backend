@@ -5,6 +5,7 @@ import {
   Body,
   Patch,
   Param,
+  Query,
   UseGuards,
   ParseUUIDPipe,
 } from '@nestjs/common';
@@ -23,6 +24,7 @@ import { GetUser } from '../common/decorators/get-user.decorator';
 import { RoleName } from '../roles/entities/role.entity';
 import { User } from '../users/entities/user.entity';
 import { type UUID } from 'crypto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @ApiTags('payments')
 @ApiBearerAuth()
@@ -43,11 +45,11 @@ export class PaymentsController {
   @Get()
   @ApiOperation({ summary: 'Get all payments (user sees only their payments)' })
   @ApiResponse({ status: 200, description: 'Payments retrieved successfully' })
-  findAll(@GetUser() user: User) {
+  findAll(@GetUser() user: User, @Query() paginationDto: PaginationDto) {
     const isAdmin = [RoleName.ADMIN, RoleName.SUPERADMIN].includes(
       user.role.name,
     );
-    return this.paymentsService.findAll(user.id, isAdmin);
+    return this.paymentsService.findAll(paginationDto, user.id, isAdmin);
   }
 
   @Get('order/:orderId')
@@ -56,11 +58,17 @@ export class PaymentsController {
   findByOrder(
     @Param('orderId', ParseUUIDPipe) orderId: UUID,
     @GetUser() user: User,
+    @Query() paginationDto: PaginationDto,
   ) {
     const isAdmin = [RoleName.ADMIN, RoleName.SUPERADMIN].includes(
       user.role.name,
     );
-    return this.paymentsService.findByOrder(orderId, user.id, isAdmin);
+    return this.paymentsService.findByOrder(
+      orderId,
+      paginationDto,
+      user.id,
+      isAdmin,
+    );
   }
 
   @Get(':id')

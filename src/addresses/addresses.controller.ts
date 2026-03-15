@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
   ParseUUIDPipe,
 } from '@nestjs/common';
 import {
@@ -22,6 +23,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUser } from '../common/decorators/get-user.decorator';
 import { User } from '../users/entities/user.entity';
 import { type UUID } from 'crypto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @ApiTags('addresses')
 @ApiBearerAuth()
@@ -43,8 +45,8 @@ export class AddressesController {
     status: 200,
     description: 'Addresses retrieved successfully',
   })
-  findAll(@GetUser() user: User) {
-    return this.addressesService.findAllByUser(user.id);
+  findAll(@GetUser() user: User, @Query() paginationDto: PaginationDto) {
+    return this.addressesService.findAllByUser(user.id, paginationDto);
   }
 
   @Get('default')

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
   ParseUUIDPipe,
 } from '@nestjs/common';
 import {
@@ -23,6 +24,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { RoleName } from './entities/role.entity';
 import { type UUID } from 'crypto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @ApiTags('roles')
 @ApiBearerAuth()
@@ -46,8 +48,8 @@ export class RolesController {
   @ApiOperation({ summary: 'Get all roles (Superadmin only)' })
   @ApiResponse({ status: 200, description: 'Roles retrieved successfully' })
   @ApiResponse({ status: 403, description: 'Forbidden - Superadmin access required' })
-  findAll() {
-    return this.rolesService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.rolesService.findAll(paginationDto);
   }
 
   @Get(':id')

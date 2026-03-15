@@ -57,8 +57,8 @@ export class PromotionsController {
     status: 200,
     description: 'Active promotions retrieved successfully',
   })
-  findActive() {
-    return this.promotionsService.findActive();
+  findActive(@Query() paginationDto: PaginationDto) {
+    return this.promotionsService.findActive(paginationDto);
   }
 
   @Get(':id')

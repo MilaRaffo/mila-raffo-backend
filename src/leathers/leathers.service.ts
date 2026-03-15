@@ -21,7 +21,9 @@ export class LeathersService {
     private readonly imagesService: ImagesService,
   ) {}
 
-  async create(createLeatherDto: CreateLeatherDto): Promise<Leather> {
+  async create(
+    createLeatherDto: CreateLeatherDto,
+  ): Promise<Record<string, unknown>> {
     const existingLeather = await this.leathersRepository.findOne({
       where: { code: createLeatherDto.code },
     });
@@ -35,13 +37,14 @@ export class LeathersService {
     }
 
     const leather = this.leathersRepository.create(createLeatherDto);
-    return this.leathersRepository.save(leather);
+    const savedLeather = await this.leathersRepository.save(leather);
+    return this.findOne(savedLeather.id);
   }
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<Leather>> {
-    const { limit, offset } = paginationDto;
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.leathersRepository.findAndCount({
       take: limit,
@@ -51,14 +54,21 @@ export class LeathersService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((leather) => this.mapLeather(leather)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Leather> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const leather = await this.findOneEntity(id);
+    return this.mapLeather(leather);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Leather> {
     const leather = await this.leathersRepository.findOne({
       where: { id },
       relations: ['image'],
@@ -74,8 +84,8 @@ export class LeathersService {
   async update(
     id: UUID,
     updateLeatherDto: UpdateLeatherDto,
-  ): Promise<Leather> {
-    const leather = await this.findOne(id);
+  ): Promise<Record<string, unknown>> {
+    const leather = await this.findOneEntity(id);
 
     if (updateLeatherDto.code && updateLeatherDto.code !== leather.code) {
       const existingLeather = await this.leathersRepository.findOne({
@@ -92,11 +102,28 @@ export class LeathersService {
     }
 
     Object.assign(leather, updateLeatherDto);
-    return this.leathersRepository.save(leather);
+    await this.leathersRepository.save(leather);
+    return this.findOne(id);
   }
 
   async remove(id: UUID): Promise<void> {
-    const leather = await this.findOne(id);
+    const leather = await this.findOneEntity(id);
     await this.leathersRepository.softRemove(leather);
+  }
+
+  private mapLeather(leather: Leather): Record<string, unknown> {
+    return {
+      id: leather.id,
+      name: leather.name,
+      code: leather.code,
+      color: leather.color,
+      isActive: leather.isActive,
+      image: leather.image
+        ? {
+            url: leather.image.url,
+            alt: leather.image.alt,
+          }
+        : null,
+    };
   }
 }

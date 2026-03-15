@@ -58,8 +58,8 @@ export class CategoriesController {
     status: 200,
     description: 'Category tree retrieved successfully',
   })
-  findTree() {
-    return this.categoriesService.findTree();
+  findTree(@Query() paginationDto: PaginationDto) {
+    return this.categoriesService.findTree(paginationDto);
   }
 
   @Get(':id')
@@ -77,8 +77,11 @@ export class CategoriesController {
     description: 'Category products retrieved successfully',
   })
   @ApiResponse({ status: 404, description: 'Category not found' })
-  findCategoryProducts(@Param('id', ParseUUIDPipe) id: UUID) {
-    return this.categoriesService.findCategoryProducts(id);
+  findCategoryProducts(
+    @Param('id', ParseUUIDPipe) id: UUID,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    return this.categoriesService.findCategoryProducts(id, paginationDto);
   }
 
   @Patch(':id')

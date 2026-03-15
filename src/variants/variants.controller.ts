@@ -8,7 +8,6 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
   ParseUUIDPipe,
 } from '@nestjs/common';
 import {
@@ -85,7 +84,7 @@ export class VariantsController {
   @ApiResponse({ status: 404, description: 'Variant or leather not found' })
   removeLeather(
     @Param('id', ParseUUIDPipe) id: UUID,
-    @Param('leatherId', ParseIntPipe) leatherId: UUID,
+    @Param('leatherId', ParseUUIDPipe) leatherId: UUID,
   ) {
     return this.variantsService.removeLeatherFromVariant(id, leatherId);
   }

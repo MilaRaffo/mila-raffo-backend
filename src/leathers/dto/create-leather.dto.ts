@@ -1,4 +1,4 @@
-import { IsString, MaxLength, MinLength, IsOptional, IsUUID } from 'class-validator';
+import { IsString, MaxLength, MinLength, IsOptional, IsUUID, IsBoolean } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { type UUID } from 'crypto';
 
@@ -14,6 +14,17 @@ export class CreateLeatherDto {
   @MinLength(2)
   @MaxLength(50)
   code: string;
+
+  @ApiProperty({ example: 'Negro' })
+  @IsString()
+  @MinLength(2)
+  @MaxLength(20)
+  color: string;
+
+  @ApiPropertyOptional({ example: false})
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
 
   @ApiPropertyOptional({ example: 'asd2-12as-das2-sa14', description: 'Image ID' })
   @IsOptional()

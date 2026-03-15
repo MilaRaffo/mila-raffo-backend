@@ -12,6 +12,7 @@ import { Product } from '../products/entities/product.entity';
 import { Category } from '../categories/entities/category.entity';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class PromotionsService {
@@ -24,7 +25,9 @@ export class PromotionsService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  async create(createPromotionDto: CreatePromotionDto): Promise<Promotion> {
+  async create(
+    createPromotionDto: CreatePromotionDto,
+  ): Promise<Record<string, unknown>> {
     const { productIds, categoryIds, startDate, endDate, ...promotionData } =
       createPromotionDto;
 
@@ -59,10 +62,13 @@ export class PromotionsService {
       promotion.categories = categories;
     }
 
-    return await this.promotionRepository.save(promotion);
+    const savedPromotion = await this.promotionRepository.save(promotion);
+    return this.findOne(savedPromotion.id);
   }
 
-  async findAll(paginationDto: PaginationDto) {
+  async findAll(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
     const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.promotionRepository.findAndCount({
@@ -73,28 +79,49 @@ export class PromotionsService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((promotion) => this.mapPromotion(promotion)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findActive() {
+  async findActive(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
     const now = new Date();
 
-    return await this.promotionRepository.find({
+    const [data, total] = await this.promotionRepository.findAndCount({
       where: {
         status: PromotionStatus.ACTIVE,
         startDate: LessThanOrEqual(now),
         endDate: MoreThanOrEqual(now),
       },
+      take: limit,
+      skip: offset,
       order: { priority: 'DESC' },
       relations: ['products', 'categories'],
     });
+
+    return {
+      data: data.map((promotion) => this.mapPromotion(promotion)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
+    };
   }
 
-  async findOne(id: UUID): Promise<Promotion> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const promotion = await this.findOneEntity(id);
+    return this.mapPromotion(promotion);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Promotion> {
     const promotion = await this.promotionRepository.findOne({
       where: { id },
       relations: ['products', 'categories'],
@@ -110,8 +137,8 @@ export class PromotionsService {
   async update(
     id: UUID,
     updatePromotionDto: UpdatePromotionDto,
-  ): Promise<Promotion> {
-    const promotion = await this.findOne(id);
+  ): Promise<Record<string, unknown>> {
+    const promotion = await this.findOneEntity(id);
     const { productIds, categoryIds, startDate, endDate, ...promotionData } =
       updatePromotionDto;
 
@@ -154,11 +181,12 @@ export class PromotionsService {
     if (startDate) promotion.startDate = startDate;
     if (endDate) promotion.endDate = endDate;
 
-    return await this.promotionRepository.save(promotion);
+    await this.promotionRepository.save(promotion);
+    return this.findOne(id);
   }
 
   async remove(id: UUID): Promise<void> {
-    const promotion = await this.findOne(id);
+    const promotion = await this.findOneEntity(id);
     await this.promotionRepository.softRemove(promotion);
   }
 
@@ -209,5 +237,33 @@ export class PromotionsService {
       .getMany();
 
     return promotions;
+  }
+
+  private mapPromotion(promotion: Promotion): Record<string, unknown> {
+    return {
+      id: promotion.id,
+      name: promotion.name,
+      description: promotion.description,
+      type: promotion.type,
+      discountValue: promotion.discountValue,
+      buyQuantity: promotion.buyQuantity,
+      getQuantity: promotion.getQuantity,
+      minimumPurchase: promotion.minimumPurchase,
+      maximumDiscount: promotion.maximumDiscount,
+      startDate: promotion.startDate,
+      endDate: promotion.endDate,
+      status: promotion.status,
+      isStackable: promotion.isStackable,
+      priority: promotion.priority,
+      products: (promotion.products ?? []).map((product) => ({
+        id: product.id,
+        name: product.name,
+      })),
+      categories: (promotion.categories ?? []).map((category) => ({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+      })),
+    };
   }
 }

@@ -15,8 +15,8 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { type UUID } from 'crypto';
 
 export class ProductCharacteristicDto {
-  @ApiProperty({ example: 'fsds3-0sdf-fsdf2-fdsf3' })
-  @IsUUID()
+  @ApiProperty({ example: '1ef214b9-4e81-4019-aa16-ffcfef089459' })
+  @IsUUID('4')
   characteristicId: UUID;
 
   @ApiProperty({ example: '25' })
@@ -47,14 +47,15 @@ export class CreateProductDto {
   available?: boolean;
 
   @ApiPropertyOptional({
-    example: [1, 2],
-    type: [Number],
+    example: [
+      'b08b8dd6-83d0-47e1-8f32-cee7c3074bd5',
+      '9fc314bc-cd44-4d40-9ac3-34121268d1b1',
+    ],
     description: 'Array of category IDs',
   })
   @IsOptional()
   @IsArray()
-  @ValidateNested({ each: true })
-  @IsUUID(4)
+  @IsUUID('4', { each: true })
   categoryIds?: UUID[];
 
   @ApiPropertyOptional({

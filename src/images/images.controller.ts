@@ -102,8 +102,11 @@ export class ImagesController {
   @Get('variant/:variantId')
   @ApiOperation({ summary: 'Get images by variant ID' })
   @ApiResponse({ status: 200, description: 'Images retrieved successfully' })
-  findByVariant(@Param('variantId', ParseUUIDPipe) variantId: UUID) {
-    return this.imagesService.findByVariant(variantId);
+  findByVariant(
+    @Param('variantId', ParseUUIDPipe) variantId: UUID,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    return this.imagesService.findByVariant(variantId, paginationDto);
   }
 
   @Get(':id')

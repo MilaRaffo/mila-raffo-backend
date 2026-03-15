@@ -12,8 +12,14 @@ export class Leather extends BaseEntity {
   @Column({ type: 'varchar', length: 50, unique: true })
   code: string;
 
+  @Column({type:'varchar',length: 20})
+  color: string;
+
   @Column({ type: 'uuid', nullable: true, name: 'image_id' })
   imageId: UUID | null;
+
+  @Column({type:'boolean', default:true})
+  isActive: boolean
 
   @ManyToOne(() => Image, { nullable: true, eager: true })
   @JoinColumn({ name: 'image_id' })

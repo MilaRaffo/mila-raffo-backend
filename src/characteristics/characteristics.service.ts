@@ -20,18 +20,21 @@ export class CharacteristicsService {
 
   async create(
     createCharacteristicDto: CreateCharacteristicDto,
-  ): Promise<Characteristic> {
+  ): Promise<Record<string, unknown>> {
 
     const characteristic = this.characteristicsRepository.create(
       createCharacteristicDto,
     );
-    return this.characteristicsRepository.save(characteristic);
+    const savedCharacteristic = await this.characteristicsRepository.save(
+      characteristic,
+    );
+    return this.mapCharacteristic(savedCharacteristic);
   }
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<Characteristic>> {
-    const { limit, offset } = paginationDto;
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.characteristicsRepository.findAndCount({
       take: limit,
@@ -40,14 +43,16 @@ export class CharacteristicsService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((characteristic) => this.mapCharacteristic(characteristic)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Characteristic> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
     const characteristic = await this.characteristicsRepository.findOne({
       where: { id }
     });
@@ -56,21 +61,48 @@ export class CharacteristicsService {
       throw new NotFoundException(`Characteristic with ID ${id} not found`);
     }
 
-    return characteristic;
+    return this.mapCharacteristic(characteristic);
   }
 
   async update(
     id: UUID,
     updateCharacteristicDto: UpdateCharacteristicDto,
-  ): Promise<Characteristic> {
-    const characteristic = await this.findOne(id);
+  ): Promise<Record<string, unknown>> {
+    const characteristic = await this.characteristicsRepository.findOne({
+      where: { id },
+    });
+
+    if (!characteristic) {
+      throw new NotFoundException(`Characteristic with ID ${id} not found`);
+    }
 
     Object.assign(characteristic, updateCharacteristicDto);
-    return this.characteristicsRepository.save(characteristic);
+    const updatedCharacteristic = await this.characteristicsRepository.save(
+      characteristic,
+    );
+    return this.mapCharacteristic(updatedCharacteristic);
   }
 
   async remove(id: UUID): Promise<void> {
-    const characteristic = await this.findOne(id);
+    const characteristic = await this.characteristicsRepository.findOne({
+      where: { id },
+    });
+
+    if (!characteristic) {
+      throw new NotFoundException(`Characteristic with ID ${id} not found`);
+    }
+
     await this.characteristicsRepository.softRemove(characteristic);
+  }
+
+  private mapCharacteristic(
+    characteristic: Characteristic,
+  ): Record<string, unknown> {
+    return {
+      id: characteristic.id,
+      name: characteristic.name,
+      dataType: characteristic.dataType,
+      units: characteristic.units,
+    };
   }
 }

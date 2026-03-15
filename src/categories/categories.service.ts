@@ -20,7 +20,9 @@ export class CategoriesService {
     private readonly categoriesRepository: Repository<Category>,
   ) {}
 
-  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+  async create(
+    createCategoryDto: CreateCategoryDto,
+  ): Promise<Record<string, unknown>> {
     const existingCategory = await this.categoriesRepository.findOne({
       where: { slug: createCategoryDto.slug },
     });
@@ -30,20 +32,21 @@ export class CategoriesService {
     }
 
     if (createCategoryDto.parentId) {
-      const parent = await this.findOne(createCategoryDto.parentId);
+      const parent = await this.findOneEntity(createCategoryDto.parentId);
       if (!parent) {
         throw new BadRequestException('Parent category not found');
       }
     }
 
     const category = this.categoriesRepository.create(createCategoryDto);
-    return this.categoriesRepository.save(category);
+    const savedCategory = await this.categoriesRepository.save(category);
+    return this.findOne(savedCategory.id);
   }
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<Category>> {
-    const { limit, offset } = paginationDto;
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.categoriesRepository.findAndCount({
       take: limit,
@@ -53,14 +56,21 @@ export class CategoriesService {
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((category) => this.mapCategory(category)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Category> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const category = await this.findOneEntity(id);
+    return this.mapCategory(category);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Category> {
     const category = await this.categoriesRepository.findOne({
       where: { id },
       relations: ['parent', 'children'],
@@ -73,14 +83,37 @@ export class CategoriesService {
     return category;
   }
 
-  async findTree(): Promise<Category[]> {
+  async findTree(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
     const categories = await this.categoriesRepository.find({
       where: { parentId: IsNull() },
       relations: ['children'],
       order: { name: 'ASC' },
     });
 
-    return this.buildCategoryTree(categories);
+    const fullTree = await this.buildCategoryTree(categories);
+    const pagedTree = fullTree.slice(offset, offset + limit);
+
+    const toTreeNode = (category: Category): Record<string, unknown> => ({
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      description: category.description,
+      active: category.active,
+      children: (category.children ?? []).map(toTreeNode),
+    });
+
+    return {
+      data: pagedTree.map(toTreeNode),
+      pagination: {
+        total: fullTree.length,
+        limit,
+        offset,
+      },
+    };
   }
 
   private async buildCategoryTree(categories: Category[]): Promise<Category[]> {
@@ -92,7 +125,12 @@ export class CategoriesService {
     return categories;
   }
 
-  async findCategoryProducts(id: UUID): Promise<Category> {
+  async findCategoryProducts(
+    id: UUID,
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
     const category = await this.categoriesRepository.findOne({
       where: { id },
       relations: ['productCategories', 'productCategories.product'],
@@ -102,14 +140,33 @@ export class CategoriesService {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
 
-    return category;
+    const products = (category.productCategories ?? [])
+      .map((productCategory) => productCategory.product)
+      .filter((product) => !!product);
+
+    const pagedProducts = products.slice(offset, offset + limit);
+
+    return {
+      data: pagedProducts.map((product) => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        basePrice: product.basePrice,
+        available: product.available,
+      })),
+      pagination: {
+        total: products.length,
+        limit,
+        offset,
+      },
+    };
   }
 
   async update(
     id: UUID,
     updateCategoryDto: UpdateCategoryDto,
-  ): Promise<Category> {
-    const category = await this.findOne(id);
+  ): Promise<Record<string, unknown>> {
+    const category = await this.findOneEntity(id);
 
     if (
       updateCategoryDto.slug &&
@@ -128,15 +185,16 @@ export class CategoriesService {
       if (updateCategoryDto.parentId === id) {
         throw new BadRequestException('Category cannot be its own parent');
       }
-      await this.findOne(updateCategoryDto.parentId);
+      await this.findOneEntity(updateCategoryDto.parentId);
     }
 
     Object.assign(category, updateCategoryDto);
-    return this.categoriesRepository.save(category);
+    await this.categoriesRepository.save(category);
+    return this.findOne(id);
   }
 
   async remove(id: UUID): Promise<void> {
-    const category = await this.findOne(id);
+    const category = await this.findOneEntity(id);
 
     if (category.children && category.children.length > 0) {
       throw new BadRequestException(
@@ -145,5 +203,29 @@ export class CategoriesService {
     }
 
     await this.categoriesRepository.softRemove(category);
+  }
+
+  private mapCategory(category: Category): Record<string, unknown> {
+    return {
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      description: category.description,
+      active: category.active,
+      parent: category.parent
+        ? {
+            id: category.parent.id,
+            name: category.parent.name,
+            slug: category.parent.slug,
+          }
+        : null,
+      children: (category.children ?? []).map((child) => ({
+        id: child.id,
+        name: child.name,
+        slug: child.slug,
+        description: child.description,
+        active: child.active,
+      })),
+    };
   }
 }

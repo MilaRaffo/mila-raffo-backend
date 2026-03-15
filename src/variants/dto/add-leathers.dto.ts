@@ -9,7 +9,6 @@ export class AddLeathersDto {
     description: 'Array of leather IDs to add',
   })
   @IsArray()
-  @IsUUID(4)
-  @ValidateNested({each:true})
+  @IsUUID(4, {each:true})
   leatherIds: UUID[];
 }

@@ -9,6 +9,7 @@ import {
   IsUUID,
   ValidateNested,
   IsBoolean,
+  validate,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { type UUID } from 'crypto';
@@ -41,7 +42,6 @@ export class CreateVariantDto {
   })
   @IsOptional()
   @IsArray()
-  @IsUUID()
-  @ValidateNested({each:true})
+  @IsUUID('4', {each: true})
   leatherIds?: UUID[];
 }

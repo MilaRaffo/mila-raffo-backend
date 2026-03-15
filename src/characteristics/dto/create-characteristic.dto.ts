@@ -6,7 +6,7 @@ import {
   IsOptional
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DataType, MeasureUnits } from '../../common/enums/characteristics.enum';
+import { DataType, Measureunits } from '../../common/enums/characteristics.enum';
 
 export class CreateCharacteristicDto {
   @ApiProperty({ example: 'Weight' })
@@ -19,8 +19,8 @@ export class CreateCharacteristicDto {
   @IsEnum(DataType)
   dataType: DataType;
 
-  @ApiPropertyOptional({ enum: MeasureUnits, example: MeasureUnits.KILOGRAM })
+  @ApiPropertyOptional({ enum: Measureunits, example: Measureunits.KILOGRAM })
   @IsOptional()
-  @IsEnum(MeasureUnits)
-  units: MeasureUnits;
+  @IsEnum(Measureunits)
+  units: Measureunits;
 }

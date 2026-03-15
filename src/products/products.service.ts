@@ -25,7 +25,9 @@ export class ProductsService {
     private readonly characteristicsService: CharacteristicsService,
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
+  async create(
+    createProductDto: CreateProductDto,
+  ): Promise<Record<string, unknown>> {
     const product = this.productsRepository.create({
       name: createProductDto.name,
       description: createProductDto.description,
@@ -59,8 +61,8 @@ export class ProductsService {
 
   async findAll(
     paginationDto: PaginationDto,
-  ): Promise<PaginatedResult<Product>> {
-    const { limit, offset } = paginationDto;
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
 
     const [data, total] = await this.productsRepository.findAndCount({
       take: limit,
@@ -70,20 +72,26 @@ export class ProductsService {
         'productCategories.category',
         'productCharacteristics',
         'productCharacteristics.characteristic',
-        'productCharacteristics.characteristic.unit',
       ],
       order: { createdAt: 'DESC' },
     });
 
     return {
-      data,
-      total,
-      limit,
-      offset,
+      data: data.map((product) => this.mapProduct(product)),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
     };
   }
 
-  async findOne(id: UUID): Promise<Product> {
+  async findOne(id: UUID): Promise<Record<string, unknown>> {
+    const product = await this.findOneEntity(id);
+    return this.mapProduct(product);
+  }
+
+  private async findOneEntity(id: UUID): Promise<Product> {
     const product = await this.productsRepository.findOne({
       where: { id },
       relations: [
@@ -91,7 +99,6 @@ export class ProductsService {
         'productCategories.category',
         'productCharacteristics',
         'productCharacteristics.characteristic',
-        'productCharacteristics.characteristic.unit',
         'variants',
       ],
     });
@@ -103,7 +110,12 @@ export class ProductsService {
     return product;
   }
 
-  async findProductVariants(id: UUID): Promise<Product> {
+  async findProductVariants(
+    id: UUID,
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
     const product = await this.productsRepository.findOne({
       where: { id },
       relations: ['variants', 'variants.images'],
@@ -113,22 +125,66 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
 
-    return product;
+    const variants = product.variants ?? [];
+    const pagedVariants = variants.slice(offset, offset + limit);
+
+    return {
+      data: pagedVariants.map((variant) => ({
+        id: variant.id,
+        sku: variant.sku,
+        price: variant.price,
+        isAvailable: variant.isAvailable,
+        images: (variant.images ?? []).map((image) => ({
+          url: image.url,
+          alt: image.alt,
+        })),
+      })),
+      pagination: {
+        total: variants.length,
+        limit,
+        offset,
+      },
+    };
   }
 
-  async findProductCharacteristics(id: UUID): Promise<ProductCharacteristic[]> {
-    const product = await this.findOne(id);
-    return this.productCharacteristicsRepository.find({
-      where: { productId: product.id },
-      relations: ['characteristic', 'characteristic.unit'],
+  async findProductCharacteristics(
+    id: UUID,
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+    await this.findOneEntity(id);
+    const [data, total] = await this.productCharacteristicsRepository.findAndCount({
+      where: { productId: id },
+      relations: ['characteristic'],
+      take: limit,
+      skip: offset,
     });
+
+    return {
+      data: data.map((item) => ({
+        characteristic: item.characteristic
+          ? {
+              id: item.characteristic.id,
+              name: item.characteristic.name,
+              dataType: item.characteristic.dataType,
+              units: item.characteristic.units,
+            }
+          : null,
+        value: item.value,
+      })),
+      pagination: {
+        total,
+        limit,
+        offset,
+      },
+    };
   }
 
   async update(
     id: UUID,
     updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
-    const product = await this.findOne(id);
+  ): Promise<Record<string, unknown>> {
+    const product = await this.findOneEntity(id);
 
     Object.assign(product, {
       name: updateProductDto.name ?? product.name,
@@ -162,8 +218,38 @@ export class ProductsService {
   }
 
   async remove(id: UUID): Promise<void> {
-    const product = await this.findOne(id);
+    const product = await this.findOneEntity(id);
     await this.productsRepository.softRemove(product);
+  }
+
+  private mapProduct(product: Product): Record<string, unknown> {
+    return {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      basePrice: product.basePrice,
+      available: product.available,
+      categories: (product.productCategories ?? []).map((productCategory) => ({
+        id: productCategory.category?.id,
+        name: productCategory.category?.name,
+        slug: productCategory.category?.slug,
+      })),
+      characteristics: (product.productCharacteristics ?? []).map(
+        (productCharacteristic) => ({
+          id: productCharacteristic.characteristic?.id,
+          name: productCharacteristic.characteristic?.name,
+          dataType: productCharacteristic.characteristic?.dataType,
+          units: productCharacteristic.characteristic?.units,
+          value: productCharacteristic.value,
+        }),
+      ),
+      variants: (product.variants ?? []).map((variant) => ({
+        id: variant.id,
+        sku: variant.sku,
+        price: variant.price,
+        isAvailable: variant.isAvailable,
+      })),
+    };
   }
 
   private async addCategoriesToProduct(
