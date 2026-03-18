@@ -118,6 +118,7 @@ export class LeathersService {
       code: leather.code,
       color: leather.color,
       isActive: leather.isActive,
+      imageId: leather.image?.id ?? null,
       image: leather.image
         ? {
             url: leather.image.url,

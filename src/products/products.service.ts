@@ -72,6 +72,8 @@ export class ProductsService {
         'productCategories.category',
         'productCharacteristics',
         'productCharacteristics.characteristic',
+        'variants',
+        'variants.images',
       ],
       order: { createdAt: 'DESC' },
     });
@@ -100,6 +102,7 @@ export class ProductsService {
         'productCharacteristics',
         'productCharacteristics.characteristic',
         'variants',
+        'variants.images',
       ],
     });
 
@@ -223,12 +226,23 @@ export class ProductsService {
   }
 
   private mapProduct(product: Product): Record<string, unknown> {
+    const firstVariantWithImage = (product.variants ?? []).find(
+      (variant) => (variant.images ?? []).length > 0,
+    );
+    const primaryImage = firstVariantWithImage?.images?.[0];
+
     return {
       id: product.id,
       name: product.name,
       description: product.description,
       basePrice: product.basePrice,
       available: product.available,
+      image: primaryImage
+        ? {
+            url: primaryImage.url,
+            alt: primaryImage.alt,
+          }
+        : null,
       categories: (product.productCategories ?? []).map((productCategory) => ({
         id: productCategory.category?.id,
         name: productCategory.category?.name,

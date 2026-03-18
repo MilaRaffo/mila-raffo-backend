@@ -20,12 +20,32 @@ async function bootstrap() {
   app.setGlobalPrefix(process.env.API_PREFIX || 'api/v1');
 
   // CORS
+  const envOrigins = (process.env.CORS_ORIGIN || '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  const defaultOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+  const allowedOrigins = envOrigins.length > 0 ? envOrigins : defaultOrigins;
+
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
+    origin: (origin, callback) => {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`CORS blocked for origin: ${origin}`), false);
+    },
     credentials: true,
   });
 
-  logger.log(`CORS enabled for origin: ${process.env.CORS_ORIGIN || 'http://localhost:4200'}`);
+  logger.log(`CORS enabled for origins: ${allowedOrigins.join(', ')}`);
 
   // Global validation pipe
   app.useGlobalPipes(
