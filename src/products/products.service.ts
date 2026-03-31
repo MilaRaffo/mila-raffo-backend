@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { ProductCharacteristic } from './entities/product-characteristic.entity';
 import { ProductCategory } from './entities/product-category.entity';
@@ -62,21 +62,79 @@ export class ProductsService {
   async findAll(
     paginationDto: PaginationDto,
   ): Promise<PaginatedResult<Record<string, unknown>>> {
-    const { limit = 10, offset = 0 } = paginationDto;
+    const {
+      limit = 10,
+      offset = 0,
+      sortBy,
+      sortOrder,
+      name,
+      q,
+      categoryId,
+      available,
+      minBasePrice,
+      maxBasePrice,
+    } = paginationDto;
 
-    const [data, total] = await this.productsRepository.findAndCount({
-      take: limit,
-      skip: offset,
-      relations: [
-        'productCategories',
-        'productCategories.category',
-        'productCharacteristics',
-        'productCharacteristics.characteristic',
-        'variants',
-        'variants.images',
-      ],
-      order: { createdAt: 'DESC' },
-    });
+    const qb = this.productsRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.productCategories', 'productCategory')
+      .leftJoinAndSelect('productCategory.category', 'category')
+      .leftJoinAndSelect('product.productCharacteristics', 'productCharacteristic')
+      .leftJoinAndSelect('productCharacteristic.characteristic', 'characteristic')
+      .leftJoinAndSelect('product.variants', 'variant')
+      .leftJoinAndSelect('variant.images', 'variantImage')
+      .distinct(true)
+      .take(limit)
+      .skip(offset);
+
+    if (name) {
+      qb.andWhere('LOWER(product.name) LIKE :name', {
+        name: `%${name.toLowerCase()}%`,
+      });
+    }
+
+    if (q) {
+      qb.andWhere(
+        new Brackets((subQb) => {
+          subQb
+            .where('LOWER(product.name) LIKE :q', { q: `%${q.toLowerCase()}%` })
+            .orWhere('LOWER(product.description) LIKE :q', {
+              q: `%${q.toLowerCase()}%`,
+            });
+        }),
+      );
+    }
+
+    if (categoryId) {
+      qb.andWhere('category.id = :categoryId', { categoryId });
+    }
+
+    if (available === 'true' || available === 'false') {
+      qb.andWhere('product.available = :available', {
+        available: available === 'true',
+      });
+    }
+
+    if (typeof minBasePrice === 'number' && !Number.isNaN(minBasePrice)) {
+      qb.andWhere('product.basePrice >= :minBasePrice', { minBasePrice });
+    }
+
+    if (typeof maxBasePrice === 'number' && !Number.isNaN(maxBasePrice)) {
+      qb.andWhere('product.basePrice <= :maxBasePrice', { maxBasePrice });
+    }
+
+    const sortableFields: Record<string, string> = {
+      name: 'product.name',
+      basePrice: 'product.basePrice',
+      available: 'product.available',
+      createdAt: 'product.createdAt',
+      updatedAt: 'product.updatedAt',
+    };
+    const resolvedSortField = sortableFields[sortBy ?? ''] ?? 'product.createdAt';
+    const resolvedSortOrder = sortOrder === 'ASC' ? 'ASC' : 'DESC';
+    qb.orderBy(resolvedSortField, resolvedSortOrder);
+
+    const [data, total] = await qb.getManyAndCount();
 
     return {
       data: data.map((product) => this.mapProduct(product)),
@@ -262,6 +320,12 @@ export class ProductsService {
         sku: variant.sku,
         price: variant.price,
         isAvailable: variant.isAvailable,
+        image: (variant.images ?? []).length
+          ? {
+              url: variant.images[0].url,
+              alt: variant.images[0].alt,
+            }
+          : null,
       })),
     };
   }
@@ -270,14 +334,52 @@ export class ProductsService {
     productId: UUID,
     categoryIds: UUID[],
   ): Promise<void> {
-    for (const categoryId of categoryIds) {
-      await this.categoriesService.findOne(categoryId);
+    const normalizedCategoryIds = await this.expandCategoryIdsWithParents(
+      categoryIds,
+    );
+
+    for (const categoryId of normalizedCategoryIds) {
       const productCategory = this.productCategoriesRepository.create({
         productId,
         categoryId,
       });
-      await this.productCategoriesRepository.save(productCategory);
+
+      const existingRelation = await this.productCategoriesRepository.findOne({
+        where: { productId, categoryId },
+      });
+
+      if (!existingRelation) {
+        await this.productCategoriesRepository.save(productCategory);
+      }
     }
+  }
+
+  private async expandCategoryIdsWithParents(
+    categoryIds: UUID[],
+  ): Promise<UUID[]> {
+    const resolvedIds = new Set<string>();
+
+    for (const categoryId of categoryIds) {
+      let currentCategoryId: string | undefined = String(categoryId);
+
+      while (currentCategoryId) {
+        if (resolvedIds.has(currentCategoryId)) {
+          break;
+        }
+
+        const category = (await this.categoriesService.findOne(
+          currentCategoryId as UUID,
+        )) as {
+          id: string;
+          parent?: { id?: string } | null;
+        };
+
+        resolvedIds.add(String(category.id));
+        currentCategoryId = category.parent?.id;
+      }
+    }
+
+    return Array.from(resolvedIds) as UUID[];
   }
 
   private async addCharacteristicsToProduct(

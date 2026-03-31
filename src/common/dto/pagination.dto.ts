@@ -1,6 +1,7 @@
 import {
   IsEnum,
   IsInt,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -124,4 +125,16 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   isAvailable?: string;
+
+  @ApiPropertyOptional({ example: 100 })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  minBasePrice?: number;
+
+  @ApiPropertyOptional({ example: 500 })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  maxBasePrice?: number;
 }
