@@ -1,9 +1,9 @@
-import { IsString, MaxLength, MinLength, IsOptional, IsUUID, IsBoolean } from 'class-validator';
+import { IsString, MaxLength, MinLength, IsOptional, IsUUID, IsBoolean, Matches } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { type UUID } from 'crypto';
 
 export class CreateLeatherDto {
-  @ApiProperty({ example: 'Italian Napa Leather' })
+  @ApiProperty({ example: 'Negro' })
   @IsString()
   @MinLength(2)
   @MaxLength(100)
@@ -15,13 +15,12 @@ export class CreateLeatherDto {
   @MaxLength(50)
   code: string;
 
-  @ApiProperty({ example: 'Negro' })
+  @ApiProperty({ example: '#000000', description: 'Hexadecimal color code' })
   @IsString()
-  @MinLength(2)
-  @MaxLength(20)
-  color: string;
+  @Matches(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, { message: 'hex must be a valid hexadecimal color' })
+  hex: string;
 
-  @ApiPropertyOptional({ example: false})
+  @ApiPropertyOptional({ example: true })
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;

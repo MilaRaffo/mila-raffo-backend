@@ -33,6 +33,9 @@ export class OrderItem extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
+  @Column({ type: 'varchar', length: 200, nullable: true, name: 'customization' })
+  customization?: string;
+
   @ManyToOne(() => Order, (order) => order.items)
   @JoinColumn({ name: 'order_id' })
   order: Order;

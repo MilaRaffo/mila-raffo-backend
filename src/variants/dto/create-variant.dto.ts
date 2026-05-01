@@ -30,6 +30,11 @@ export class CreateVariantDto {
   @Min(0)
   price: number;
 
+  @ApiProperty({ example: 50 })
+  @IsNumber()
+  @Min(0)
+  stock: number;
+
   @ApiPropertyOptional({ example: true, default: true })
   @IsOptional()
   @IsBoolean()

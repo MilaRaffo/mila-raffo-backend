@@ -26,7 +26,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { RoleName } from '../roles/entities/role.entity';
 import { type UUID } from 'crypto';
 
-@ApiTags('leathers')
+@ApiTags('colors')
 @Controller('leathers')
 export class LeathersController {
   constructor(private readonly leathersService: LeathersService) {}
@@ -35,24 +35,24 @@ export class LeathersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create a new leather type (Admin only)' })
-  @ApiResponse({ status: 201, description: 'Leather created successfully' })
-  @ApiResponse({ status: 409, description: 'Leather code already exists' })
+  @ApiOperation({ summary: 'Create a new color (Admin only)' })
+  @ApiResponse({ status: 201, description: 'Color created successfully' })
+  @ApiResponse({ status: 409, description: 'Color code already exists' })
   create(@Body() createLeatherDto: CreateLeatherDto) {
     return this.leathersService.create(createLeatherDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all leathers with pagination' })
-  @ApiResponse({ status: 200, description: 'Leathers retrieved successfully' })
+  @ApiOperation({ summary: 'Get all colors with pagination' })
+  @ApiResponse({ status: 200, description: 'Colors retrieved successfully' })
   findAll(@Query() paginationDto: PaginationDto) {
     return this.leathersService.findAll(paginationDto);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get a leather by ID' })
-  @ApiResponse({ status: 200, description: 'Leather found' })
-  @ApiResponse({ status: 404, description: 'Leather not found' })
+  @ApiOperation({ summary: 'Get a color by ID' })
+  @ApiResponse({ status: 200, description: 'Color found' })
+  @ApiResponse({ status: 404, description: 'Color not found' })
   findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.leathersService.findOne(id);
   }
@@ -61,9 +61,9 @@ export class LeathersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Update a leather (Admin only)' })
-  @ApiResponse({ status: 200, description: 'Leather updated successfully' })
-  @ApiResponse({ status: 404, description: 'Leather not found' })
+  @ApiOperation({ summary: 'Update a color (Admin only)' })
+  @ApiResponse({ status: 200, description: 'Color updated successfully' })
+  @ApiResponse({ status: 404, description: 'Color not found' })
   update(
     @Param('id', ParseUUIDPipe) id: UUID,
     @Body() updateLeatherDto: UpdateLeatherDto,
@@ -75,9 +75,9 @@ export class LeathersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleName.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Soft delete a leather (Admin only)' })
-  @ApiResponse({ status: 200, description: 'Leather deleted successfully' })
-  @ApiResponse({ status: 404, description: 'Leather not found' })
+  @ApiOperation({ summary: 'Soft delete a color (Admin only)' })
+  @ApiResponse({ status: 200, description: 'Color deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Color not found' })
   remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.leathersService.remove(id);
   }

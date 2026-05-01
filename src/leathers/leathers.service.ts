@@ -116,7 +116,7 @@ export class LeathersService {
       id: leather.id,
       name: leather.name,
       code: leather.code,
-      color: leather.color,
+      hex: leather.hex,
       isActive: leather.isActive,
       imageId: leather.image?.id ?? null,
       image: leather.image

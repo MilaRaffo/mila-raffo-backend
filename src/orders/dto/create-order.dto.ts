@@ -23,6 +23,12 @@ export class OrderItemDto {
   @IsNumber()
   @Min(1)
   quantity: number;
+
+  @ApiPropertyOptional({ example: 'Rojo intenso', description: 'Customization for personalized variants' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  customization?: string;
 }
 
 export class AddressInfoDto {

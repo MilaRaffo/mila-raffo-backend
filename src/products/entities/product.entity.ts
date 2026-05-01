@@ -18,6 +18,9 @@ export class Product extends BaseEntity {
   @Column({ type: 'boolean', default: true })
   available: boolean;
 
+  @Column({ type: 'boolean', default: false, name: 'is_customizable' })
+  isCustomizable: boolean;
+
   @OneToMany(() => Variant, (variant) => variant.product)
   variants: Variant[];
 

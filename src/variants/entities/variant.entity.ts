@@ -16,6 +16,9 @@ export class Variant extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
+  @Column({ type: 'int', default: 0 })
+  stock: number;
+
   @Column({ type: 'boolean', default: true, name: 'is_available' })
   isAvailable: boolean;
 

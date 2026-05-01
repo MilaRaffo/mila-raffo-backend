@@ -28,6 +28,7 @@ import { AddressesModule } from './addresses/addresses.module';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
 import { ProfileModule } from './profile/profile.module';
+import { SectionsModule } from './sections/sections.module';
 import { LoggerModule } from './common/services/logger.module';
 
 // Common
@@ -79,6 +80,7 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
     AddressesModule,
     OrdersModule,    PaymentsModule,
     ProfileModule,
+    SectionsModule,
   ],
   controllers: [AppController],
   providers: [

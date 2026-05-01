@@ -46,6 +46,11 @@ export class CreateProductDto {
   @IsBoolean()
   available?: boolean;
 
+  @ApiPropertyOptional({ example: true, default: false })
+  @IsOptional()
+  @IsBoolean()
+  isCustomizable?: boolean;
+
   @ApiPropertyOptional({
     example: [
       'b08b8dd6-83d0-47e1-8f32-cee7c3074bd5',
