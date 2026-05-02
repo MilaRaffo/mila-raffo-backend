@@ -1,11 +1,11 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { Image } from '../../images/entities/image.entity';
-import { VariantLeather } from '../../variants/entities/variant-leather.entity';
+import { Variant } from '../../variants/entities/variant.entity';
 import { type UUID } from 'crypto';
 
-@Entity('leathers')
-export class Leather extends BaseEntity {
+@Entity('colors')
+export class Color extends BaseEntity {
   @Column({ type: 'varchar', length: 100 })
   name: string;
 
@@ -25,9 +25,6 @@ export class Leather extends BaseEntity {
   @JoinColumn({ name: 'image_id' })
   image?: Image;
 
-  @OneToMany(
-    () => VariantLeather,
-    (variantLeather) => variantLeather.leather,
-  )
-  variantLeathers: VariantLeather[];
+  @OneToMany(() => Variant, (variant) => variant.color)
+  variants: Variant[];
 }

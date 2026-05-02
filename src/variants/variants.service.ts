@@ -6,13 +6,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Variant } from './entities/variant.entity';
-import { VariantLeather } from './entities/variant-leather.entity';
 import { CreateVariantDto } from './dto/create-variant.dto';
 import { UpdateVariantDto } from './dto/update-variant.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { ProductsService } from '../products/products.service';
-import { LeathersService } from '../leathers/leathers.service';
+import { ColorsService } from '../colors/colors.service';
 import { type UUID } from 'crypto';
 
 @Injectable()
@@ -20,10 +19,8 @@ export class VariantsService {
   constructor(
     @InjectRepository(Variant)
     private readonly variantsRepository: Repository<Variant>,
-    @InjectRepository(VariantLeather)
-    private readonly variantLeathersRepository: Repository<VariantLeather>,
     private readonly productsService: ProductsService,
-    private readonly leathersService: LeathersService,
+    private readonly colorsService: ColorsService,
   ) {}
 
   async create(
@@ -39,21 +36,20 @@ export class VariantsService {
 
     await this.productsService.findOne(createVariantDto.productId);
 
+    if (createVariantDto.colorId) {
+      await this.colorsService.findOne(createVariantDto.colorId);
+    }
+
     const variant = this.variantsRepository.create({
       productId: createVariantDto.productId,
       sku: createVariantDto.sku,
       price: createVariantDto.price,
+      stock: createVariantDto.stock ?? 0,
+      isAvailable: createVariantDto.isAvailable ?? true,
+      colorId: createVariantDto.colorId ?? null,
     });
 
     const savedVariant = await this.variantsRepository.save(variant);
-
-    if (createVariantDto.leatherIds && createVariantDto.leatherIds.length > 0) {
-      await this.addLeathersToVariant(
-        savedVariant.id,
-        createVariantDto.leatherIds,
-      );
-    }
-
     return this.findOne(savedVariant.id);
   }
 
@@ -65,13 +61,7 @@ export class VariantsService {
     const [data, total] = await this.variantsRepository.findAndCount({
       take: limit,
       skip: offset,
-      relations: [
-        'product',
-        'images',
-        'variantLeathers',
-        'variantLeathers.leather',
-        'variantLeathers.leather.image',
-      ],
+      relations: ['product', 'images', 'color'],
       order: { createdAt: 'DESC' },
     });
 
@@ -93,13 +83,7 @@ export class VariantsService {
   private async findOneEntity(id: UUID): Promise<Variant> {
     const variant = await this.variantsRepository.findOne({
       where: { id },
-      relations: [
-        'product',
-        'images',
-        'variantLeathers',
-        'variantLeathers.leather',
-        'variantLeathers.leather.image',
-      ],
+      relations: ['product', 'images', 'color'],
     });
 
     if (!variant) {
@@ -107,41 +91,6 @@ export class VariantsService {
     }
 
     return variant;
-  }
-
-  async addLeathersToVariant(
-    variantId: UUID,
-    leatherIds: UUID[],
-  ): Promise<Record<string, unknown>> {
-    await this.findOneEntity(variantId);
-
-    for (const leatherId of leatherIds) {
-      await this.leathersService.findOne(leatherId);
-
-      const existingVariantLeather = await this.variantLeathersRepository.findOne({
-        where: { variantId, leatherId },
-      });
-
-      if (!existingVariantLeather) {
-        const variantLeather = this.variantLeathersRepository.create({
-          variantId,
-          leatherId,
-        });
-        await this.variantLeathersRepository.save(variantLeather);
-      }
-    }
-
-    return this.findOne(variantId);
-  }
-
-  async removeLeatherFromVariant(
-    variantId: UUID,
-    leatherId: UUID,
-  ): Promise<void> {
-    await this.findOneEntity(variantId);
-    await this.leathersService.findOne(leatherId);
-
-    await this.variantLeathersRepository.delete({ variantId, leatherId });
   }
 
   async update(
@@ -160,20 +109,19 @@ export class VariantsService {
       }
     }
 
+    if (updateVariantDto.colorId && updateVariantDto.colorId !== variant.colorId) {
+      await this.colorsService.findOne(updateVariantDto.colorId);
+    }
+
     Object.assign(variant, {
       sku: updateVariantDto.sku ?? variant.sku,
       price: updateVariantDto.price ?? variant.price,
+      stock: updateVariantDto.stock ?? variant.stock,
+      isAvailable: updateVariantDto.isAvailable ?? variant.isAvailable,
+      colorId: updateVariantDto.colorId ?? variant.colorId,
     });
 
     await this.variantsRepository.save(variant);
-
-    if (updateVariantDto.leatherIds) {
-      await this.variantLeathersRepository.delete({ variantId: id });
-      if (updateVariantDto.leatherIds.length > 0) {
-        await this.addLeathersToVariant(id, updateVariantDto.leatherIds);
-      }
-    }
-
     return this.findOne(id);
   }
 
@@ -182,11 +130,18 @@ export class VariantsService {
     await this.variantsRepository.softRemove(variant);
   }
 
+  async updateStock(id: UUID, quantity: number): Promise<void> {
+    const variant = await this.findOneEntity(id);
+    variant.stock = Math.max(0, variant.stock + quantity);
+    await this.variantsRepository.save(variant);
+  }
+
   private mapVariant(variant: Variant): Record<string, unknown> {
     return {
       id: variant.id,
       sku: variant.sku,
       price: variant.price,
+      stock: variant.stock,
       isAvailable: variant.isAvailable,
       product: variant.product
         ? {
@@ -198,19 +153,22 @@ export class VariantsService {
         url: image.url,
         alt: image.alt,
       })),
-      leathers: (variant.variantLeathers ?? []).map((variantLeather) => ({
-        id: variantLeather.leather?.id,
-        name: variantLeather.leather?.name,
-        code: variantLeather.leather?.code,
-        color: variantLeather.leather?.color,
-        isActive: variantLeather.leather?.isActive,
-        image: variantLeather.leather?.image
-          ? {
-              url: variantLeather.leather.image.url,
-              alt: variantLeather.leather.image.alt,
-            }
-          : null,
-      })),
+      color: variant.color
+        ? {
+            id: variant.color.id,
+            name: variant.color.name,
+            code: variant.color.code,
+            hex: variant.color.hex,
+            isActive: variant.color.isActive,
+            image: variant.color.image
+              ? {
+                  url: variant.color.image.url,
+                  alt: variant.color.image.alt,
+                }
+              : null,
+          }
+        : null,
     };
   }
 }
+

@@ -3,15 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { VariantsService } from './variants.service';
 import { VariantsController } from './variants.controller';
 import { Variant } from './entities/variant.entity';
-import { VariantLeather } from './entities/variant-leather.entity';
 import { ProductsModule } from '../products/products.module';
-import { LeathersModule } from '../leathers/leathers.module';
+import { ColorsModule } from '../colors/colors.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Variant, VariantLeather]),
+    TypeOrmModule.forFeature([Variant]),
     ProductsModule,
-    LeathersModule,
+    ColorsModule,
   ],
   controllers: [VariantsController],
   providers: [VariantsService],

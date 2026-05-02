@@ -19,7 +19,6 @@ import {
 import { VariantsService } from './variants.service';
 import { CreateVariantDto } from './dto/create-variant.dto';
 import { UpdateVariantDto } from './dto/update-variant.dto';
-import { AddLeathersDto } from './dto/add-leathers.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -56,37 +55,6 @@ export class VariantsController {
   @ApiResponse({ status: 404, description: 'Variant not found' })
   findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.variantsService.findOne(id);
-  }
-
-  @Post(':id/leathers')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleName.ADMIN)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Add leathers to a variant (Admin only)' })
-  @ApiResponse({ status: 200, description: 'Leathers added successfully' })
-  @ApiResponse({ status: 404, description: 'Variant or leather not found' })
-  addLeathers(
-    @Param('id', ParseUUIDPipe) id: UUID,
-    @Body() addLeathersDto: AddLeathersDto,
-  ) {
-    return this.variantsService.addLeathersToVariant(
-      id,
-      addLeathersDto.leatherIds,
-    );
-  }
-
-  @Delete(':id/leathers/:leatherId')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleName.ADMIN)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Remove a leather from a variant (Admin only)' })
-  @ApiResponse({ status: 200, description: 'Leather removed successfully' })
-  @ApiResponse({ status: 404, description: 'Variant or leather not found' })
-  removeLeather(
-    @Param('id', ParseUUIDPipe) id: UUID,
-    @Param('leatherId', ParseUUIDPipe) leatherId: UUID,
-  ) {
-    return this.variantsService.removeLeatherFromVariant(id, leatherId);
   }
 
   @Patch(':id')

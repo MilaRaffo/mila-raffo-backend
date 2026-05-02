@@ -62,7 +62,7 @@ async function bootstrap() {
   // Swagger documentation
   const config = new DocumentBuilder()
     .setTitle('Mila Raffo Store API')
-    .setDescription('E-commerce API for Mila Raffo leather goods store')
+    .setDescription('E-commerce API for Mila Raffo store')
     .setVersion('1.0')
     .addBearerAuth()
     .addTag('auth', 'Authentication and authorization endpoints')
@@ -72,7 +72,7 @@ async function bootstrap() {
     .addTag('variants', 'Product variants')
     .addTag('categories', 'Category hierarchy')
     .addTag('characteristics', 'Product characteristics')
-    .addTag('leathers', 'Leather types')
+    .addTag('colors', 'Color management')
     .addTag('images', 'Image management')
     .addTag('promotions', 'Promotions and sales')
     .addTag('coupons', 'Discount coupons')

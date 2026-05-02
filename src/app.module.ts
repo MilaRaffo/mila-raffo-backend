@@ -20,7 +20,7 @@ import { ProductsModule } from './products/products.module';
 import { VariantsModule } from './variants/variants.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CharacteristicsModule } from './characteristics/characteristics.module';
-import { LeathersModule } from './leathers/leathers.module';
+import { ColorsModule } from './colors/colors.module';
 import { ImagesModule } from './images/images.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { CouponsModule } from './coupons/coupons.module';
@@ -73,7 +73,7 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
     VariantsModule,
     CategoriesModule,
     CharacteristicsModule,
-    LeathersModule,
+    ColorsModule,
     ImagesModule,
     PromotionsModule,
     CouponsModule,

@@ -4,7 +4,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Section } from './entities/section.entity';
 import { SectionItem } from './entities/section-item.entity';
 import { CreateSectionDto } from './dto/create-section.dto';
@@ -190,8 +190,8 @@ export class SectionsService {
   async reorderSections(
     sectionIds: UUID[],
   ): Promise<Section[]> {
-    const sections = await this.sectionsRepository.find({
-      where: { id: sectionIds },
+    const sections = await this.sectionsRepository.findBy({
+      id: In(sectionIds),
     });
 
     sections.forEach((section, index) => {
@@ -204,8 +204,8 @@ export class SectionsService {
   async reorderSectionItems(
     itemIds: UUID[],
   ): Promise<SectionItem[]> {
-    const items = await this.sectionItemsRepository.find({
-      where: { id: itemIds },
+    const items = await this.sectionItemsRepository.findBy({
+      id: In(itemIds),
     });
 
     items.forEach((item, index) => {

@@ -16,9 +16,9 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { LeathersService } from './leathers.service';
-import { CreateLeatherDto } from './dto/create-leather.dto';
-import { UpdateLeatherDto } from './dto/update-leather.dto';
+import { ColorsService } from './colors.service';
+import { CreateColorDto } from './dto/create-color.dto';
+import { UpdateColorDto } from './dto/update-color.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -27,9 +27,9 @@ import { RoleName } from '../roles/entities/role.entity';
 import { type UUID } from 'crypto';
 
 @ApiTags('colors')
-@Controller('leathers')
-export class LeathersController {
-  constructor(private readonly leathersService: LeathersService) {}
+@Controller('colors')
+export class ColorsController {
+  constructor(private readonly colorsService: ColorsService) {}
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -38,15 +38,15 @@ export class LeathersController {
   @ApiOperation({ summary: 'Create a new color (Admin only)' })
   @ApiResponse({ status: 201, description: 'Color created successfully' })
   @ApiResponse({ status: 409, description: 'Color code already exists' })
-  create(@Body() createLeatherDto: CreateLeatherDto) {
-    return this.leathersService.create(createLeatherDto);
+  create(@Body() createColorDto: CreateColorDto) {
+    return this.colorsService.create(createColorDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all colors with pagination' })
   @ApiResponse({ status: 200, description: 'Colors retrieved successfully' })
   findAll(@Query() paginationDto: PaginationDto) {
-    return this.leathersService.findAll(paginationDto);
+    return this.colorsService.findAll(paginationDto);
   }
 
   @Get(':id')
@@ -54,7 +54,7 @@ export class LeathersController {
   @ApiResponse({ status: 200, description: 'Color found' })
   @ApiResponse({ status: 404, description: 'Color not found' })
   findOne(@Param('id', ParseUUIDPipe) id: UUID) {
-    return this.leathersService.findOne(id);
+    return this.colorsService.findOne(id);
   }
 
   @Patch(':id')
@@ -66,9 +66,9 @@ export class LeathersController {
   @ApiResponse({ status: 404, description: 'Color not found' })
   update(
     @Param('id', ParseUUIDPipe) id: UUID,
-    @Body() updateLeatherDto: UpdateLeatherDto,
+    @Body() updateColorDto: UpdateColorDto,
   ) {
-    return this.leathersService.update(id, updateLeatherDto);
+    return this.colorsService.update(id, updateColorDto);
   }
 
   @Delete(':id')
@@ -79,6 +79,6 @@ export class LeathersController {
   @ApiResponse({ status: 200, description: 'Color deleted successfully' })
   @ApiResponse({ status: 404, description: 'Color not found' })
   remove(@Param('id', ParseUUIDPipe) id: UUID) {
-    return this.leathersService.remove(id);
+    return this.colorsService.remove(id);
   }
 }

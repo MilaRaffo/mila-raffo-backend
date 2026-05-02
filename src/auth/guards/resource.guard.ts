@@ -59,7 +59,7 @@ export class ResourceGuard implements CanActivate {
       update: [RoleName.SUPERADMIN, RoleName.ADMIN],
       delete: [RoleName.SUPERADMIN, RoleName.ADMIN],
     },
-    leathers: {
+    colors: {
       create: [RoleName.SUPERADMIN, RoleName.ADMIN],
       read: [RoleName.SUPERADMIN, RoleName.ADMIN, RoleName.CLIENT],
       update: [RoleName.SUPERADMIN, RoleName.ADMIN],
