@@ -33,6 +33,7 @@ export class ProductsService {
       description: createProductDto.description,
       basePrice: createProductDto.basePrice,
       available: createProductDto.available ?? true,
+      isCustomizable: createProductDto.isCustomizable ?? false,
     });
 
     const savedProduct = await this.productsRepository.save(product);
@@ -146,6 +147,62 @@ export class ProductsService {
     };
   }
 
+  async findProductsWithVariants(
+    paginationDto: PaginationDto,
+  ): Promise<PaginatedResult<Record<string, unknown>>> {
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    const qb = this.productsRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.variants', 'variant')
+      .leftJoinAndSelect('variant.images', 'image')
+      .leftJoinAndSelect('variant.color', 'color')
+      .where('variant.id IS NOT NULL')
+      .distinct(true)
+      .take(limit)
+      .skip(offset);
+
+    const [data, total] = await qb.getManyAndCount();
+
+    // Filter products that actually have variants
+    const productsWithVariants = data.filter((p) => (p.variants ?? []).length > 0);
+
+    return {
+      data: productsWithVariants.map((product) => ({
+        id: product.id,
+        name: product.name,
+        basePrice: product.basePrice,
+        variants: (product.variants ?? []).map((variant) => {
+          const firstImage = (variant.images ?? []).length > 0 ? variant.images[0] : null;
+          return {
+            id: variant.id,
+            sku: variant.sku,
+            stock: variant.stock,
+            image: firstImage
+              ? {
+                  url: firstImage.url,
+                  alt: firstImage.alt,
+                }
+              : null,
+            color: variant.color
+              ? {
+                  id: variant.color.id,
+                  name: variant.color.name,
+                  code: variant.color.code,
+                  hex: variant.color.hex,
+                }
+              : null,
+          };
+        }),
+      })),
+      pagination: {
+        total: productsWithVariants.length,
+        limit,
+        offset,
+      },
+    };
+  }
+
   async findOne(id: UUID): Promise<Record<string, unknown>> {
     const product = await this.findOneEntity(id);
     return this.mapProduct(product);
@@ -252,6 +309,7 @@ export class ProductsService {
       description: updateProductDto.description ?? product.description,
       basePrice: updateProductDto.basePrice ?? product.basePrice,
       available: updateProductDto.available ?? product.available,
+      isCustomizable: updateProductDto.isCustomizable ?? product.isCustomizable,
     });
 
     await this.productsRepository.save(product);
@@ -295,6 +353,7 @@ export class ProductsService {
       description: product.description,
       basePrice: product.basePrice,
       available: product.available,
+      isCustomizable: product.isCustomizable,
       image: primaryImage
         ? {
             url: primaryImage.url,

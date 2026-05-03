@@ -160,12 +160,6 @@ export class VariantsService {
             code: variant.color.code,
             hex: variant.color.hex,
             isActive: variant.color.isActive,
-            image: variant.color.image
-              ? {
-                  url: variant.color.image.url,
-                  alt: variant.color.image.alt,
-                }
-              : null,
           }
         : null,
     };

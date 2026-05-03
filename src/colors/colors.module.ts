@@ -6,7 +6,7 @@ import { Color } from './entities/color.entity';
 import { ImagesModule } from '../images/images.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Color]), ImagesModule],
+  imports: [TypeOrmModule.forFeature([Color])],
   controllers: [ColorsController],
   providers: [ColorsService],
   exports: [ColorsService],

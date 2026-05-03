@@ -5,7 +5,7 @@ import { type UUID } from 'crypto';
 
 @Entity('images')
 export class Image extends BaseEntity {
-  @Column({ type: 'int', nullable: true, name: 'variant_id' })
+  @Column({ type: 'uuid', nullable: true, name: 'variant_id' })
   variantId: UUID | null;
 
   @Column({ type: 'varchar', length: 500 })

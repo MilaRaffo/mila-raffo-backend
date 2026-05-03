@@ -18,7 +18,6 @@ export class ColorsService {
   constructor(
     @InjectRepository(Color)
     private readonly colorsRepository: Repository<Color>,
-    private readonly imagesService: ImagesService,
   ) {}
 
   async create(
@@ -30,10 +29,6 @@ export class ColorsService {
 
     if (existingColor) {
       throw new ConflictException('Color code already exists');
-    }
-
-    if (createColorDto.imageId) {
-      await this.imagesService.findOne(createColorDto.imageId);
     }
 
     const color = this.colorsRepository.create(createColorDto);
@@ -49,7 +44,6 @@ export class ColorsService {
     const [data, total] = await this.colorsRepository.findAndCount({
       take: limit,
       skip: offset,
-      relations: ['image'],
       order: { name: 'ASC' },
     });
 
@@ -71,7 +65,6 @@ export class ColorsService {
   private async findOneEntity(id: UUID): Promise<Color> {
     const color = await this.colorsRepository.findOne({
       where: { id },
-      relations: ['image'],
     });
 
     if (!color) {
@@ -97,10 +90,6 @@ export class ColorsService {
       }
     }
 
-    if (updateColorDto.imageId) {
-      await this.imagesService.findOne(updateColorDto.imageId);
-    }
-
     Object.assign(color, updateColorDto);
     await this.colorsRepository.save(color);
     return this.findOne(id);
@@ -118,13 +107,6 @@ export class ColorsService {
       code: color.code,
       hex: color.hex,
       isActive: color.isActive,
-      imageId: color.image?.id ?? null,
-      image: color.image
-        ? {
-            url: color.image.url,
-            alt: color.image.alt,
-          }
-        : null,
     };
   }
 }
