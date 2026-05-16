@@ -29,6 +29,8 @@ import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
 import { ProfileModule } from './profile/profile.module';
 import { SectionsModule } from './sections/sections.module';
+import { CartModule } from './cart/cart.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 import { LoggerModule } from './common/services/logger.module';
 
 // Common
@@ -78,9 +80,12 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
     PromotionsModule,
     CouponsModule,
     AddressesModule,
-    OrdersModule,    PaymentsModule,
+    OrdersModule,
+    PaymentsModule,
     ProfileModule,
     SectionsModule,
+    CartModule,
+    WishlistModule,
   ],
   controllers: [AppController],
   providers: [

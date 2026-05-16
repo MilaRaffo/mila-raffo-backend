@@ -1,9 +1,7 @@
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { seedRolesAndSuperadmin } from '../src/database/seeds/seed';
 import { seedCatalog } from '../src/database/seeds/seed-catalog';
 
-// Load environment variables
 dotenv.config();
 
 const AppDataSource = new DataSource({
@@ -23,14 +21,13 @@ async function runSeed() {
     await AppDataSource.initialize();
     console.log('Connected!');
 
-    await seedRolesAndSuperadmin(AppDataSource);
     await seedCatalog(AppDataSource);
 
     await AppDataSource.destroy();
     console.log('Database connection closed');
     process.exit(0);
   } catch (error) {
-    console.error('Error running seed:', error);
+    console.error('Error running catalog seed:', error);
     process.exit(1);
   }
 }
