@@ -4,6 +4,11 @@ NestJS + PostgreSQL + TypeORM. API REST con prefijo global `/api/v1`.
 
 Swagger disponible en `http://localhost:3000/api/docs` cuando el servidor está corriendo.
 
+También hay archivos generados para herramientas de API:
+`docs/openapi.generated.json` para OpenAPI/Swagger y
+`docs/insomnia.generated.json` para importar una colección de requests en
+Insomnia.
+
 ---
 
 ## Levantar el proyecto (primera vez)
@@ -71,6 +76,18 @@ En producción, cambiar `DB_SYNCHRONIZE=false` en `.env` y generar migraciones c
 | `npm run start:prod` | Producción (requiere `npm run build` antes) |
 | `npm run build` | Compila TypeScript a `dist/` |
 | `npm run seed` | Crea roles y superadmin (solo primera vez) |
+
+---
+
+## Importar en Insomnia
+
+1. Abrir Insomnia.
+2. Ir a `Create > Import from File`.
+3. Seleccionar `docs/insomnia.generated.json`.
+4. Configurar la variable `base_url` con la URL base del backend, por ejemplo `http://localhost:3000`.
+5. Si vas a probar endpoints protegidos, configurar `access_token` con el JWT.
+
+Las rutas del archivo ya incluyen el prefijo global `/api/v1`.
 
 ---
 

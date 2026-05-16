@@ -1,0 +1,6292 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-16T06:52:20.069Z",
+  "__export_source": "mila-raffo-backend:generated",
+  "resources": [
+    {
+      "_id": "wrk_18378d435195cce3",
+      "parentId": null,
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "Mila Raffo Store API",
+      "description": "E-commerce API for Mila Raffo store",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_1405df66cbe219b0",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000",
+        "access_token": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "access_token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 0,
+      "_type": "environment"
+    },
+    {
+      "_id": "fld_834beaf936d39d77",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "addresses",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 2,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_7d1043473d55bfa9",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "app",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 3,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_66a36e77fd002579",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "auth",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 4,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_50b9e78177f37e3c",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "categories",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 5,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_56b80273da1d7c0a",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "characteristics",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 6,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_f8bd696759805b90",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "colors",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 7,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_d9496b04f01d4759",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "coupons",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 8,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_19f49d852660fe0a",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "images",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 9,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_9658403816409e66",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "orders",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 10,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_40c4770202821f32",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "payments",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 11,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_fbdc4f23f93125bb",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "products",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 12,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_5d45a009b0383b5b",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "profile",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 13,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_0e7d8d8c539aafe0",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "promotions",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 14,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_037c883f00c362bc",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "roles",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 15,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_063b11410c63284d",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340064,
+      "created": 1778914340064,
+      "name": "sections",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 16,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_5b7dcd14a4faa2cd",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "name": "users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 17,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_0f3528060d4b726d",
+      "parentId": "wrk_18378d435195cce3",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "name": "variants",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 18,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_250bd42cf5476211",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses",
+      "name": "Create a new address for the current user",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"streetAddress\": \"123 Main St\",\n  \"apartment\": \"Apt 4B\",\n  \"city\": \"New York\",\n  \"stateProvince\": \"NY\",\n  \"postalCode\": \"10001\",\n  \"country\": \"United States\",\n  \"phone\": \"+1234567890\",\n  \"isDefault\": false,\n  \"notes\": \"Ring the doorbell twice\",\n  \"latitude\": -34.603722,\n  \"longitude\": -58.381592\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 0,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6b14bb6332a44ab4",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses",
+      "name": "Get all addresses for the current user",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 1,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_49543dc42a51f413",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses/default",
+      "name": "Get the default address for the current user",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 2,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8ad4bf8799ca1b97",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses/:id",
+      "name": "Get an address by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 3,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4611ac617f100c33",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses/:id",
+      "name": "Update an address",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"streetAddress\": \"123 Main St\",\n  \"apartment\": \"Apt 4B\",\n  \"city\": \"New York\",\n  \"stateProvince\": \"NY\",\n  \"postalCode\": \"10001\",\n  \"country\": \"United States\",\n  \"phone\": \"+1234567890\",\n  \"isDefault\": false,\n  \"notes\": \"Ring the doorbell twice\",\n  \"latitude\": -34.603722,\n  \"longitude\": -58.381592\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 4,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4538f3d52f95bffa",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses/:id",
+      "name": "Delete an address",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_ed5327871a1470d9",
+      "parentId": "fld_834beaf936d39d77",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/addresses/:id/set-default",
+      "name": "Set an address as default",
+      "description": "",
+      "method": "PATCH",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 6,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0cf0abbac4048fe6",
+      "parentId": "fld_7d1043473d55bfa9",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1",
+      "name": "getHello",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 7,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_79af7746f5e2a9c5",
+      "parentId": "fld_66a36e77fd002579",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/auth/register",
+      "name": "Register a new user",
+      "description": "Creates a new user account with CLIENT role by default",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 8,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e89f3cf00de67a10",
+      "parentId": "fld_66a36e77fd002579",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/auth/login",
+      "name": "Login with email and password",
+      "description": "Authenticates a user and returns access and refresh tokens",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 9,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_659d775c781539dc",
+      "parentId": "fld_66a36e77fd002579",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/auth/admin/login",
+      "name": "Login for admin panel (admin and superadmin only)",
+      "description": "Authenticates admin users and verifies they have ADMIN or SUPERADMIN role",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 10,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_b8a8be85f51d6356",
+      "parentId": "fld_66a36e77fd002579",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/auth/logout",
+      "name": "Logout and invalidate tokens",
+      "description": "Invalidates the current access token and optionally the refresh token by adding them to the blacklist",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refreshToken\": \"\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 11,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_95e78fb4e0af6d9e",
+      "parentId": "fld_66a36e77fd002579",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/auth/refresh",
+      "name": "Refresh access token",
+      "description": "Generates a new access token using a valid refresh token",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refreshToken\": \"\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 12,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f22b1d13917b4f9d",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories",
+      "name": "Create a new category (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Handbags\",\n  \"slug\": \"handbags\",\n  \"description\": \"Luxury leather handbags\",\n  \"parentId\": \"M213-12SA-9ZXC-2SDA\",\n  \"active\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 13,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_9da0820b44f26fce",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories",
+      "name": "Get all categories with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 14,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8ccdd3e3a990e0f3",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories/tree",
+      "name": "Get category tree hierarchy",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 15,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_29b72231d2412f26",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories/:id",
+      "name": "Get a category by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 16,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_137dd152b5542c2c",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories/:id",
+      "name": "Update a category (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Handbags\",\n  \"slug\": \"handbags\",\n  \"description\": \"Luxury leather handbags\",\n  \"parentId\": \"M213-12SA-9ZXC-2SDA\",\n  \"active\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 17,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_25119c1e69dff371",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories/:id",
+      "name": "Soft delete a category (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 18,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_36810624b167d664",
+      "parentId": "fld_50b9e78177f37e3c",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/categories/:id/products",
+      "name": "Get products by category",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 19,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_7264aac51142f57b",
+      "parentId": "fld_56b80273da1d7c0a",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/characteristics",
+      "name": "Create a new characteristic (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Weight\",\n  \"dataType\": \"number\",\n  \"units\": \"Kg\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 20,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_deb4f9f25bd21b04",
+      "parentId": "fld_56b80273da1d7c0a",
+      "modified": 1778914340065,
+      "created": 1778914340065,
+      "url": "{{ _.base_url }}/api/v1/characteristics",
+      "name": "Get all characteristics with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 21,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0c68b8cc76118898",
+      "parentId": "fld_56b80273da1d7c0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/characteristics/:id",
+      "name": "Get a characteristic by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 22,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cbcc1964e7f9b8db",
+      "parentId": "fld_56b80273da1d7c0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/characteristics/:id",
+      "name": "Update a characteristic (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 23,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cd3a76c2287c87c4",
+      "parentId": "fld_56b80273da1d7c0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/characteristics/:id",
+      "name": "Soft delete a characteristic (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 24,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_62f2c745f1514437",
+      "parentId": "fld_f8bd696759805b90",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/colors",
+      "name": "Create a new color (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Rojo Intenso\",\n  \"code\": \"RED-001\",\n  \"hex\": \"#FF0000\",\n  \"isActive\": true,\n  \"imageId\": \"asd2-12as-das2-sa14\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 25,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_761e4c6e0819adfd",
+      "parentId": "fld_f8bd696759805b90",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/colors",
+      "name": "Get all colors with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 26,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_1b6665ac204447ca",
+      "parentId": "fld_f8bd696759805b90",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/colors/:id",
+      "name": "Get a color by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 27,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2fe9aab88cfa4df7",
+      "parentId": "fld_f8bd696759805b90",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/colors/:id",
+      "name": "Update a color (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Rojo Intenso\",\n  \"code\": \"RED-001\",\n  \"hex\": \"#FF0000\",\n  \"isActive\": true,\n  \"imageId\": \"asd2-12as-das2-sa14\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 28,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_284e1152e49dc8ac",
+      "parentId": "fld_f8bd696759805b90",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/colors/:id",
+      "name": "Soft delete a color (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 29,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_7ee0b383b2ad9c0b",
+      "parentId": "fld_d9496b04f01d4759",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/coupons",
+      "name": "Create a new coupon (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"SUMMER2026\",\n  \"name\": \"Summer Sale 2026\",\n  \"description\": \"Get 20% off on all products\",\n  \"type\": \"percentage\",\n  \"value\": 20,\n  \"minimumPurchase\": 100,\n  \"maximumDiscount\": 500,\n  \"usageLimit\": 100,\n  \"usageLimitPerUser\": 1,\n  \"validFrom\": \"2026-06-01T00:00:00.000Z\",\n  \"validUntil\": \"2026-08-31T23:59:59.000Z\",\n  \"status\": \"active\",\n  \"isSingleUse\": false,\n  \"restrictedToUserId\": \"uuid\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 30,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3af83697133ae980",
+      "parentId": "fld_d9496b04f01d4759",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/coupons",
+      "name": "Get all coupons with pagination (Admin only)",
+      "description": "Required roles: admin",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 31,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3472198f288263b9",
+      "parentId": "fld_d9496b04f01d4759",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/coupons/validate",
+      "name": "Validate a coupon code",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"code\": \"SUMMER2026\"\n}"
+      },
+      "parameters": [
+        {
+          "id": "pair_1b0b33b66ec5ecd0",
+          "name": "cartTotal",
+          "value": "1",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 32,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_144cf2aa5c853f24",
+      "parentId": "fld_d9496b04f01d4759",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/coupons/:id",
+      "name": "Get a coupon by ID (Admin only)",
+      "description": "Required roles: admin",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 33,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c66b091cafbfb785",
+      "parentId": "fld_d9496b04f01d4759",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/coupons/:id",
+      "name": "Update a coupon (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Summer Sale 2026\",\n  \"description\": \"Get 20% off on all products\",\n  \"type\": \"percentage\",\n  \"value\": 20,\n  \"minimumPurchase\": 100,\n  \"maximumDiscount\": 500,\n  \"usageLimit\": 100,\n  \"usageLimitPerUser\": 1,\n  \"validFrom\": \"2026-06-01T00:00:00.000Z\",\n  \"validUntil\": \"2026-08-31T23:59:59.000Z\",\n  \"status\": \"active\",\n  \"isSingleUse\": false,\n  \"restrictedToUserId\": \"uuid\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 34,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_fdb0a5ceae92c5b4",
+      "parentId": "fld_d9496b04f01d4759",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/coupons/:id",
+      "name": "Soft delete a coupon (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 35,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_92b0e440b3388a8f",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images",
+      "name": "Create an image record (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"variantId\": \"SD1W-12S2-SF23-123S\",\n  \"url\": \"https://example.com/images/product1.jpg\",\n  \"alt\": \"Brown leather handbag\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 36,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_032aec96928edc2f",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images",
+      "name": "Get all images with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 37,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_becc044acf597c63",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images/upload",
+      "name": "Upload an image file (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "id": "pair_9458f4a12f60cc19",
+            "name": "file",
+            "value": "",
+            "type": "file",
+            "disabled": false,
+            "fileName": ""
+          },
+          {
+            "id": "pair_9ee868bc6a47df24",
+            "name": "variantId",
+            "value": "550e8400-e29b-41d4-a716-446655440000",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "id": "pair_6a506ad5f5fb88d9",
+            "name": "alt",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 38,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_bbc0993dfa05de4e",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images/variant/:variantId",
+      "name": "Get images by variant ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 39,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c315000a6e1f2a6e",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images/:id",
+      "name": "Get an image by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 40,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_52be320109829e09",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images/:id",
+      "name": "Update an image (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"variantId\": \"SD1W-12S2-SF23-123S\",\n  \"url\": \"https://example.com/images/product1.jpg\",\n  \"alt\": \"Brown leather handbag\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 41,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_bcf5839c3de8b502",
+      "parentId": "fld_19f49d852660fe0a",
+      "modified": 1778914340066,
+      "created": 1778914340066,
+      "url": "{{ _.base_url }}/api/v1/images/:id",
+      "name": "Soft delete an image (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 42,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_ee6ff7331e77779b",
+      "parentId": "fld_9658403816409e66",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/orders",
+      "name": "Create a new order",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"items\": [\n    {\n      \"variantId\": \"uuid\",\n      \"quantity\": 2,\n      \"customization\": \"Rojo intenso\"\n    }\n  ],\n  \"shippingAddress\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"streetAddress\": \"123 Main St\",\n    \"apartment\": \"Apt 4B\",\n    \"city\": \"New York\",\n    \"stateProvince\": \"NY\",\n    \"postalCode\": \"10001\",\n    \"country\": \"United States\",\n    \"phone\": \"+1234567890\"\n  },\n  \"billingAddress\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"streetAddress\": \"123 Main St\",\n    \"apartment\": \"Apt 4B\",\n    \"city\": \"New York\",\n    \"stateProvince\": \"NY\",\n    \"postalCode\": \"10001\",\n    \"country\": \"United States\",\n    \"phone\": \"+1234567890\"\n  },\n  \"couponCode\": \"SUMMER2026\",\n  \"notes\": \"Please deliver between 9-5\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 43,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_b7a969ddcafcef0f",
+      "parentId": "fld_9658403816409e66",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/orders",
+      "name": "Get all orders (user sees only their orders)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 44,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f0717c8d34a3e8a3",
+      "parentId": "fld_9658403816409e66",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/orders/number/:orderNumber",
+      "name": "Get an order by order number",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 45,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8b4d80ecede67c89",
+      "parentId": "fld_9658403816409e66",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/orders/:id",
+      "name": "Get an order by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 46,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8c66903dedae5da6",
+      "parentId": "fld_9658403816409e66",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/orders/:id",
+      "name": "Update an order",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"pending\",\n  \"trackingNumber\": \"TRACK123456\",\n  \"notes\": \"Updated delivery instructions\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 47,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4d04771afb7591db",
+      "parentId": "fld_9658403816409e66",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/orders/:id/cancel",
+      "name": "Cancel an order",
+      "description": "",
+      "method": "PATCH",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 48,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_26f6cb85d327a50a",
+      "parentId": "fld_40c4770202821f32",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/payments",
+      "name": "Create a new payment for an order",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"orderId\": \"uuid\",\n  \"method\": \"test\",\n  \"cardNumber\": \"4242424242424242\",\n  \"cardExpiry\": \"12/25\",\n  \"cardCvv\": \"123\",\n  \"cardHolderName\": \"John Doe\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 49,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2f6a7a0d20e8e1f2",
+      "parentId": "fld_40c4770202821f32",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/payments",
+      "name": "Get all payments (user sees only their payments)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 50,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_bb52e90e7b21bb77",
+      "parentId": "fld_40c4770202821f32",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/payments/order/:orderId",
+      "name": "Get payments for a specific order",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 51,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_634e5dfa84ebda21",
+      "parentId": "fld_40c4770202821f32",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/payments/:id",
+      "name": "Get a payment by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 52,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3fc6945f92ee91a5",
+      "parentId": "fld_40c4770202821f32",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/payments/:id/refund",
+      "name": "Refund a payment (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 53,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_38e818063393fb64",
+      "parentId": "fld_40c4770202821f32",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/payments/webhook/:provider",
+      "name": "Webhook endpoint for payment gateways",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 54,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6305306b16acc5d4",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products",
+      "name": "Create a new product (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Classic Leather Handbag\",\n  \"description\": \"Elegant handcrafted leather handbag\",\n  \"basePrice\": 299.99,\n  \"available\": true,\n  \"isCustomizable\": true,\n  \"categoryIds\": [\n    \"b08b8dd6-83d0-47e1-8f32-cee7c3074bd5\",\n    \"9fc314bc-cd44-4d40-9ac3-34121268d1b1\"\n  ],\n  \"characteristics\": [\n    {\n      \"characteristicId\": \"fsds3-0sdf-fsdf2-fdsf3\",\n      \"value\": \"25\"\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 55,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_9e3b5dd223bb7049",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products",
+      "name": "Get all products with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 56,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2a3da44ec935b980",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products/catalog/with-variants",
+      "name": "Get products with variants (name, price, variant images & colors)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 57,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8b8495e5150acf91",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products/:id",
+      "name": "Get a product by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 58,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_850b3edb4ea4c282",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products/:id",
+      "name": "Update a product (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Classic Leather Handbag\",\n  \"description\": \"Elegant handcrafted leather handbag\",\n  \"basePrice\": 299.99,\n  \"available\": true,\n  \"isCustomizable\": true,\n  \"categoryIds\": [\n    \"b08b8dd6-83d0-47e1-8f32-cee7c3074bd5\",\n    \"9fc314bc-cd44-4d40-9ac3-34121268d1b1\"\n  ],\n  \"characteristics\": [\n    {\n      \"characteristicId\": \"fsds3-0sdf-fsdf2-fdsf3\",\n      \"value\": \"25\"\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 59,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3eb99c5ed248b02d",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products/:id",
+      "name": "Soft delete a product (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 60,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e7deb5bc2e905bc8",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products/:id/variants",
+      "name": "Get product variants",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 61,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cc386bbfcb05136f",
+      "parentId": "fld_fbdc4f23f93125bb",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/products/:id/characteristics",
+      "name": "Get product characteristics",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 62,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6487bafdcb19ef7b",
+      "parentId": "fld_5d45a009b0383b5b",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/profile",
+      "name": "Get current user profile with addresses",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 63,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e238bef5225371a7",
+      "parentId": "fld_5d45a009b0383b5b",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/profile",
+      "name": "Update current user profile (ecommerce data)",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1234567890\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 64,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_03835722586cae48",
+      "parentId": "fld_5d45a009b0383b5b",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/profile/addresses",
+      "name": "Get current user addresses",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 65,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_a208977fed3649b8",
+      "parentId": "fld_0e7d8d8c539aafe0",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/promotions",
+      "name": "Create a new promotion (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Black Friday 2026\",\n  \"description\": \"Descuento especial por Black Friday\",\n  \"type\": \"percentage\",\n  \"discountValue\": 20,\n  \"buyQuantity\": 2,\n  \"getQuantity\": 1,\n  \"minimumPurchase\": 100,\n  \"maximumDiscount\": 500,\n  \"startDate\": \"2026-11-25T00:00:00.000Z\",\n  \"endDate\": \"2026-11-30T23:59:59.000Z\",\n  \"status\": \"scheduled\",\n  \"isStackable\": false,\n  \"priority\": 1,\n  \"productIds\": [\n    \"uuid-1\",\n    \"uuid-2\"\n  ],\n  \"categoryIds\": [\n    \"uuid-1\",\n    \"uuid-2\"\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 66,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e2d2235f593a0b65",
+      "parentId": "fld_0e7d8d8c539aafe0",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/promotions",
+      "name": "Get all promotions with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 67,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_7663beccb87e418d",
+      "parentId": "fld_0e7d8d8c539aafe0",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/promotions/active",
+      "name": "Get all active promotions",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 68,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2186722a553aab8b",
+      "parentId": "fld_0e7d8d8c539aafe0",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/promotions/:id",
+      "name": "Get a promotion by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 69,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_312a836f3185174c",
+      "parentId": "fld_0e7d8d8c539aafe0",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/promotions/:id",
+      "name": "Update a promotion (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Black Friday 2026\",\n  \"description\": \"Descuento especial por Black Friday\",\n  \"type\": \"percentage\",\n  \"discountValue\": 20,\n  \"buyQuantity\": 2,\n  \"getQuantity\": 1,\n  \"minimumPurchase\": 100,\n  \"maximumDiscount\": 500,\n  \"startDate\": \"2026-11-25T00:00:00.000Z\",\n  \"endDate\": \"2026-11-30T23:59:59.000Z\",\n  \"status\": \"scheduled\",\n  \"isStackable\": false,\n  \"priority\": 1,\n  \"productIds\": [\n    \"uuid-1\",\n    \"uuid-2\"\n  ],\n  \"categoryIds\": [\n    \"uuid-1\",\n    \"uuid-2\"\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 70,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e98dbed19e4b9dd4",
+      "parentId": "fld_0e7d8d8c539aafe0",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/promotions/:id",
+      "name": "Soft delete a promotion (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 71,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_be9ecd89a722e46a",
+      "parentId": "fld_037c883f00c362bc",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/roles",
+      "name": "Create a new role (Superadmin only)",
+      "description": "Required roles: superadmin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"client\",\n  \"description\": \"Standard client with basic access\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 72,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4d970206336f2119",
+      "parentId": "fld_037c883f00c362bc",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/roles",
+      "name": "Get all roles (Superadmin only)",
+      "description": "Required roles: superadmin",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 73,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4b2ae181f4a92932",
+      "parentId": "fld_037c883f00c362bc",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/roles/:id",
+      "name": "Get a role by ID (Superadmin only)",
+      "description": "Required roles: superadmin",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 74,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e43f885671111ff3",
+      "parentId": "fld_037c883f00c362bc",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/roles/:id",
+      "name": "Update a role (Superadmin only)",
+      "description": "Required roles: superadmin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"client\",\n  \"description\": \"Standard client with basic access\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 75,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_1ff7b9cb8d039d1b",
+      "parentId": "fld_037c883f00c362bc",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/roles/:id",
+      "name": "Delete a role (Superadmin only)",
+      "description": "Required roles: superadmin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 76,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_183b03701ca24e10",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections",
+      "name": "Create a new section",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"type\": \"hero\",\n  \"title\": \"Hero Section\",\n  \"subtitle\": \"Welcome to our store\",\n  \"slug\": \"hero-main\",\n  \"isActive\": true,\n  \"order\": 0\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 77,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3d136d0615708bcc",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections",
+      "name": "Get all sections with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 78,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_674c4c0bfd1f446d",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/active",
+      "name": "Get all active sections (for frontend)",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 79,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f64655aa41682591",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/slug/:slug",
+      "name": "Get section by slug",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 80,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_33694563b1322c41",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/:id",
+      "name": "Get section by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 81,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8e34465b77859a64",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/:id",
+      "name": "Update section",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"type\": \"hero\",\n  \"title\": \"Hero Section\",\n  \"subtitle\": \"Welcome to our store\",\n  \"slug\": \"hero-main\",\n  \"isActive\": true,\n  \"order\": 0\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 82,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c0f6918f637aae40",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/:id",
+      "name": "Delete section",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 83,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f52e6eaa1793c075",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/reorder",
+      "name": "Reorder sections",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  \"550e8400-e29b-41d4-a716-446655440000\"\n]"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 84,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_23cbc1657069406d",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/:id/items",
+      "name": "Create section item",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sectionId\": \"uuid\",\n  \"title\": \"Item Title\",\n  \"description\": \"Item description\",\n  \"imageId\": \"uuid\",\n  \"url\": \"https://example.com\",\n  \"order\": 0,\n  \"extraData\": {\n    \"customKey\": \"value\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 85,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4a810e3f0c0405bb",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340067,
+      "created": 1778914340067,
+      "url": "{{ _.base_url }}/api/v1/sections/:id/items",
+      "name": "Get section items",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 86,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_75c177ea424a92ae",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/sections/items/:itemId",
+      "name": "Get section item by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 87,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_bed92f6b2f420c08",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/sections/items/:itemId",
+      "name": "Update section item",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sectionId\": \"uuid\",\n  \"title\": \"Item Title\",\n  \"description\": \"Item description\",\n  \"imageId\": \"uuid\",\n  \"url\": \"https://example.com\",\n  \"order\": 0,\n  \"extraData\": {\n    \"customKey\": \"value\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 88,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_1a9060bdda54e2f5",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/sections/items/:itemId",
+      "name": "Delete section item",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 89,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c36ee4cefe6d0287",
+      "parentId": "fld_063b11410c63284d",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/sections/items/reorder",
+      "name": "Reorder section items",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  \"550e8400-e29b-41d4-a716-446655440000\"\n]"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 90,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c374f7e78dc62d6b",
+      "parentId": "fld_5b7dcd14a4faa2cd",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/users",
+      "name": "Create a new user (Admin only in production)",
+      "description": "Required roles: superadmin, admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\",\n  \"roleId\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 91,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_8d6a399d2fb06aad",
+      "parentId": "fld_5b7dcd14a4faa2cd",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/users",
+      "name": "Get all users with pagination",
+      "description": "Required roles: superadmin, admin",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 92,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f89f7d465d6638d3",
+      "parentId": "fld_5b7dcd14a4faa2cd",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/users/:id",
+      "name": "Get a user by ID",
+      "description": "Required roles: superadmin, admin",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 93,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e7aaa2d36dec573b",
+      "parentId": "fld_5b7dcd14a4faa2cd",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/users/:id",
+      "name": "Update a user",
+      "description": "Required roles: superadmin, admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1234567890\",\n  \"roleId\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 94,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2082437942a61e94",
+      "parentId": "fld_5b7dcd14a4faa2cd",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/users/:id",
+      "name": "Soft delete a user",
+      "description": "Required roles: superadmin, admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 95,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0d65e8d3d17f9ece",
+      "parentId": "fld_0f3528060d4b726d",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/variants",
+      "name": "Create a new variant (Admin only)",
+      "description": "Required roles: admin",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"productId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"colorId\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"sku\": \"HB-001-BLK\",\n  \"price\": 349.99,\n  \"stock\": 50,\n  \"isAvailable\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 96,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_191a88b791b692ef",
+      "parentId": "fld_0f3528060d4b726d",
+      "modified": 1778914340068,
+      "created": 1778914340068,
+      "url": "{{ _.base_url }}/api/v1/variants",
+      "name": "Get all variants with pagination",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_1c5a434fee905c97",
+          "name": "limit",
+          "value": "10",
+          "disabled": true
+        },
+        {
+          "id": "pair_b8e944f6679c6166",
+          "name": "offset",
+          "value": "0",
+          "disabled": true
+        },
+        {
+          "id": "pair_376c74ec898a8c99",
+          "name": "sortBy",
+          "value": "createdAt",
+          "disabled": true
+        },
+        {
+          "id": "pair_663cc6ce44f18411",
+          "name": "sortOrder",
+          "value": "DESC",
+          "disabled": true
+        },
+        {
+          "id": "pair_98a32ccfc377c733",
+          "name": "q",
+          "value": "bolso",
+          "disabled": true
+        },
+        {
+          "id": "pair_2120f8d1e26a525a",
+          "name": "name",
+          "value": "Classic Leather Handbag",
+          "disabled": true
+        },
+        {
+          "id": "pair_f4753a96cdb291e2",
+          "name": "email",
+          "value": "admin@milaraffo.com",
+          "disabled": true
+        },
+        {
+          "id": "pair_2f537659e4f897e8",
+          "name": "status",
+          "value": "pending",
+          "disabled": true
+        },
+        {
+          "id": "pair_e9ec15d529216a3f",
+          "name": "role",
+          "value": "admin",
+          "disabled": true
+        },
+        {
+          "id": "pair_54c3833f3ef4886f",
+          "name": "code",
+          "value": "NAPA-001",
+          "disabled": true
+        },
+        {
+          "id": "pair_76b41a677bf9bd95",
+          "name": "color",
+          "value": "black",
+          "disabled": true
+        },
+        {
+          "id": "pair_f9acf64b410387c9",
+          "name": "slug",
+          "value": "handbags",
+          "disabled": true
+        },
+        {
+          "id": "pair_140fbf527070697e",
+          "name": "parentId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_39f82f76ea28ef14",
+          "name": "productId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_d6135aea630e8da1",
+          "name": "categoryId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_355c25cb2e0095e1",
+          "name": "userId",
+          "value": "uuid",
+          "disabled": true
+        },
+        {
+          "id": "pair_b021a9256321a263",
+          "name": "active",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6ee574403046bb80",
+          "name": "isActive",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_cee813a24ab5c619",
+          "name": "available",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_6fbb88c92ea712fd",
+          "name": "isAvailable",
+          "value": "true",
+          "disabled": true
+        },
+        {
+          "id": "pair_f7a7ea679027d589",
+          "name": "minBasePrice",
+          "value": "100",
+          "disabled": true
+        },
+        {
+          "id": "pair_0e34f84d4b791db9",
+          "name": "maxBasePrice",
+          "value": "500",
+          "disabled": true
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 97,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_43f499b5df8a41f0",
+      "parentId": "fld_0f3528060d4b726d",
+      "modified": 1778914340069,
+      "created": 1778914340069,
+      "url": "{{ _.base_url }}/api/v1/variants/:id",
+      "name": "Get a variant by ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 98,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_74ca75bd8fa3157f",
+      "parentId": "fld_0f3528060d4b726d",
+      "modified": 1778914340069,
+      "created": 1778914340069,
+      "url": "{{ _.base_url }}/api/v1/variants/:id",
+      "name": "Update a variant (Admin only)",
+      "description": "Required roles: admin",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"colorId\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"sku\": \"HB-001-BLK\",\n  \"price\": 349.99,\n  \"stock\": 50,\n  \"isAvailable\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "id": "pair_b29a2fdd7db9c2e7",
+          "name": "Content-Type",
+          "value": "application/json",
+          "disabled": false
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 99,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_030d615166d86b20",
+      "parentId": "fld_0f3528060d4b726d",
+      "modified": 1778914340069,
+      "created": 1778914340069,
+      "url": "{{ _.base_url }}/api/v1/variants/:id",
+      "name": "Soft delete a variant (Admin only)",
+      "description": "Required roles: admin",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": 100,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    }
+  ]
+}
