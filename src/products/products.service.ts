@@ -84,6 +84,7 @@ export class ProductsService {
       .leftJoinAndSelect('productCharacteristic.characteristic', 'characteristic')
       .leftJoinAndSelect('product.variants', 'variant')
       .leftJoinAndSelect('variant.images', 'variantImage')
+      .leftJoinAndSelect('variant.color', 'variantColor')
       .distinct(true)
       .take(limit)
       .skip(offset);
@@ -218,6 +219,7 @@ export class ProductsService {
         'productCharacteristics.characteristic',
         'variants',
         'variants.images',
+        'variants.color',
       ],
     });
 
@@ -378,13 +380,27 @@ export class ProductsService {
         id: variant.id,
         sku: variant.sku,
         price: variant.price,
+        stock: variant.stock,
         isAvailable: variant.isAvailable,
+        color: variant.color
+          ? {
+              id: variant.color.id,
+              name: variant.color.name,
+              hex: variant.color.hex,
+            }
+          : null,
         image: (variant.images ?? []).length
           ? {
+              id: variant.images[0].id,
               url: variant.images[0].url,
               alt: variant.images[0].alt,
             }
           : null,
+        images: (variant.images ?? []).map((img) => ({
+          id: img.id,
+          url: img.url,
+          alt: img.alt,
+        })),
       })),
     };
   }
