@@ -2,7 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { ConfigService } from '@nestjs/config';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { User } from '../../users/entities/user.entity';
 import { UsersService } from '../../users/users.service';
 import { TokenBlacklistService } from '../services/token-blacklist.service';
@@ -37,9 +37,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Token has been revoked');
     }
 
-    const user = await this.usersService.getUserById(payload.sub);
+    let user: User;
+    try {
+      user = await this.usersService.getUserById(payload.sub);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new UnauthorizedException('User not found or inactive');
+      }
+      throw error;
+    }
 
-    if (!user || !user.isActive) {
+    if (!user.isActive) {
       throw new UnauthorizedException('User not found or inactive');
     }
 

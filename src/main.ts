@@ -82,6 +82,8 @@ async function bootstrap() {
     .addTag('promotions', 'Promotions and sales')
     .addTag('coupons', 'Discount coupons')
     .addTag('addresses', 'User addresses')
+    .addTag('cart', 'Shopping cart')
+    .addTag('wishlist', 'Wishlist')
     .addTag('orders', 'Order management')
     .addTag('payments', 'Payment processing')
     .build();
