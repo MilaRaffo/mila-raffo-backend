@@ -74,6 +74,7 @@ export class ProductsService {
       available,
       minBasePrice,
       maxBasePrice,
+      colorIds,
     } = paginationDto;
 
     const qb = this.productsRepository
@@ -123,6 +124,10 @@ export class ProductsService {
 
     if (typeof maxBasePrice === 'number' && !Number.isNaN(maxBasePrice)) {
       qb.andWhere('product.basePrice <= :maxBasePrice', { maxBasePrice });
+    }
+
+    if (colorIds?.length) {
+      qb.andWhere('variantColor.id IN (:...colorIds)', { colorIds });
     }
 
     const sortableFields: Record<string, string> = {

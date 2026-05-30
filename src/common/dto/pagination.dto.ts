@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsEnum,
   IsInt,
   IsNumber,
@@ -7,7 +8,7 @@ import {
   IsUUID,
   Min,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export enum SortOrder {
@@ -137,4 +138,15 @@ export class PaginationDto {
   @Type(() => Number)
   @IsNumber()
   maxBasePrice?: number;
+
+  @ApiPropertyOptional({ example: 'uuid1,uuid2', description: 'Comma-separated color IDs (OR logic)' })
+  @IsOptional()
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @Transform(({ value }) => {
+    if (!value) return undefined;
+    if (Array.isArray(value)) return value;
+    return String(value).split(',').filter(Boolean);
+  })
+  colorIds?: string[];
 }
