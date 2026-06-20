@@ -7,11 +7,13 @@ import { OrderItem } from './entities/order-item.entity';
 import { Variant } from '../variants/entities/variant.entity';
 import { Product } from '../products/entities/product.entity';
 import { CouponsModule } from '../coupons/coupons.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Order, OrderItem, Variant, Product]),
     CouponsModule,
+    NotificationsModule,
   ],
   controllers: [OrdersController],
   providers: [OrdersService],

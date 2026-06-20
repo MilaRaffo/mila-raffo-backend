@@ -31,6 +31,7 @@ import { ProfileModule } from './profile/profile.module';
 import { SectionsModule } from './sections/sections.module';
 import { CartModule } from './cart/cart.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import { LoggerModule } from './common/services/logger.module';
 
 // Common
@@ -86,6 +87,7 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
     SectionsModule,
     CartModule,
     WishlistModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [

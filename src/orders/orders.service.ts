@@ -13,6 +13,7 @@ import { OrderItem } from './entities/order-item.entity';
 import { Variant } from '../variants/entities/variant.entity';
 import { Product } from '../products/entities/product.entity';
 import { CouponsService } from '../coupons/coupons.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { LoggerService } from '../common/services/logger.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
@@ -30,6 +31,7 @@ export class OrdersService {
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
     private readonly couponsService: CouponsService,
+    private readonly notificationsService: NotificationsService,
     private readonly logger: LoggerService,
   ) {
     this.logger.setContext('OrdersService');
@@ -307,8 +309,36 @@ export class OrdersService {
       order.deliveredAt = new Date();
     }
 
+    const prevStatus = order.status;
     Object.assign(order, updateOrderDto);
     await this.orderRepository.save(order);
+
+    const notifiableStatuses: OrderStatus[] = [
+      OrderStatus.CONFIRMED,
+      OrderStatus.PROCESSING,
+      OrderStatus.SHIPPED,
+      OrderStatus.DELIVERED,
+      OrderStatus.CANCELLED,
+    ];
+    if (
+      updateOrderDto.status &&
+      updateOrderDto.status !== prevStatus &&
+      notifiableStatuses.includes(updateOrderDto.status)
+    ) {
+      const statusLabel: Record<string, string> = {
+        [OrderStatus.CONFIRMED]: 'confirmado',
+        [OrderStatus.PROCESSING]: 'en preparación',
+        [OrderStatus.SHIPPED]: 'enviado',
+        [OrderStatus.DELIVERED]: 'entregado',
+        [OrderStatus.CANCELLED]: 'cancelado',
+      };
+      void this.notificationsService.sendToUserIfOrdersEnabled(order.userId, {
+        title: `Pedido #${order.orderNumber}`,
+        body: `Tu pedido está ${statusLabel[updateOrderDto.status] ?? updateOrderDto.status}.`,
+        data: { type: 'order_status', orderId: order.id },
+      });
+    }
+
     return this.findOne(id, userId, isAdmin);
   }
 
@@ -326,6 +356,13 @@ export class OrdersService {
 
     order.status = OrderStatus.CANCELLED;
     await this.orderRepository.save(order);
+
+    void this.notificationsService.sendToUserIfOrdersEnabled(userId, {
+      title: `Pedido #${order.orderNumber}`,
+      body: 'Tu pedido fue cancelado.',
+      data: { type: 'order_status', orderId: order.id },
+    });
+
     return this.findOne(id, userId);
   }
 

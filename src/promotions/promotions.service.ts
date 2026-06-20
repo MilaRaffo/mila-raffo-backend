@@ -10,6 +10,7 @@ import { UpdatePromotionDto } from './dto/update-promotion.dto';
 import { Promotion, PromotionStatus } from './entities/promotion.entity';
 import { Product } from '../products/entities/product.entity';
 import { Category } from '../categories/entities/category.entity';
+import { NotificationsService } from '../notifications/notifications.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
@@ -23,6 +24,7 @@ export class PromotionsService {
     private readonly productRepository: Repository<Product>,
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async create(
@@ -63,6 +65,13 @@ export class PromotionsService {
     }
 
     const savedPromotion = await this.promotionRepository.save(promotion);
+
+    void this.notificationsService.sendBroadcast({
+      title: '¡Nueva oferta en Mila Raffo!',
+      body: savedPromotion.name,
+      data: { type: 'offer' },
+    });
+
     return this.findOne(savedPromotion.id);
   }
 
