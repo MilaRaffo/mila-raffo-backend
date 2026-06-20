@@ -32,6 +32,7 @@ import { SectionsModule } from './sections/sections.module';
 import { CartModule } from './cart/cart.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ShipmentsModule } from './shipments/shipments.module';
 import { LoggerModule } from './common/services/logger.module';
 
 // Common
@@ -88,6 +89,7 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
     CartModule,
     WishlistModule,
     NotificationsModule,
+    ShipmentsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -111,4 +113,3 @@ import { BusinessLogInterceptor } from './common/interceptors/business-log.inter
   ],
 })
 export class AppModule {}
-

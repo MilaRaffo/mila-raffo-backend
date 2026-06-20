@@ -3,11 +3,13 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { User } from '../../users/entities/user.entity';
 import { OrderItem } from './order-item.entity';
+import { Shipment } from '../../shipments/entities/shipment.entity';
 import { type UUID } from 'crypto';
 
 export enum OrderStatus {
@@ -53,13 +55,31 @@ export class Order extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   subtotal: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, name: 'discount_amount' })
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0,
+    name: 'discount_amount',
+  })
   discountAmount: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, name: 'shipping_cost' })
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0,
+    name: 'shipping_cost',
+  })
   shippingCost: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, name: 'tax_amount' })
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0,
+    name: 'tax_amount',
+  })
   taxAmount: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
@@ -81,7 +101,12 @@ export class Order extends BaseEntity {
   @Column({ type: 'varchar', length: 200, name: 'shipping_street_address' })
   shippingStreetAddress: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true, name: 'shipping_apartment' })
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: true,
+    name: 'shipping_apartment',
+  })
   shippingApartment?: string;
 
   @Column({ type: 'varchar', length: 100, name: 'shipping_city' })
@@ -96,7 +121,12 @@ export class Order extends BaseEntity {
   @Column({ type: 'varchar', length: 100, name: 'shipping_country' })
   shippingCountry: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: true, name: 'shipping_phone' })
+  @Column({
+    type: 'varchar',
+    length: 20,
+    nullable: true,
+    name: 'shipping_phone',
+  })
   shippingPhone?: string;
 
   // Billing address
@@ -109,7 +139,12 @@ export class Order extends BaseEntity {
   @Column({ type: 'varchar', length: 200, name: 'billing_street_address' })
   billingStreetAddress: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true, name: 'billing_apartment' })
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: true,
+    name: 'billing_apartment',
+  })
   billingApartment?: string;
 
   @Column({ type: 'varchar', length: 100, name: 'billing_city' })
@@ -124,13 +159,23 @@ export class Order extends BaseEntity {
   @Column({ type: 'varchar', length: 100, name: 'billing_country' })
   billingCountry: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: true, name: 'billing_phone' })
+  @Column({
+    type: 'varchar',
+    length: 20,
+    nullable: true,
+    name: 'billing_phone',
+  })
   billingPhone?: string;
 
   @Column({ type: 'text', nullable: true })
   notes?: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true, name: 'tracking_number' })
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: true,
+    name: 'tracking_number',
+  })
   trackingNumber?: string;
 
   @Column({ type: 'timestamp', nullable: true, name: 'shipped_at' })
@@ -148,4 +193,7 @@ export class Order extends BaseEntity {
     eager: true,
   })
   items: OrderItem[];
+
+  @OneToOne(() => Shipment, (shipment) => shipment.order)
+  shipment?: Shipment;
 }

@@ -14,6 +14,7 @@ import { Variant } from '../variants/entities/variant.entity';
 import { Product } from '../products/entities/product.entity';
 import { CouponsService } from '../coupons/coupons.service';
 import { NotificationsService } from '../notifications/notifications.service';
+import { ShipmentsService } from '../shipments/shipments.service';
 import { LoggerService } from '../common/services/logger.service';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
@@ -32,6 +33,7 @@ export class OrdersService {
     private readonly productRepository: Repository<Product>,
     private readonly couponsService: CouponsService,
     private readonly notificationsService: NotificationsService,
+    private readonly shipmentsService: ShipmentsService,
     private readonly logger: LoggerService,
   ) {
     this.logger.setContext('OrdersService');
@@ -207,6 +209,7 @@ export class OrdersService {
       .createQueryBuilder('order')
       .leftJoinAndSelect('order.items', 'items')
       .leftJoinAndSelect('order.user', 'user')
+      .leftJoinAndSelect('order.shipment', 'shipment')
       .skip(offset)
       .take(limit)
       .orderBy('order.createdAt', 'DESC');
@@ -244,7 +247,7 @@ export class OrdersService {
   ): Promise<Order> {
     const order = await this.orderRepository.findOne({
       where: { id },
-      relations: ['items', 'items.variant', 'user'],
+      relations: ['items', 'items.variant', 'user', 'shipment'],
     });
 
     if (!order) {
@@ -266,13 +269,11 @@ export class OrdersService {
   ): Promise<Record<string, unknown>> {
     const order = await this.orderRepository.findOne({
       where: { orderNumber },
-      relations: ['items', 'items.variant', 'user'],
+      relations: ['items', 'items.variant', 'user', 'shipment'],
     });
 
     if (!order) {
-      throw new NotFoundException(
-        `Order with number ${orderNumber} not found`,
-      );
+      throw new NotFoundException(`Order with number ${orderNumber} not found`);
     }
 
     // Verificar permisos
@@ -302,10 +303,7 @@ export class OrdersService {
     if (updateOrderDto.status === OrderStatus.SHIPPED && !order.shippedAt) {
       order.shippedAt = new Date();
     }
-    if (
-      updateOrderDto.status === OrderStatus.DELIVERED &&
-      !order.deliveredAt
-    ) {
+    if (updateOrderDto.status === OrderStatus.DELIVERED && !order.deliveredAt) {
       order.deliveredAt = new Date();
     }
 
@@ -346,9 +344,7 @@ export class OrdersService {
     const order = await this.findOneEntity(id, userId);
 
     // Solo se puede cancelar si está pending o confirmed
-    if (
-      ![OrderStatus.PENDING, OrderStatus.CONFIRMED].includes(order.status)
-    ) {
+    if (![OrderStatus.PENDING, OrderStatus.CONFIRMED].includes(order.status)) {
       throw new BadRequestException(
         'Only pending or confirmed orders can be cancelled',
       );
@@ -383,7 +379,13 @@ export class OrdersService {
       order.status = OrderStatus.CONFIRMED;
     }
 
-    return await this.orderRepository.save(order);
+    const savedOrder = await this.orderRepository.save(order);
+
+    if (paymentStatus === PaymentStatus.PAID) {
+      await this.shipmentsService.createForPaidOrder(savedOrder);
+    }
+
+    return savedOrder;
   }
 
   private async generateOrderNumber(): Promise<string> {
@@ -422,6 +424,16 @@ export class OrdersService {
       trackingNumber: order.trackingNumber,
       shippedAt: order.shippedAt,
       deliveredAt: order.deliveredAt,
+      shipment: order.shipment
+        ? {
+            id: order.shipment.id,
+            status: order.shipment.status,
+            courier: order.shipment.courier,
+            trackingNumber: order.shipment.trackingNumber,
+            shippedAt: order.shipment.shippedAt,
+            deliveredAt: order.shipment.deliveredAt,
+          }
+        : null,
       notes: order.notes,
       shippingAddress: {
         firstName: order.shippingFirstName,
