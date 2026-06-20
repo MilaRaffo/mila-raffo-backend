@@ -86,6 +86,8 @@ async function bootstrap() {
     .addTag('wishlist', 'Wishlist')
     .addTag('orders', 'Order management')
     .addTag('payments', 'Payment processing')
+    .addTag('shipments', 'Shipment tracking')
+    .addTag('notifications', 'Push notifications')
     .build();
   
   const document = SwaggerModule.createDocument(app, config);

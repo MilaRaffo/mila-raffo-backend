@@ -8,6 +8,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  NotFoundException,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -20,6 +21,7 @@ import { RegisterTokenDto } from './dto/register-token.dto';
 import { UnregisterTokenDto } from './dto/unregister-token.dto';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 import { BroadcastDto } from './dto/broadcast.dto';
+import { TestNotificationDto } from './dto/test-notification.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -87,5 +89,48 @@ export class NotificationsController {
       body: dto.body,
       data: { type: 'offer' },
     });
+  }
+
+  @Post('test')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Send a test push notification to yourself',
+    description:
+      'Sends a test push to all devices registered for the authenticated user. Useful for verifying the notification pipeline without creating real orders.',
+  })
+  @ApiResponse({ status: 204, description: 'Test notification sent' })
+  @ApiResponse({ status: 404, description: 'No registered device tokens found for this user' })
+  async test(
+    @GetUser() user: User,
+    @Body() dto: TestNotificationDto,
+  ): Promise<void> {
+    const type = dto.type ?? 'order_status';
+
+    const payloads: Record<typeof type, { title: string; body: string; data: Record<string, unknown> }> = {
+      order_status: {
+        title: 'Pedido #TEST-001',
+        body: 'Tu pedido está confirmado. 🎉',
+        data: { type: 'order_status', orderId: '00000000-0000-0000-0000-000000000000' },
+      },
+      shipment_status: {
+        title: 'Pedido #TEST-001',
+        body: 'Tu envío está en camino.',
+        data: { type: 'shipment_status', orderId: '00000000-0000-0000-0000-000000000000' },
+      },
+      offer: {
+        title: '¡Nueva oferta en Mila Raffo!',
+        body: 'Descuentos de hasta 40% en toda la colección.',
+        data: { type: 'offer' },
+      },
+    };
+
+    const preferences = await this.notificationsService.getPreferences(user.id);
+    const hasToken = preferences.notifyOffers || preferences.notifyOrders;
+
+    if (!hasToken) {
+      throw new NotFoundException('No registered device tokens found for this user. Login from the mobile app first.');
+    }
+
+    await this.notificationsService.sendToUser(user.id, payloads[type]);
   }
 }
