@@ -25,7 +25,7 @@ jobs:
       - name: Install Podman and podman-compose
         run: |
           sudo apt-get update
-          sudo apt-get install -y podman python3-pip
+          sudo apt-get install -y podman buildah uidmap slirp4netns fuse-overlayfs python3-pip
           python3 -m pip install --user podman-compose
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
@@ -50,6 +50,9 @@ jobs:
       - name: Podman compose config
         run: podman-compose -f podman-compose.yml config
 
+      - name: Podman compose build
+        run: podman-compose -f podman-compose.yml build backend
+
   publish-image:
     name: Publish Podman image
     runs-on: ubuntu-latest
@@ -63,7 +66,7 @@ jobs:
       - name: Install Podman
         run: |
           sudo apt-get update
-          sudo apt-get install -y podman
+          sudo apt-get install -y podman buildah uidmap slirp4netns fuse-overlayfs
 
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u "${{ github.actor }}" --password-stdin
