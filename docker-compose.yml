@@ -20,6 +20,30 @@ services:
       timeout: 5s
       retries: 5
 
+  # NestJS Backend Application
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mila-raffo-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: ${PORT:-3000}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-mila_raffo_store}
+      DB_SYNCHRONIZE: ${DB_SYNCHRONIZE:-true}
+    ports:
+      - "${PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mila-raffo-network
+
 networks:
   mila-raffo-network:
     driver: bridge

@@ -2,12 +2,13 @@
 
 ## Requisitos Previos
 
-- Docker instalado
-- Docker Compose instalado
+- Podman instalado
+- podman-compose instalado
 
 ## Configuración
 
 1. Crea un archivo `.env` basado en `.env.example`:
+
    ```bash
    cp .env.example .env
    ```
@@ -22,50 +23,50 @@
 
 ```bash
 # Construir e iniciar todos los servicios (backend + PostgreSQL)
-docker-compose up -d
+podman-compose -f podman-compose.yml up -d --build
 
 # Ver logs
-docker-compose logs -f
+podman-compose -f podman-compose.yml logs -f
 
 # Ver logs solo del backend
-docker-compose logs -f backend
+podman-compose -f podman-compose.yml logs -f backend
 ```
 
 ### Detener la aplicación
 
 ```bash
 # Detener servicios
-docker-compose stop
+podman-compose -f podman-compose.yml stop
 
 # Detener y eliminar contenedores
-docker-compose down
+podman-compose -f podman-compose.yml down
 
 # Detener y eliminar contenedores + volúmenes (¡elimina la base de datos!)
-docker-compose down -v
+podman-compose -f podman-compose.yml down -v
 ```
 
 ### Reconstruir la aplicación
 
 ```bash
 # Reconstruir después de cambios en el código
-docker-compose up -d --build
+podman-compose -f podman-compose.yml up -d --build
 
 # Forzar reconstrucción completa
-docker-compose build --no-cache
-docker-compose up -d
+podman-compose -f podman-compose.yml build --no-cache
+podman-compose -f podman-compose.yml up -d
 ```
 
 ### Ejecutar comandos dentro del contenedor
 
 ```bash
 # Acceder al contenedor del backend
-docker-compose exec backend sh
+podman-compose -f podman-compose.yml exec backend sh
 
 # Ejecutar migraciones (si las tienes configuradas)
-docker-compose exec backend npm run migration:run
+podman-compose -f podman-compose.yml exec backend npm run migration:run
 
 # Ver logs de PostgreSQL
-docker-compose logs -f postgres
+podman-compose -f podman-compose.yml logs -f postgres
 ```
 
 ## Estructura de Servicios
@@ -99,34 +100,39 @@ Una vez iniciados los servicios:
 ## Desarrollo Local vs Docker
 
 ### Para desarrollo local (sin Docker):
+
 ```bash
 npm run start:dev
 ```
 
 ### Para ejecutar con Docker:
+
 ```bash
-docker-compose up -d
+podman-compose -f podman-compose.yml up -d --build
 ```
 
 ## Solución de Problemas
 
 ### El contenedor no inicia
+
 ```bash
 # Ver logs detallados
-docker-compose logs backend
+podman-compose -f podman-compose.yml logs backend
 
 # Verificar el estado
-docker-compose ps
+podman-compose -f podman-compose.yml ps
 ```
 
 ### Problemas de conexión a la base de datos
+
 - Asegúrate de que `DB_HOST=postgres` en el archivo `.env` cuando uses Docker Compose
 - Para desarrollo local, usa `DB_HOST=localhost`
 
 ### Limpiar todo y empezar de nuevo
+
 ```bash
-docker-compose down -v
-docker-compose up -d --build
+podman-compose -f podman-compose.yml down -v
+podman-compose -f podman-compose.yml up -d --build
 ```
 
 ## Producción

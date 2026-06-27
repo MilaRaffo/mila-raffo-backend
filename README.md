@@ -17,13 +17,13 @@ Insomnia.
 
 El archivo `.env` ya está en la raíz. No hay que copiarlo.
 
-### 2. Base de datos (Docker)
+### 2. Base de datos y servidor con Podman Compose
 
 ```bash
-docker compose up -d
+podman-compose -f podman-compose.yml up -d --build
 ```
 
-Levanta solo PostgreSQL en `localhost:5432`. El schema se crea automáticamente al arrancar el backend (`synchronize: true` en desarrollo).
+Levanta PostgreSQL en `localhost:5432` y el backend en `localhost:3000`. El schema se crea automáticamente al arrancar el backend (`synchronize: true` en desarrollo).
 
 ### 3. Dependencias
 
@@ -52,9 +52,20 @@ El servidor queda en `http://localhost:3000` con hot-reload.
 ## Arranque diario
 
 ```bash
-docker compose up -d   # si el contenedor no está corriendo
+podman-compose -f podman-compose.yml up -d   # si el contenedor no está corriendo
 npm run start:dev
 ```
+
+---
+
+## GitHub Actions
+
+El repo tiene un workflow en [ci-cd.yml](.github/workflows/ci-cd.yml) que:
+
+- valida `lint`, `test` y `build` en cada PR contra `main`
+- publica la imagen con Podman en GHCR cuando hay un push a `main`
+
+La imagen queda disponible como `ghcr.io/<owner>/<repo>` con tags `latest` y el SHA del commit.
 
 ---
 
@@ -70,12 +81,12 @@ En producción, cambiar `DB_SYNCHRONIZE=false` en `.env` y generar migraciones c
 
 ## Scripts disponibles
 
-| Comando | Descripción |
-|---------|-------------|
-| `npm run start:dev` | Dev con hot-reload |
+| Comando              | Descripción                                 |
+| -------------------- | ------------------------------------------- |
+| `npm run start:dev`  | Dev con hot-reload                          |
 | `npm run start:prod` | Producción (requiere `npm run build` antes) |
-| `npm run build` | Compila TypeScript a `dist/` |
-| `npm run seed` | Crea roles y superadmin (solo primera vez) |
+| `npm run build`      | Compila TypeScript a `dist/`                |
+| `npm run seed`       | Crea roles y superadmin (solo primera vez)  |
 
 ---
 
