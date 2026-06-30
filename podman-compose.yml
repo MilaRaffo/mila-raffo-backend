@@ -15,7 +15,7 @@ services:
     networks:
       - mila-raffo-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres}"]
+      test: pg_isready -U ${DB_USERNAME:-postgres}
       interval: 10s
       timeout: 5s
       retries: 5

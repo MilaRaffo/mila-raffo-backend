@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { LoggerService } from './common/services/logger.service';
 
@@ -15,6 +16,20 @@ async function bootstrap() {
   app.useLogger(logger);
 
   logger.log('Starting Mila Raffo Store API...');
+
+  // Security headers (HSTS, X-Content-Type-Options, X-Frame-Options, CSP, etc.)
+  // CSP is relaxed for Swagger UI (/api/docs), which loads inline scripts/styles.
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          'script-src': ["'self'", "'unsafe-inline'"],
+          'style-src': ["'self'", "'unsafe-inline'"],
+        },
+      },
+    }),
+  );
 
   // Global prefix
   app.setGlobalPrefix(process.env.API_PREFIX || 'api/v1');
