@@ -1,7 +1,40 @@
-import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Max,
+  Min,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { PaymentMethod } from '../entities/payment.entity';
 import { type UUID } from 'crypto';
+import { Type } from 'class-transformer';
+
+export class CulqiAuthentication3dsDto {
+  @ApiProperty()
+  @IsString()
+  eci: string;
+
+  @ApiProperty()
+  @IsString()
+  xid: string;
+
+  @ApiProperty()
+  @IsString()
+  cavv: string;
+
+  @ApiProperty()
+  @IsString()
+  protocolVersion: string;
+
+  @ApiProperty()
+  @IsString()
+  directoryServerTransactionId: string;
+}
 
 export class CreatePaymentDto {
   @ApiProperty({ example: 'uuid' })
@@ -12,23 +45,33 @@ export class CreatePaymentDto {
   @IsEnum(PaymentMethod)
   method: PaymentMethod;
 
-  @ApiPropertyOptional({ example: '4242424242424242' })
-  @IsOptional()
+  @ApiPropertyOptional({ example: 'tkn_test_xxxxxxxxxxxx' })
+  @ValidateIf(
+    (dto: CreatePaymentDto) =>
+      dto.method === PaymentMethod.CULQI || dto.sourceId !== undefined,
+  )
   @IsString()
-  cardNumber?: string;
+  sourceId?: string;
 
-  @ApiPropertyOptional({ example: '12/25' })
-  @IsOptional()
+  @ApiPropertyOptional({ example: '8019959c-fab1-49eb-bbbe-b846d308d8df' })
+  @ValidateIf(
+    (dto: CreatePaymentDto) =>
+      dto.method === PaymentMethod.CULQI ||
+      dto.deviceFingerprintId !== undefined,
+  )
   @IsString()
-  cardExpiry?: string;
+  deviceFingerprintId?: string;
 
-  @ApiPropertyOptional({ example: '123' })
+  @ApiPropertyOptional({ minimum: 0, maximum: 48, default: 0 })
   @IsOptional()
-  @IsString()
-  cardCvv?: string;
+  @IsInt()
+  @Min(0)
+  @Max(48)
+  installments?: number;
 
-  @ApiPropertyOptional({ example: 'John Doe' })
+  @ApiPropertyOptional({ type: CulqiAuthentication3dsDto })
   @IsOptional()
-  @IsString()
-  cardHolderName?: string;
+  @ValidateNested()
+  @Type(() => CulqiAuthentication3dsDto)
+  authentication3DS?: CulqiAuthentication3dsDto;
 }

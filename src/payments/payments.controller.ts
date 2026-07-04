@@ -28,12 +28,12 @@ import { PaginationDto } from '../common/dto/pagination.dto';
 
 @ApiTags('payments')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 @Controller('payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new payment for an order' })
   @ApiResponse({ status: 201, description: 'Payment created successfully' })
   @ApiResponse({ status: 400, description: 'Invalid payment data' })
@@ -43,6 +43,7 @@ export class PaymentsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all payments (user sees only their payments)' })
   @ApiResponse({ status: 200, description: 'Payments retrieved successfully' })
   findAll(@GetUser() user: User, @Query() paginationDto: PaginationDto) {
@@ -53,6 +54,7 @@ export class PaymentsController {
   }
 
   @Get('order/:orderId')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get payments for a specific order' })
   @ApiResponse({ status: 200, description: 'Payments retrieved successfully' })
   findByOrder(
@@ -72,6 +74,7 @@ export class PaymentsController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get a payment by ID' })
   @ApiResponse({ status: 200, description: 'Payment found' })
   @ApiResponse({ status: 404, description: 'Payment not found' })
@@ -84,7 +87,7 @@ export class PaymentsController {
   }
 
   @Patch(':id/refund')
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleName.ADMIN)
   @ApiOperation({ summary: 'Refund a payment (Admin only)' })
   @ApiResponse({ status: 200, description: 'Payment refunded successfully' })
@@ -97,10 +100,10 @@ export class PaymentsController {
     return this.paymentsService.refund(id, isAdmin);
   }
 
-  @Post('webhook/:provider')
-  @ApiOperation({ summary: 'Webhook endpoint for payment gateways' })
+  @Post('webhook/culqi')
+  @ApiOperation({ summary: 'Receive and verify a Culqi webhook event' })
   @ApiResponse({ status: 200, description: 'Webhook processed' })
-  handleWebhook(@Param('provider') provider: string, @Body() payload: any) {
-    return this.paymentsService.handleWebhook(provider, payload);
+  handleWebhook(@Body() payload: unknown) {
+    return this.paymentsService.handleCulqiWebhook(payload);
   }
 }
