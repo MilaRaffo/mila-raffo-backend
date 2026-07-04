@@ -119,6 +119,10 @@ DB_SYNCHRONIZE=true        # false en producción
 JWT_SECRET=...
 JWT_REFRESH_SECRET=...
 
+CULQI_SECRET_KEY=sk_test_...
+# Optional; defaults to https://api.culqi.com/v2
+CULQI_API_URL=https://api.culqi.com/v2
+
 SUPERADMIN_EMAIL=superadmin@milaraffo.com
 SUPERADMIN_PASSWORD=SuperAdmin123!
 ```
