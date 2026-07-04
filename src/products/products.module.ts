@@ -10,11 +10,7 @@ import { CharacteristicsModule } from '../characteristics/characteristics.module
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Product,
-      ProductCharacteristic,
-      ProductCategory,
-    ]),
+    TypeOrmModule.forFeature([Product, ProductCharacteristic, ProductCategory]),
     CategoriesModule,
     CharacteristicsModule,
   ],

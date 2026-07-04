@@ -36,7 +36,7 @@ export class CreatePromotionDto {
   type: PromotionType;
 
   @ApiPropertyOptional({ example: 20 })
-  @ValidateIf((o) =>
+  @ValidateIf((o: CreatePromotionDto) =>
     [PromotionType.PERCENTAGE, PromotionType.FIXED_AMOUNT].includes(o.type),
   )
   @IsNumber()
@@ -44,13 +44,13 @@ export class CreatePromotionDto {
   discountValue?: number;
 
   @ApiPropertyOptional({ example: 2 })
-  @ValidateIf((o) => o.type === PromotionType.BUY_X_GET_Y)
+  @ValidateIf((o: CreatePromotionDto) => o.type === PromotionType.BUY_X_GET_Y)
   @IsNumber()
   @Min(1)
   buyQuantity?: number;
 
   @ApiPropertyOptional({ example: 1 })
-  @ValidateIf((o) => o.type === PromotionType.BUY_X_GET_Y)
+  @ValidateIf((o: CreatePromotionDto) => o.type === PromotionType.BUY_X_GET_Y)
   @IsNumber()
   @Min(1)
   getQuantity?: number;

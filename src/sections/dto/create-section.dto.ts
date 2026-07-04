@@ -4,11 +4,8 @@ import {
   IsInt,
   IsBoolean,
   IsOptional,
-  IsUUID,
   MaxLength,
   MinLength,
-  IsObject,
-  IsUrl,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SectionType } from '../entities/section.entity';

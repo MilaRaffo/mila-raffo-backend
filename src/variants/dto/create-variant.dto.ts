@@ -16,7 +16,10 @@ export class CreateVariantDto {
   @IsUUID()
   productId: UUID;
 
-  @ApiPropertyOptional({ example: '550e8400-e29b-41d4-a716-446655440001', description: 'Color ID (optional)' })
+  @ApiPropertyOptional({
+    example: '550e8400-e29b-41d4-a716-446655440001',
+    description: 'Color ID (optional)',
+  })
   @IsOptional()
   @IsUUID()
   colorId?: UUID;

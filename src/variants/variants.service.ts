@@ -109,7 +109,10 @@ export class VariantsService {
       }
     }
 
-    if (updateVariantDto.colorId && updateVariantDto.colorId !== variant.colorId) {
+    if (
+      updateVariantDto.colorId &&
+      updateVariantDto.colorId !== variant.colorId
+    ) {
       await this.colorsService.findOne(updateVariantDto.colorId);
     }
 
@@ -165,4 +168,3 @@ export class VariantsService {
     };
   }
 }
-

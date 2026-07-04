@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role, RoleName } from './entities/role.entity';
@@ -15,9 +19,7 @@ export class RolesService {
     private rolesRepository: Repository<Role>,
   ) {}
 
-  async create(
-    createRoleDto: CreateRoleDto,
-  ): Promise<Record<string, unknown>> {
+  async create(createRoleDto: CreateRoleDto): Promise<Record<string, unknown>> {
     const existingRole = await this.rolesRepository.findOne({
       where: { name: createRoleDto.name },
     });

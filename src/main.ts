@@ -49,7 +49,10 @@ async function bootstrap() {
   const allowedOrigins = envOrigins.length > 0 ? envOrigins : defaultOrigins;
 
   app.enableCors({
-    origin: (origin, callback) => {
+    origin: (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void,
+    ) => {
       if (!origin) {
         callback(null, true);
         return;
@@ -104,13 +107,13 @@ async function bootstrap() {
     .addTag('shipments', 'Shipment tracking')
     .addTag('notifications', 'Push notifications')
     .build();
-  
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  
+
   logger.log(`Application is running on: http://localhost:${port}`);
   logger.log(`Swagger documentation: http://localhost:${port}/api/docs`);
   logger.log(`API prefix: ${process.env.API_PREFIX || 'api/v1'}`);

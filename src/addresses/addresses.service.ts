@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateAddressDto } from './dto/create-address.dto';
@@ -30,7 +26,10 @@ export class AddressesService {
     }
 
     const { latitude, longitude, ...addressData } = createAddressDto;
-    const normalizedCoordinates = this.normalizeCoordinates(latitude, longitude);
+    const normalizedCoordinates = this.normalizeCoordinates(
+      latitude,
+      longitude,
+    );
 
     const address = this.addressRepository.create({
       ...addressData,
@@ -103,7 +102,10 @@ export class AddressesService {
     }
 
     const { latitude, longitude, ...addressData } = updateAddressDto;
-    const normalizedCoordinates = this.normalizeCoordinates(latitude, longitude);
+    const normalizedCoordinates = this.normalizeCoordinates(
+      latitude,
+      longitude,
+    );
     Object.assign(address, addressData, normalizedCoordinates);
     await this.addressRepository.save(address);
     return this.findOne(id, userId);
@@ -162,5 +164,3 @@ export class AddressesService {
     };
   }
 }
-
-

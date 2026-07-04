@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCouponDto } from './dto/create-coupon.dto';
 import { UpdateCouponDto } from './dto/update-coupon.dto';
-import { Coupon, CouponStatus } from './entities/coupon.entity';
+import { Coupon, CouponStatus, CouponType } from './entities/coupon.entity';
 import { CouponUsage } from './entities/coupon-usage.entity';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { type UUID } from 'crypto';
@@ -175,10 +175,7 @@ export class CouponsService {
     }
 
     // Verificar restricción de usuario
-    if (
-      coupon.restrictedToUserId &&
-      coupon.restrictedToUserId !== userId
-    ) {
+    if (coupon.restrictedToUserId && coupon.restrictedToUserId !== userId) {
       return {
         valid: false,
         message: 'This coupon is not available for your account',
@@ -209,11 +206,11 @@ export class CouponsService {
 
     // Calcular descuento
     let discount = 0;
-    if (coupon.type === 'percentage') {
+    if (coupon.type === CouponType.PERCENTAGE) {
       discount = (cartTotal * coupon.value) / 100;
-    } else if (coupon.type === 'fixed_amount') {
+    } else if (coupon.type === CouponType.FIXED_AMOUNT) {
       discount = coupon.value;
-    } else if (coupon.type === 'free_shipping') {
+    } else if (coupon.type === CouponType.FREE_SHIPPING) {
       discount = 0; // Se maneja en el frontend/cálculo de envío
     }
 

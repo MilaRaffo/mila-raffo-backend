@@ -268,13 +268,13 @@ export class PaymentsService {
   }
 
   // Método para webhook de pasarelas de pago (preparado para futuro)
-  async handleWebhook(
+  handleWebhook(
     provider: string,
-    payload: any,
+    payload: unknown,
   ): Promise<{ received: boolean }> {
     // Aquí se manejarían webhooks de Stripe, PayPal, MercadoPago, etc.
     console.log(`Received webhook from ${provider}:`, payload);
-    return { received: true };
+    return Promise.resolve({ received: true });
   }
 
   private mapPayment(payment: Payment): Record<string, unknown> {

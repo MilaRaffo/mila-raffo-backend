@@ -5,7 +5,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { type UUID } from 'crypto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUser } from '../common/decorators/get-user.decorator';
 import { User } from '../users/entities/user.entity';
@@ -23,14 +22,14 @@ export class ProfileController {
   @ApiOperation({ summary: 'Get current user profile with addresses' })
   @ApiResponse({ status: 200, description: 'Profile retrieved successfully' })
   getProfile(@GetUser() user: User) {
-    return this.profileService.getProfile(user.id as UUID);
+    return this.profileService.getProfile(user.id);
   }
 
   @Get('addresses')
   @ApiOperation({ summary: 'Get current user addresses' })
   @ApiResponse({ status: 200, description: 'Addresses retrieved successfully' })
   getAddresses(@GetUser() user: User) {
-    return this.profileService.getAddresses(user.id as UUID);
+    return this.profileService.getAddresses(user.id);
   }
 
   @Patch()
@@ -41,6 +40,6 @@ export class ProfileController {
     @GetUser() user: User,
     @Body() updateProfileDto: UpdateProfileDto,
   ) {
-    return this.profileService.updateProfile(user.id as UUID, updateProfileDto);
+    return this.profileService.updateProfile(user.id, updateProfileDto);
   }
 }

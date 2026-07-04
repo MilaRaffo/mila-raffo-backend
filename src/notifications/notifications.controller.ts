@@ -44,7 +44,11 @@ export class NotificationsController {
     @GetUser() user: User,
     @Body() dto: RegisterTokenDto,
   ): Promise<void> {
-    await this.notificationsService.registerToken(user.id, dto.token, dto.platform);
+    await this.notificationsService.registerToken(
+      user.id,
+      dto.token,
+      dto.platform,
+    );
   }
 
   @Delete('register')
@@ -99,23 +103,35 @@ export class NotificationsController {
       'Sends a test push to all devices registered for the authenticated user. Useful for verifying the notification pipeline without creating real orders.',
   })
   @ApiResponse({ status: 204, description: 'Test notification sent' })
-  @ApiResponse({ status: 404, description: 'No registered device tokens found for this user' })
+  @ApiResponse({
+    status: 404,
+    description: 'No registered device tokens found for this user',
+  })
   async test(
     @GetUser() user: User,
     @Body() dto: TestNotificationDto,
   ): Promise<void> {
     const type = dto.type ?? 'order_status';
 
-    const payloads: Record<typeof type, { title: string; body: string; data: Record<string, unknown> }> = {
+    const payloads: Record<
+      typeof type,
+      { title: string; body: string; data: Record<string, unknown> }
+    > = {
       order_status: {
         title: 'Pedido #TEST-001',
         body: 'Tu pedido está confirmado. 🎉',
-        data: { type: 'order_status', orderId: '00000000-0000-0000-0000-000000000000' },
+        data: {
+          type: 'order_status',
+          orderId: '00000000-0000-0000-0000-000000000000',
+        },
       },
       shipment_status: {
         title: 'Pedido #TEST-001',
         body: 'Tu envío está en camino.',
-        data: { type: 'shipment_status', orderId: '00000000-0000-0000-0000-000000000000' },
+        data: {
+          type: 'shipment_status',
+          orderId: '00000000-0000-0000-0000-000000000000',
+        },
       },
       offer: {
         title: '¡Nueva oferta en Mila Raffo!',
@@ -128,7 +144,9 @@ export class NotificationsController {
     const hasToken = preferences.notifyOffers || preferences.notifyOrders;
 
     if (!hasToken) {
-      throw new NotFoundException('No registered device tokens found for this user. Login from the mobile app first.');
+      throw new NotFoundException(
+        'No registered device tokens found for this user. Login from the mobile app first.',
+      );
     }
 
     await this.notificationsService.sendToUser(user.id, payloads[type]);

@@ -37,7 +37,10 @@ export class RolesController {
   @Roles(RoleName.SUPERADMIN)
   @ApiOperation({ summary: 'Create a new role (Superadmin only)' })
   @ApiResponse({ status: 201, description: 'Role created successfully' })
-  @ApiResponse({ status: 403, description: 'Forbidden - Superadmin access required' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Superadmin access required',
+  })
   @ApiResponse({ status: 409, description: 'Role name already exists' })
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.rolesService.create(createRoleDto);
@@ -47,7 +50,10 @@ export class RolesController {
   @Roles(RoleName.SUPERADMIN)
   @ApiOperation({ summary: 'Get all roles (Superadmin only)' })
   @ApiResponse({ status: 200, description: 'Roles retrieved successfully' })
-  @ApiResponse({ status: 403, description: 'Forbidden - Superadmin access required' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Superadmin access required',
+  })
   findAll(@Query() paginationDto: PaginationDto) {
     return this.rolesService.findAll(paginationDto);
   }
@@ -56,7 +62,10 @@ export class RolesController {
   @Roles(RoleName.SUPERADMIN)
   @ApiOperation({ summary: 'Get a role by ID (Superadmin only)' })
   @ApiResponse({ status: 200, description: 'Role found' })
-  @ApiResponse({ status: 403, description: 'Forbidden - Superadmin access required' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Superadmin access required',
+  })
   @ApiResponse({ status: 404, description: 'Role not found' })
   findOne(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.rolesService.findOne(id);
@@ -66,9 +75,15 @@ export class RolesController {
   @Roles(RoleName.SUPERADMIN)
   @ApiOperation({ summary: 'Update a role (Superadmin only)' })
   @ApiResponse({ status: 200, description: 'Role updated successfully' })
-  @ApiResponse({ status: 403, description: 'Forbidden - Superadmin access required' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Superadmin access required',
+  })
   @ApiResponse({ status: 404, description: 'Role not found' })
-  update(@Param('id', ParseUUIDPipe) id: UUID, @Body() updateRoleDto: UpdateRoleDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: UUID,
+    @Body() updateRoleDto: UpdateRoleDto,
+  ) {
     return this.rolesService.update(id, updateRoleDto);
   }
 
@@ -76,9 +91,15 @@ export class RolesController {
   @Roles(RoleName.SUPERADMIN)
   @ApiOperation({ summary: 'Delete a role (Superadmin only)' })
   @ApiResponse({ status: 200, description: 'Role deleted successfully' })
-  @ApiResponse({ status: 403, description: 'Forbidden - Superadmin access required' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Superadmin access required',
+  })
   @ApiResponse({ status: 404, description: 'Role not found' })
-  @ApiResponse({ status: 400, description: 'Cannot delete role with associated users' })
+  @ApiResponse({
+    status: 400,
+    description: 'Cannot delete role with associated users',
+  })
   remove(@Param('id', ParseUUIDPipe) id: UUID) {
     return this.rolesService.remove(id);
   }

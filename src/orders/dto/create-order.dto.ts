@@ -24,7 +24,10 @@ export class OrderItemDto {
   @Min(1)
   quantity: number;
 
-  @ApiPropertyOptional({ example: 'Rojo intenso', description: 'Customization for personalized variants' })
+  @ApiPropertyOptional({
+    example: 'Rojo intenso',
+    description: 'Customization for personalized variants',
+  })
   @IsOptional()
   @IsString()
   @MaxLength(200)

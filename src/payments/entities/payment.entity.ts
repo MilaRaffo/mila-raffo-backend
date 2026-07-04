@@ -47,10 +47,20 @@ export class Payment extends BaseEntity {
   })
   status: PaymentStatus;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, name: 'transaction_id' })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+    name: 'transaction_id',
+  })
   transactionId?: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, name: 'payment_gateway_response' })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+    name: 'payment_gateway_response',
+  })
   paymentGatewayResponse?: string;
 
   @Column({ type: 'text', nullable: true, name: 'error_message' })

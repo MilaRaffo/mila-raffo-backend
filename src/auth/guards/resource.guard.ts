@@ -7,6 +7,10 @@ import {
 import { Reflector } from '@nestjs/core';
 import { RoleName } from '../../roles/entities/role.entity';
 
+interface RequestWithUser {
+  user?: { role?: { name: RoleName } };
+}
+
 export const RESOURCE_ACTIONS_KEY = 'resource_actions';
 
 export interface ResourceAction {
@@ -85,7 +89,7 @@ export class ResourceGuard implements CanActivate {
       return true;
     }
 
-    const { user } = context.switchToHttp().getRequest();
+    const { user } = context.switchToHttp().getRequest<RequestWithUser>();
 
     if (!user || !user.role) {
       throw new ForbiddenException('User not authenticated');
@@ -101,10 +105,8 @@ export class ResourceGuard implements CanActivate {
     const { resource, action, allowedRoles } = resourceAction;
 
     // Si se especifican roles permitidos, usar esos; sino usar los permisos por defecto
-    const permittedRoles =
-      allowedRoles ||
-      this.permissions[resource]?.[action] ||
-      [RoleName.SUPERADMIN];
+    const permittedRoles = allowedRoles ||
+      this.permissions[resource]?.[action] || [RoleName.SUPERADMIN];
 
     if (!permittedRoles.includes(userRole)) {
       throw new ForbiddenException(

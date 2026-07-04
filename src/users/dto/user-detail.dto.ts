@@ -38,7 +38,6 @@ class AddressDto {
 
   @ApiProperty({ nullable: true, example: -58.381592 })
   longitude?: number;
-
 }
 
 export class UserDetailDto {
@@ -94,4 +93,3 @@ export class UserDetailDto {
     return dto;
   }
 }
-

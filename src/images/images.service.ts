@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import {
   S3Client,
   PutObjectCommand,
-  DeleteObjectCommand
+  DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
 import { Image } from './entities/image.entity';
 import { CreateImageDto } from './dto/create-image.dto';
@@ -31,7 +31,8 @@ export class ImagesService {
     private readonly configService: ConfigService,
   ) {
     const accessKeyId = this.configService.get<string>('s3.accessKeyId');
-    const secretAccessKey = this.configService.get<string>('s3.secretAccessKey');
+    const secretAccessKey =
+      this.configService.get<string>('s3.secretAccessKey');
     this.region = this.configService.get<string>('s3.region', 'us-east-1');
     this.bucket = this.configService.get<string>('s3.bucket') || '';
 
@@ -44,19 +45,26 @@ export class ImagesService {
     });
 
     if (!this.bucket) {
-      throw new Error('[Images] S3 bucket name is not configured in environment variables');
+      throw new Error(
+        '[Images] S3 bucket name is not configured in environment variables',
+      );
     }
 
     if (!accessKeyId || !secretAccessKey) {
-      console.warn('[Images] AWS credentials not provided - will use IAM role or default credentials');
+      console.warn(
+        '[Images] AWS credentials not provided - will use IAM role or default credentials',
+      );
     }
 
     this.s3Client = new S3Client({
       region: this.region,
-      credentials: accessKeyId && secretAccessKey ? {
-        accessKeyId,
-        secretAccessKey,
-      } : undefined,
+      credentials:
+        accessKeyId && secretAccessKey
+          ? {
+              accessKeyId,
+              secretAccessKey,
+            }
+          : undefined,
     });
 
     console.log('[Images] S3Client initialized successfully');
@@ -85,14 +93,18 @@ export class ImagesService {
         throw new Error('S3 bucket is not configured');
       }
 
-      console.log(`[Images] Starting S3 upload - Bucket: ${this.bucket}, Region: ${this.region}`);
+      console.log(
+        `[Images] Starting S3 upload - Bucket: ${this.bucket}, Region: ${this.region}`,
+      );
 
       // Generate unique file name
       const fileExtension = file.originalname.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`;
       const key = `images/${fileName}`;
 
-      console.log(`[Images] File details - Original: ${file.originalname}, Size: ${file.size} bytes, Type: ${file.mimetype}`);
+      console.log(
+        `[Images] File details - Original: ${file.originalname}, Size: ${file.size} bytes, Type: ${file.mimetype}`,
+      );
 
       // Upload to S3
       const command = new PutObjectCommand({
@@ -118,31 +130,48 @@ export class ImagesService {
 
       const savedImage = await this.imagesRepository.save(image);
       return this.findOne(savedImage.id);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       const errorName = error instanceof Error ? error.name : 'UnknownError';
-      
+      const s3Error = error as {
+        Code?: string;
+        statusCode?: number;
+        RequestId?: string;
+      };
+
       console.error(`[Images] S3 Upload Error:`, {
         name: errorName,
         message: errorMessage,
-        code: (error as any)?.Code,
-        statusCode: (error as any)?.statusCode,
-        requestId: (error as any)?.RequestId,
+        code: s3Error?.Code,
+        statusCode: s3Error?.statusCode,
+        requestId: s3Error?.RequestId,
         fullError: error,
       });
 
       // Provide more specific error messages
-      if ((error as any)?.Code === 'InvalidAccessKeyId' || (error as any)?.Code === 'SignatureDoesNotMatch') {
-        throw new InternalServerErrorException('AWS credentials are invalid or not configured correctly');
+      if (
+        s3Error?.Code === 'InvalidAccessKeyId' ||
+        s3Error?.Code === 'SignatureDoesNotMatch'
+      ) {
+        throw new InternalServerErrorException(
+          'AWS credentials are invalid or not configured correctly',
+        );
       }
-      if ((error as any)?.Code === 'NoSuchBucket') {
-        throw new InternalServerErrorException(`S3 bucket "${this.bucket}" does not exist`);
+      if (s3Error?.Code === 'NoSuchBucket') {
+        throw new InternalServerErrorException(
+          `S3 bucket "${this.bucket}" does not exist`,
+        );
       }
-      if ((error as any)?.Code === 'AccessDenied') {
-        throw new InternalServerErrorException('Access denied to S3 bucket. Check IAM permissions.');
+      if (s3Error?.Code === 'AccessDenied') {
+        throw new InternalServerErrorException(
+          'Access denied to S3 bucket. Check IAM permissions.',
+        );
       }
 
-      throw new InternalServerErrorException(`Failed to upload file to S3: ${errorMessage}`);
+      throw new InternalServerErrorException(
+        `Failed to upload file to S3: ${errorMessage}`,
+      );
     }
   }
 
@@ -154,12 +183,14 @@ export class ImagesService {
     try {
       const urlObj = new URL(url);
       const pathname = urlObj.pathname;
-      
+
       // For AWS S3 virtual-hosted-style URLs: https://bucket.s3.region.amazonaws.com/key
-      if (urlObj.hostname === `${this.bucket}.s3.${this.region}.amazonaws.com`) {
+      if (
+        urlObj.hostname === `${this.bucket}.s3.${this.region}.amazonaws.com`
+      ) {
         return pathname.substring(1);
       }
-      
+
       return null;
     } catch {
       return null;
@@ -245,7 +276,7 @@ export class ImagesService {
     // Delete file from S3
     try {
       const key = this.extractKeyFromUrl(image.url);
-      
+
       if (key) {
         const command = new DeleteObjectCommand({
           Bucket: this.bucket,

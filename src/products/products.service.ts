@@ -6,7 +6,7 @@ import { ProductCharacteristic } from './entities/product-characteristic.entity'
 import { ProductCategory } from './entities/product-category.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { PaginationDto } from '../common/dto/pagination.dto';
+import { PaginationDto, SortOrder } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 import { CategoriesService } from '../categories/categories.service';
 import { CharacteristicsService } from '../characteristics/characteristics.service';
@@ -39,7 +39,10 @@ export class ProductsService {
     const savedProduct = await this.productsRepository.save(product);
 
     // Add categories
-    if (createProductDto.categoryIds && createProductDto.categoryIds.length > 0) {
+    if (
+      createProductDto.categoryIds &&
+      createProductDto.categoryIds.length > 0
+    ) {
       await this.addCategoriesToProduct(
         savedProduct.id,
         createProductDto.categoryIds,
@@ -81,8 +84,14 @@ export class ProductsService {
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.productCategories', 'productCategory')
       .leftJoinAndSelect('productCategory.category', 'category')
-      .leftJoinAndSelect('product.productCharacteristics', 'productCharacteristic')
-      .leftJoinAndSelect('productCharacteristic.characteristic', 'characteristic')
+      .leftJoinAndSelect(
+        'product.productCharacteristics',
+        'productCharacteristic',
+      )
+      .leftJoinAndSelect(
+        'productCharacteristic.characteristic',
+        'characteristic',
+      )
       .leftJoinAndSelect('product.variants', 'variant')
       .leftJoinAndSelect('variant.images', 'variantImage')
       .leftJoinAndSelect('variant.color', 'variantColor')
@@ -137,8 +146,10 @@ export class ProductsService {
       createdAt: 'product.createdAt',
       updatedAt: 'product.updatedAt',
     };
-    const resolvedSortField = sortableFields[sortBy ?? ''] ?? 'product.createdAt';
-    const resolvedSortOrder = sortOrder === 'ASC' ? 'ASC' : 'DESC';
+    const resolvedSortField =
+      sortableFields[sortBy ?? ''] ?? 'product.createdAt';
+    const resolvedSortOrder =
+      sortOrder === SortOrder.ASC ? SortOrder.ASC : SortOrder.DESC;
     qb.orderBy(resolvedSortField, resolvedSortOrder);
 
     const [data, total] = await qb.getManyAndCount();
@@ -168,10 +179,12 @@ export class ProductsService {
       .take(limit)
       .skip(offset);
 
-    const [data, total] = await qb.getManyAndCount();
+    const [data] = await qb.getManyAndCount();
 
     // Filter products that actually have variants
-    const productsWithVariants = data.filter((p) => (p.variants ?? []).length > 0);
+    const productsWithVariants = data.filter(
+      (p) => (p.variants ?? []).length > 0,
+    );
 
     return {
       data: productsWithVariants.map((product) => ({
@@ -179,7 +192,8 @@ export class ProductsService {
         name: product.name,
         basePrice: product.basePrice,
         variants: (product.variants ?? []).map((variant) => {
-          const firstImage = (variant.images ?? []).length > 0 ? variant.images[0] : null;
+          const firstImage =
+            (variant.images ?? []).length > 0 ? variant.images[0] : null;
           return {
             id: variant.id,
             sku: variant.sku,
@@ -278,12 +292,13 @@ export class ProductsService {
   ): Promise<PaginatedResult<Record<string, unknown>>> {
     const { limit = 10, offset = 0 } = paginationDto;
     await this.findOneEntity(id);
-    const [data, total] = await this.productCharacteristicsRepository.findAndCount({
-      where: { productId: id },
-      relations: ['characteristic'],
-      take: limit,
-      skip: offset,
-    });
+    const [data, total] =
+      await this.productCharacteristicsRepository.findAndCount({
+        where: { productId: id },
+        relations: ['characteristic'],
+        take: limit,
+        skip: offset,
+      });
 
     return {
       data: data.map((item) => ({
@@ -414,9 +429,8 @@ export class ProductsService {
     productId: UUID,
     categoryIds: UUID[],
   ): Promise<void> {
-    const normalizedCategoryIds = await this.expandCategoryIdsWithParents(
-      categoryIds,
-    );
+    const normalizedCategoryIds =
+      await this.expandCategoryIdsWithParents(categoryIds);
 
     for (const categoryId of normalizedCategoryIds) {
       const productCategory = this.productCategoriesRepository.create({

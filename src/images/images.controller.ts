@@ -8,7 +8,6 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseIntPipe,
   UseInterceptors,
   UploadedFile,
   BadRequestException,
@@ -29,7 +28,9 @@ import { UpdateImageDto } from './dto/update-image.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';import { RoleName } from '../roles/entities/role.entity';import type { UUID } from 'crypto';
+import { Roles } from '../common/decorators/roles.decorator';
+import { RoleName } from '../roles/entities/role.entity';
+import type { UUID } from 'crypto';
 
 @ApiTags('images')
 @Controller('images')

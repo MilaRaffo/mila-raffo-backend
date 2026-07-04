@@ -39,14 +39,14 @@ export class WishlistController {
     @Body() addWishlistItemDto: AddWishlistItemDto,
     @GetUser() user: User,
   ) {
-    return this.wishlistService.addItem(user.id as UUID, addWishlistItemDto);
+    return this.wishlistService.addItem(user.id, addWishlistItemDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get the authenticated user wishlist' })
   @ApiResponse({ status: 200, description: 'Wishlist retrieved successfully' })
   getWishlist(@GetUser() user: User) {
-    return this.wishlistService.getWishlist(user.id as UUID);
+    return this.wishlistService.getWishlist(user.id);
   }
 
   @Delete('items/:id')
@@ -54,10 +54,7 @@ export class WishlistController {
   @ApiOperation({ summary: 'Remove an item from the wishlist' })
   @ApiResponse({ status: 204, description: 'Wishlist item removed' })
   @ApiResponse({ status: 404, description: 'Wishlist item not found' })
-  removeItem(
-    @Param('id', ParseUUIDPipe) id: UUID,
-    @GetUser() user: User,
-  ) {
-    return this.wishlistService.removeItem(user.id as UUID, id);
+  removeItem(@Param('id', ParseUUIDPipe) id: UUID, @GetUser() user: User) {
+    return this.wishlistService.removeItem(user.id, id);
   }
 }

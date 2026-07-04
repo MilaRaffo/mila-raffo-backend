@@ -44,6 +44,4 @@ export class Address extends BaseEntity {
 
   @Column({ type: 'decimal', precision: 10, scale: 7, nullable: true })
   longitude?: string;
-
 }
-

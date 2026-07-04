@@ -49,8 +49,14 @@ export class ProductsController {
   }
 
   @Get('catalog/with-variants')
-  @ApiOperation({ summary: 'Get products with variants (name, price, variant images & colors)' })
-  @ApiResponse({ status: 200, description: 'Products with variants retrieved successfully' })
+  @ApiOperation({
+    summary:
+      'Get products with variants (name, price, variant images & colors)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Products with variants retrieved successfully',
+  })
   findProductsWithVariants(@Query() paginationDto: PaginationDto) {
     return this.productsService.findProductsWithVariants(paginationDto);
   }

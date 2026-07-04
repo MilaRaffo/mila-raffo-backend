@@ -6,7 +6,10 @@ import { Product } from '../../products/entities/product.entity';
 import { Variant } from '../../variants/entities/variant.entity';
 import { ProductCharacteristic } from '../../products/entities/product-characteristic.entity';
 import { ProductCategory } from '../../products/entities/product-category.entity';
-import { DataType, Measureunits } from '../../common/enums/characteristics.enum';
+import {
+  DataType,
+  Measureunits,
+} from '../../common/enums/characteristics.enum';
 
 interface SeedCount {
   created: number;
@@ -27,24 +30,52 @@ const COLORS_DATA = [
 ];
 
 const CATEGORIES_DATA = [
-  { name: 'Carteras', slug: 'carteras', description: 'Carteras de cuero artesanales' },
+  {
+    name: 'Carteras',
+    slug: 'carteras',
+    description: 'Carteras de cuero artesanales',
+  },
   { name: 'Bolsos', slug: 'bolsos', description: 'Bolsos de cuero premium' },
-  { name: 'Billeteras', slug: 'billeteras', description: 'Billeteras de cuero fino' },
-  { name: 'Accesorios', slug: 'accesorios', description: 'Accesorios de cuero y complementos' },
+  {
+    name: 'Billeteras',
+    slug: 'billeteras',
+    description: 'Billeteras de cuero fino',
+  },
+  {
+    name: 'Accesorios',
+    slug: 'accesorios',
+    description: 'Accesorios de cuero y complementos',
+  },
 ];
 
 const CHARACTERISTICS_DATA = [
   { name: 'Ancho', dataType: DataType.NUMBER, units: Measureunits.CENTIMETER },
   { name: 'Alto', dataType: DataType.NUMBER, units: Measureunits.CENTIMETER },
-  { name: 'Profundidad', dataType: DataType.NUMBER, units: Measureunits.CENTIMETER },
-  { name: 'Largo del asa', dataType: DataType.NUMBER, units: Measureunits.CENTIMETER },
-  { name: 'Largo de correa', dataType: DataType.NUMBER, units: Measureunits.CENTIMETER },
+  {
+    name: 'Profundidad',
+    dataType: DataType.NUMBER,
+    units: Measureunits.CENTIMETER,
+  },
+  {
+    name: 'Largo del asa',
+    dataType: DataType.NUMBER,
+    units: Measureunits.CENTIMETER,
+  },
+  {
+    name: 'Largo de correa',
+    dataType: DataType.NUMBER,
+    units: Measureunits.CENTIMETER,
+  },
   { name: 'Material', dataType: DataType.TEXT, units: undefined },
   { name: 'Tipo de forro', dataType: DataType.TEXT, units: undefined },
   { name: 'Acabado', dataType: DataType.TEXT, units: undefined },
   { name: 'Compartimentos', dataType: DataType.NUMBER, units: undefined },
   { name: 'Tiene cierre', dataType: DataType.BOOLEAN, units: undefined },
-  { name: 'Tiene bolsillo interno', dataType: DataType.BOOLEAN, units: undefined },
+  {
+    name: 'Tiene bolsillo interno',
+    dataType: DataType.BOOLEAN,
+    units: undefined,
+  },
   { name: 'Correa regulable', dataType: DataType.BOOLEAN, units: undefined },
 ];
 
@@ -291,9 +322,15 @@ export async function seedCatalog(dataSource: DataSource): Promise<void> {
   const categoriesMap = new Map<string, Category>();
 
   for (const catData of CATEGORIES_DATA) {
-    let category = await categoryRepo.findOne({ where: { slug: catData.slug } });
+    let category = await categoryRepo.findOne({
+      where: { slug: catData.slug },
+    });
     if (!category) {
-      category = categoryRepo.create({ ...catData, parentId: null, active: true });
+      category = categoryRepo.create({
+        ...catData,
+        parentId: null,
+        active: true,
+      });
       await categoryRepo.save(category);
       console.log(`  ✅ Created: ${catData.name}`);
       counts.categories.created++;
@@ -309,7 +346,9 @@ export async function seedCatalog(dataSource: DataSource): Promise<void> {
   const charsMap = new Map<string, Characteristic>();
 
   for (const charData of CHARACTERISTICS_DATA) {
-    let characteristic = await characteristicRepo.findOne({ where: { name: charData.name } });
+    let characteristic = await characteristicRepo.findOne({
+      where: { name: charData.name },
+    });
     if (!characteristic) {
       characteristic = characteristicRepo.create({
         name: charData.name,
@@ -333,7 +372,9 @@ export async function seedCatalog(dataSource: DataSource): Promise<void> {
     console.log(`\n  📦 ${productData.name}`);
 
     // 4a. Product
-    let product = await productRepo.findOne({ where: { name: productData.name } });
+    let product = await productRepo.findOne({
+      where: { name: productData.name },
+    });
     if (!product) {
       product = productRepo.create({
         name: productData.name,
@@ -432,7 +473,9 @@ export async function seedCatalog(dataSource: DataSource): Promise<void> {
   console.log('  Catalog Seed Summary');
   console.log('════════════════════════════════════════');
   for (const [entity, count] of Object.entries(counts)) {
-    console.log(`  ${entity.padEnd(24)} created: ${count.created}, skipped: ${count.skipped}`);
+    console.log(
+      `  ${entity.padEnd(24)} created: ${count.created}, skipped: ${count.skipped}`,
+    );
   }
   console.log('════════════════════════════════════════\n');
   console.log('🎉 Catalog seed completed successfully!\n');

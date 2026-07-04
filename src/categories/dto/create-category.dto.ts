@@ -4,7 +4,6 @@ import {
   MinLength,
   IsOptional,
   IsBoolean,
-  IsInt,
   IsUUID,
 } from 'class-validator';
 import { type UUID } from 'crypto';
@@ -28,7 +27,10 @@ export class CreateCategoryDto {
   @IsString()
   description?: string;
 
-  @ApiPropertyOptional({ example: 'M213-12SA-9ZXC-2SDA', description: 'Parent category ID' })
+  @ApiPropertyOptional({
+    example: 'M213-12SA-9ZXC-2SDA',
+    description: 'Parent category ID',
+  })
   @IsOptional()
   @IsUUID()
   parentId?: UUID;

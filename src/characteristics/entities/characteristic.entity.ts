@@ -1,8 +1,10 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { ProductCharacteristic } from '../../products/entities/product-characteristic.entity';
-import { DataType, Measureunits } from '../../common/enums/characteristics.enum';
-
+import {
+  DataType,
+  Measureunits,
+} from '../../common/enums/characteristics.enum';
 
 @Entity('characteristics')
 export class Characteristic extends BaseEntity {
@@ -16,7 +18,7 @@ export class Characteristic extends BaseEntity {
   })
   dataType: DataType;
 
-  @Column({ type: 'enum', enum: Measureunits, nullable:true})
+  @Column({ type: 'enum', enum: Measureunits, nullable: true })
   units?: Measureunits;
 
   @OneToMany(

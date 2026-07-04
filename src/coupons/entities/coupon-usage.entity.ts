@@ -15,7 +15,12 @@ export class CouponUsage extends BaseEntity {
   @Column({ type: 'uuid', nullable: true, name: 'order_id' })
   orderId?: UUID;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, name: 'discount_applied' })
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    name: 'discount_applied',
+  })
   discountApplied: number;
 
   @ManyToOne(() => Coupon)

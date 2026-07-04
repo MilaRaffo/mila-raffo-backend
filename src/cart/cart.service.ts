@@ -70,7 +70,12 @@ export class CartService {
   async getCart(userId: UUID): Promise<Record<string, unknown>> {
     const items = await this.cartItemRepository.find({
       where: { userId },
-      relations: ['variant', 'variant.product', 'variant.color', 'variant.images'],
+      relations: [
+        'variant',
+        'variant.product',
+        'variant.color',
+        'variant.images',
+      ],
     });
 
     const mappedItems = items.map((item) => {

@@ -82,4 +82,3 @@ export class CreateAddressDto {
   @IsLongitude()
   longitude?: number;
 }
-

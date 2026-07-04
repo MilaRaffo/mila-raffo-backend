@@ -8,7 +8,10 @@ import { Category } from '../categories/entities/category.entity';
 import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Promotion, Product, Category]), NotificationsModule],
+  imports: [
+    TypeOrmModule.forFeature([Promotion, Product, Category]),
+    NotificationsModule,
+  ],
   controllers: [PromotionsController],
   providers: [PromotionsService],
   exports: [PromotionsService],

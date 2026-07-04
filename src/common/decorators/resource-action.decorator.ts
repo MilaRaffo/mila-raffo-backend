@@ -11,7 +11,7 @@ export interface ResourceActionParams {
 /**
  * Decorador para definir permisos granulares sobre recursos
  * @param params Parámetros que definen el recurso, acción y roles permitidos
- * 
+ *
  * @example
  * @ResourceAction({ resource: 'users', action: 'create', allowedRoles: [RoleName.SUPERADMIN, RoleName.ADMIN] })
  */

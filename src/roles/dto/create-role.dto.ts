@@ -3,17 +3,17 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { RoleName } from '../entities/role.entity';
 
 export class CreateRoleDto {
-  @ApiProperty({ 
+  @ApiProperty({
     enum: RoleName,
     example: RoleName.CLIENT,
-    description: 'Role name (client, admin, or superadmin)'
+    description: 'Role name (client, admin, or superadmin)',
   })
   @IsEnum(RoleName)
   name: RoleName;
 
-  @ApiPropertyOptional({ 
+  @ApiPropertyOptional({
     example: 'Standard client with basic access',
-    description: 'Role description'
+    description: 'Role description',
   })
   @IsString()
   @IsOptional()

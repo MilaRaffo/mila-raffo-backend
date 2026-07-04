@@ -5,7 +5,7 @@ export enum Measureunits {
   CENTIMETER = 'cm',
   MILLIMETER = 'mm',
   LITER = 'L',
-  INCH = 'in'
+  INCH = 'in',
 }
 
 export enum DataType {

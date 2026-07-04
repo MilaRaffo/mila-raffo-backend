@@ -31,8 +31,8 @@ export class TokenBlacklistService {
   ): Promise<TokenBlacklist> {
     try {
       // Decodificar el token para obtener la fecha de expiración
-      const decoded = this.jwtService.decode(token) as { exp: number };
-      const expiresAt = new Date(decoded.exp * 1000);
+      const decoded = this.jwtService.decode<{ exp: number }>(token);
+      const expiresAt = new Date((decoded?.exp ?? 0) * 1000);
 
       const blacklistedToken = this.blacklistRepository.create({
         token,
@@ -45,7 +45,8 @@ export class TokenBlacklistService {
 
       return await this.blacklistRepository.save(blacklistedToken);
     } catch (error) {
-      this.logger.error(`Error adding token to blacklist: ${error.message}`);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Error adding token to blacklist: ${message}`);
       throw error;
     }
   }
@@ -65,7 +66,7 @@ export class TokenBlacklistService {
    * Invalida todos los tokens de un usuario
    * Útil cuando se cambia la contraseña o hay una brecha de seguridad
    */
-  async invalidateAllUserTokens(
+  invalidateAllUserTokens(
     userId: UUID,
     reason: BlacklistReason,
     notes?: string,
@@ -73,7 +74,10 @@ export class TokenBlacklistService {
     // Nota: Esta es una implementación simplificada
     // En producción, podrías querer almacenar una marca de tiempo en el usuario
     // y verificar que los tokens sean posteriores a esa marca
-    this.logger.log(`Invalidating all tokens for user ${userId}`);
+    this.logger.log(
+      `Invalidating all tokens for user ${userId} (reason: ${reason}${notes ? `, notes: ${notes}` : ''})`,
+    );
+    return Promise.resolve();
   }
 
   /**

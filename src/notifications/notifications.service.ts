@@ -69,7 +69,10 @@ export class NotificationsService {
     await this.sendMessages(messages);
   }
 
-  async sendToUserIfOrdersEnabled(userId: UUID, payload: SendPayload): Promise<void> {
+  async sendToUserIfOrdersEnabled(
+    userId: UUID,
+    payload: SendPayload,
+  ): Promise<void> {
     const tokens = await this.tokenRepository.find({
       where: { userId, notifyOrders: true },
     });

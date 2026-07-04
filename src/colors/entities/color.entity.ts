@@ -1,8 +1,6 @@
-import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
-import { Image } from '../../images/entities/image.entity';
 import { Variant } from '../../variants/entities/variant.entity';
-import { type UUID } from 'crypto';
 
 @Entity('colors')
 export class Color extends BaseEntity {

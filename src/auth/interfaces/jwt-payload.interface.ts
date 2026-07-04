@@ -1,4 +1,4 @@
-import { UUID } from "crypto";
+import { UUID } from 'crypto';
 import { RoleName } from '../../roles/entities/role.entity';
 
 export interface JwtPayload {

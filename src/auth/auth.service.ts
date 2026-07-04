@@ -37,7 +37,9 @@ export class AuthService {
       // Obtener el rol client por defecto
       const clientRole = await this.rolesService.findByName(RoleName.CLIENT);
       if (!clientRole) {
-        throw new BadRequestException('Client role not found. Please run seed first.');
+        throw new BadRequestException(
+          'Client role not found. Please run seed first.',
+        );
       }
 
       const createdUser = await this.usersService.create({
@@ -46,10 +48,10 @@ export class AuthService {
       });
 
       const user = await this.usersService.getUserById(createdUser.id);
-      
+
       this.logger.userRegistered(user.id, user.email);
 
-      const payload = this.buildPayload(user)
+      const payload = this.buildPayload(user);
 
       return {
         accessToken: await this.getAccessToken(payload),
@@ -57,11 +59,17 @@ export class AuthService {
         user: this.mapUserResponse(user),
       };
     } catch (error) {
-      this.logger.error(`Registration failed for email: ${registerDto.email}`, error.stack, {
-        email: registerDto.email,
-        error: error.message,
-      });
-      throw new BadRequestException(error.message || 'Registration failed');
+      const message = error instanceof Error ? error.message : String(error);
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error(
+        `Registration failed for email: ${registerDto.email}`,
+        stack,
+        {
+          email: registerDto.email,
+          error: message,
+        },
+      );
+      throw new BadRequestException(message || 'Registration failed');
     }
   }
 
@@ -72,7 +80,9 @@ export class AuthService {
       const user = await this.usersService.findByEmail(email);
 
       if (!user) {
-        this.logger.security('Login attempt failed - User not found', { email });
+        this.logger.security('Login attempt failed - User not found', {
+          email,
+        });
         throw new UnauthorizedException('Invalid credentials');
       }
 
@@ -99,8 +109,8 @@ export class AuthService {
 
       this.logger.userLogin(user.id, user.email);
 
-      const payload = this.buildPayload(user)
-      
+      const payload = this.buildPayload(user);
+
       return {
         accessToken: await this.getAccessToken(payload),
         refreshToken: await this.getRefreshToken(payload),
@@ -110,7 +120,8 @@ export class AuthService {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      this.logger.error('Login error', error.stack, { email });
+      const stack = error instanceof Error ? error.stack : undefined;
+      this.logger.error('Login error', stack, { email });
       throw new UnauthorizedException('Login failed');
     }
   }
@@ -121,14 +132,16 @@ export class AuthService {
         secret: this.configService.get<string>('jwt.secret'),
       });
     } catch (error) {
-      this.logger.invalidToken(token, error.message);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.invalidToken(token, message);
       throw new UnauthorizedException('Invalid or expired token');
     }
   }
 
   async refreshToken(token: string): Promise<AuthResponse> {
     try {
-      const isBlacklisted = await this.tokenBlacklistService.isBlacklisted(token);
+      const isBlacklisted =
+        await this.tokenBlacklistService.isBlacklisted(token);
 
       if (isBlacklisted) {
         throw new UnauthorizedException('Refresh token has been revoked');
@@ -178,8 +191,8 @@ export class AuthService {
   }
 
   private async getAccessToken(payload: JwtPayload) {
-    const expiresIn =
-      (this.configService.get<string>('jwt.expiresIn') || '1d') as StringValue;
+    const expiresIn = (this.configService.get<string>('jwt.expiresIn') ||
+      '1d') as StringValue;
 
     const token = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('jwt.secret'),
@@ -189,9 +202,9 @@ export class AuthService {
   }
 
   private async getRefreshToken(payload: JwtPayload) {
-    const refreshExpiresIn =
-      (this.configService.get<string>('jwt.refreshExpiresIn') ||
-        '14d') as StringValue;
+    const refreshExpiresIn = (this.configService.get<string>(
+      'jwt.refreshExpiresIn',
+    ) || '14d') as StringValue;
 
     return this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('jwt.refreshSecret'),
@@ -218,7 +231,7 @@ export class AuthService {
   ): Promise<{ message: string }> {
     try {
       // Decodificar el access token para obtener el userId si no se proporciona
-      const payload = this.jwtService.decode(accessToken) as JwtPayload;
+      const payload = this.jwtService.decode<{ sub: UUID }>(accessToken);
       const userIdToUse = userId || payload?.sub;
 
       if (!userIdToUse) {
@@ -247,7 +260,8 @@ export class AuthService {
 
       return { message: 'Logout successful' };
     } catch (error) {
-      throw new BadRequestException('Logout failed: ' + error.message);
+      const message = error instanceof Error ? error.message : String(error);
+      throw new BadRequestException('Logout failed: ' + message);
     }
   }
 

@@ -1,5 +1,20 @@
-import { Controller, Post, Body, UseGuards, HttpCode, HttpStatus, UnauthorizedException, Req, BadRequestException } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
+  UnauthorizedException,
+  Req,
+  BadRequestException,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -17,12 +32,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @ApiOperation({ 
+  @ApiOperation({
     summary: 'Register a new user',
-    description: 'Creates a new user account with CLIENT role by default'
+    description: 'Creates a new user account with CLIENT role by default',
   })
-  @ApiResponse({ 
-    status: 201, 
+  @ApiResponse({
+    status: 201,
     description: 'User registered successfully',
     schema: {
       example: {
@@ -31,12 +46,12 @@ export class AuthController {
           email: 'user@example.com',
           name: 'John',
           lastName: 'Doe',
-          role: { id: 'uuid', name: 'client' }
+          role: { id: 'uuid', name: 'client' },
         },
         access_token: 'jwt-token',
-        refresh_token: 'refresh-jwt-token'
-      }
-    }
+        refresh_token: 'refresh-jwt-token',
+      },
+    },
   })
   @ApiResponse({ status: 409, description: 'Email already exists' })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
@@ -46,12 +61,12 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ 
+  @ApiOperation({
     summary: 'Login with email and password',
-    description: 'Authenticates a user and returns access and refresh tokens'
+    description: 'Authenticates a user and returns access and refresh tokens',
   })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: 'Login successful',
     schema: {
       example: {
@@ -60,14 +75,17 @@ export class AuthController {
           email: 'user@example.com',
           name: 'John',
           lastName: 'Doe',
-          role: { id: 'uuid', name: 'client' }
+          role: { id: 'uuid', name: 'client' },
         },
         access_token: 'jwt-token',
-        refresh_token: 'refresh-jwt-token'
-      }
-    }
+        refresh_token: 'refresh-jwt-token',
+      },
+    },
   })
-  @ApiResponse({ status: 401, description: 'Invalid credentials or user inactive' })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid credentials or user inactive',
+  })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
@@ -75,12 +93,13 @@ export class AuthController {
 
   @Post('admin/login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ 
+  @ApiOperation({
     summary: 'Login for admin panel (admin and superadmin only)',
-    description: 'Authenticates admin users and verifies they have ADMIN or SUPERADMIN role'
+    description:
+      'Authenticates admin users and verifies they have ADMIN or SUPERADMIN role',
   })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: 'Admin login successful',
     schema: {
       example: {
@@ -89,24 +108,30 @@ export class AuthController {
           email: 'admin@example.com',
           name: 'Admin',
           lastName: 'User',
-          role: { id: 'uuid', name: 'admin' }
+          role: { id: 'uuid', name: 'admin' },
         },
         access_token: 'jwt-token',
-        refresh_token: 'refresh-jwt-token'
-      }
-    }
+        refresh_token: 'refresh-jwt-token',
+      },
+    },
   })
-  @ApiResponse({ status: 401, description: 'Invalid credentials, insufficient permissions, or user inactive' })
+  @ApiResponse({
+    status: 401,
+    description:
+      'Invalid credentials, insufficient permissions, or user inactive',
+  })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   async adminLogin(@Body() loginDto: LoginDto) {
     const response = await this.authService.login(loginDto);
-    
+
     // Verificar que el usuario sea admin o superadmin
     const roleName = response.user.role.name;
     if (roleName !== RoleName.ADMIN && roleName !== RoleName.SUPERADMIN) {
-      throw new UnauthorizedException('Access denied. Admin privileges required.');
+      throw new UnauthorizedException(
+        'Access denied. Admin privileges required.',
+      );
     }
-    
+
     return response;
   }
 
@@ -114,20 +139,24 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ 
+  @ApiOperation({
     summary: 'Logout and invalidate tokens',
-    description: 'Invalidates the current access token and optionally the refresh token by adding them to the blacklist'
+    description:
+      'Invalidates the current access token and optionally the refresh token by adding them to the blacklist',
   })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: 'Logout successful',
     schema: {
       example: {
-        message: 'Logout successful'
-      }
-    }
+        message: 'Logout successful',
+      },
+    },
   })
-  @ApiResponse({ status: 401, description: 'Unauthorized - Invalid or missing token' })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized - Invalid or missing token',
+  })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   async logout(
     @Req() req: Request,
@@ -151,23 +180,29 @@ export class AuthController {
 
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ 
+  @ApiOperation({
     summary: 'Refresh access token',
-    description: 'Generates a new access token using a valid refresh token'
+    description: 'Generates a new access token using a valid refresh token',
   })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: 'Token refreshed successfully',
     schema: {
       example: {
-        access_token: 'new-jwt-token'
-      }
-    }
+        access_token: 'new-jwt-token',
+      },
+    },
   })
-  @ApiResponse({ status: 401, description: 'Invalid, expired, or blacklisted refresh token' })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid, expired, or blacklisted refresh token',
+  })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
-  async refresh(@Body() refreshTokenDto: RefreshTokenDto & { refresh_token?: string }) {
-    const refreshToken = refreshTokenDto.refreshToken ?? refreshTokenDto.refresh_token;
+  async refresh(
+    @Body() refreshTokenDto: RefreshTokenDto & { refresh_token?: string },
+  ) {
+    const refreshToken =
+      refreshTokenDto.refreshToken ?? refreshTokenDto.refresh_token;
 
     if (!refreshToken) {
       throw new BadRequestException(

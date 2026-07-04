@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
-  ParseUUIDPipe
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import {
   ApiTags,

@@ -10,7 +10,6 @@ import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
-import { ImagesService } from '../images/images.service';
 import { type UUID } from 'crypto';
 
 @Injectable()

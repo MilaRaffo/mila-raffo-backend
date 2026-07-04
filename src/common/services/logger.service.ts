@@ -58,9 +58,13 @@ export class LoggerService implements NestLoggerService {
       format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
       format.colorize({ all: true }),
       format.printf(({ timestamp, level, message, context, ...meta }) => {
-        const ctx = context ? `[${context}]` : '';
+        const ctx = typeof context === 'string' ? `[${context}]` : '';
         const metaStr = Object.keys(meta).length ? JSON.stringify(meta) : '';
-        return `${timestamp} ${level} ${ctx} ${message} ${metaStr}`;
+        const ts =
+          typeof timestamp === 'string' ? timestamp : String(timestamp);
+        const msg =
+          typeof message === 'string' ? message : JSON.stringify(message);
+        return `${ts} ${level} ${ctx} ${msg} ${metaStr}`;
       }),
     );
 
@@ -92,24 +96,6 @@ export class LoggerService implements NestLoggerService {
       maxFiles: '7d',
       format: logFormat,
       level: 'http',
-    });
-
-    // Transport para seguridad
-    const securityTransport = new DailyRotateFile({
-      filename: 'logs/security-%DATE%.log',
-      datePattern: 'YYYY-MM-DD',
-      maxSize: '20m',
-      maxFiles: '90d',
-      format: logFormat,
-    });
-
-    // Transport para eventos de negocio
-    const businessTransport = new DailyRotateFile({
-      filename: 'logs/business-%DATE%.log',
-      datePattern: 'YYYY-MM-DD',
-      maxSize: '20m',
-      maxFiles: '90d',
-      format: logFormat,
     });
 
     // Console transport para desarrollo
@@ -154,7 +140,10 @@ export class LoggerService implements NestLoggerService {
     contextOrMetadata?: ContextOrMetadata,
     metadata?: LogMetadata,
   ) {
-    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+    const resolved = this.resolveContextAndMetadata(
+      contextOrMetadata,
+      metadata,
+    );
 
     this.logger.info(message, {
       context: resolved.context || this.context,
@@ -168,7 +157,10 @@ export class LoggerService implements NestLoggerService {
     contextOrMetadata?: ContextOrMetadata,
     metadata?: LogMetadata,
   ) {
-    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+    const resolved = this.resolveContextAndMetadata(
+      contextOrMetadata,
+      metadata,
+    );
 
     this.logger.error(message, {
       context: resolved.context || this.context,
@@ -182,7 +174,10 @@ export class LoggerService implements NestLoggerService {
     contextOrMetadata?: ContextOrMetadata,
     metadata?: LogMetadata,
   ) {
-    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+    const resolved = this.resolveContextAndMetadata(
+      contextOrMetadata,
+      metadata,
+    );
 
     this.logger.warn(message, {
       context: resolved.context || this.context,
@@ -195,7 +190,10 @@ export class LoggerService implements NestLoggerService {
     contextOrMetadata?: ContextOrMetadata,
     metadata?: LogMetadata,
   ) {
-    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+    const resolved = this.resolveContextAndMetadata(
+      contextOrMetadata,
+      metadata,
+    );
 
     this.logger.debug(message, {
       context: resolved.context || this.context,
@@ -208,7 +206,10 @@ export class LoggerService implements NestLoggerService {
     contextOrMetadata?: ContextOrMetadata,
     metadata?: LogMetadata,
   ) {
-    const resolved = this.resolveContextAndMetadata(contextOrMetadata, metadata);
+    const resolved = this.resolveContextAndMetadata(
+      contextOrMetadata,
+      metadata,
+    );
 
     this.logger.verbose(message, {
       context: resolved.context || this.context,

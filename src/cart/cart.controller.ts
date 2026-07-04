@@ -35,20 +35,20 @@ export class CartController {
   @Post('items')
   @ApiOperation({ summary: 'Add a variant to the cart' })
   @ApiResponse({ status: 201, description: 'Item added to cart' })
-  @ApiResponse({ status: 400, description: 'Invalid quantity or exceeds stock' })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid quantity or exceeds stock',
+  })
   @ApiResponse({ status: 404, description: 'Variant not found' })
-  addItem(
-    @Body() addCartItemDto: AddCartItemDto,
-    @GetUser() user: User,
-  ) {
-    return this.cartService.addItem(user.id as UUID, addCartItemDto);
+  addItem(@Body() addCartItemDto: AddCartItemDto, @GetUser() user: User) {
+    return this.cartService.addItem(user.id, addCartItemDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get the authenticated user cart' })
   @ApiResponse({ status: 200, description: 'Cart retrieved successfully' })
   getCart(@GetUser() user: User) {
-    return this.cartService.getCart(user.id as UUID);
+    return this.cartService.getCart(user.id);
   }
 
   @Patch('items/:id')
@@ -61,7 +61,7 @@ export class CartController {
     @Body() updateCartItemDto: UpdateCartItemDto,
     @GetUser() user: User,
   ) {
-    return this.cartService.updateItem(user.id as UUID, id, updateCartItemDto);
+    return this.cartService.updateItem(user.id, id, updateCartItemDto);
   }
 
   @Delete('items/:id')
@@ -69,11 +69,8 @@ export class CartController {
   @ApiOperation({ summary: 'Remove an item from the cart' })
   @ApiResponse({ status: 204, description: 'Cart item removed' })
   @ApiResponse({ status: 404, description: 'Cart item not found' })
-  removeItem(
-    @Param('id', ParseUUIDPipe) id: UUID,
-    @GetUser() user: User,
-  ) {
-    return this.cartService.removeItem(user.id as UUID, id);
+  removeItem(@Param('id', ParseUUIDPipe) id: UUID, @GetUser() user: User) {
+    return this.cartService.removeItem(user.id, id);
   }
 
   @Delete()
@@ -81,6 +78,6 @@ export class CartController {
   @ApiOperation({ summary: 'Clear the entire cart' })
   @ApiResponse({ status: 204, description: 'Cart cleared' })
   clearCart(@GetUser() user: User) {
-    return this.cartService.clearCart(user.id as UUID);
+    return this.cartService.clearCart(user.id);
   }
 }

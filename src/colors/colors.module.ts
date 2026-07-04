@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ColorsService } from './colors.service';
 import { ColorsController } from './colors.controller';
 import { Color } from './entities/color.entity';
-import { ImagesModule } from '../images/images.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Color])],

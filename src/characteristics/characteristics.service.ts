@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotFoundException
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Characteristic } from './entities/characteristic.entity';
@@ -21,13 +18,11 @@ export class CharacteristicsService {
   async create(
     createCharacteristicDto: CreateCharacteristicDto,
   ): Promise<Record<string, unknown>> {
-
     const characteristic = this.characteristicsRepository.create(
       createCharacteristicDto,
     );
-    const savedCharacteristic = await this.characteristicsRepository.save(
-      characteristic,
-    );
+    const savedCharacteristic =
+      await this.characteristicsRepository.save(characteristic);
     return this.mapCharacteristic(savedCharacteristic);
   }
 
@@ -43,7 +38,9 @@ export class CharacteristicsService {
     });
 
     return {
-      data: data.map((characteristic) => this.mapCharacteristic(characteristic)),
+      data: data.map((characteristic) =>
+        this.mapCharacteristic(characteristic),
+      ),
       pagination: {
         total,
         limit,
@@ -54,7 +51,7 @@ export class CharacteristicsService {
 
   async findOne(id: UUID): Promise<Record<string, unknown>> {
     const characteristic = await this.characteristicsRepository.findOne({
-      where: { id }
+      where: { id },
     });
 
     if (!characteristic) {
@@ -77,9 +74,8 @@ export class CharacteristicsService {
     }
 
     Object.assign(characteristic, updateCharacteristicDto);
-    const updatedCharacteristic = await this.characteristicsRepository.save(
-      characteristic,
-    );
+    const updatedCharacteristic =
+      await this.characteristicsRepository.save(characteristic);
     return this.mapCharacteristic(updatedCharacteristic);
   }
 

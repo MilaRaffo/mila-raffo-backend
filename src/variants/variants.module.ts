@@ -7,11 +7,7 @@ import { ProductsModule } from '../products/products.module';
 import { ColorsModule } from '../colors/colors.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Variant]),
-    ProductsModule,
-    ColorsModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Variant]), ProductsModule, ColorsModule],
   controllers: [VariantsController],
   providers: [VariantsService],
   exports: [VariantsService],

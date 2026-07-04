@@ -25,9 +25,7 @@ export class SectionsService {
   ) {}
 
   // SECTION CRUD
-  async createSection(
-    createSectionDto: CreateSectionDto,
-  ): Promise<Section> {
+  async createSection(createSectionDto: CreateSectionDto): Promise<Section> {
     const existingSection = await this.sectionsRepository.findOne({
       where: { slug: createSectionDto.slug },
     });
@@ -101,10 +99,7 @@ export class SectionsService {
   ): Promise<Section> {
     const section = await this.findSectionById(id);
 
-    if (
-      updateSectionDto.slug &&
-      updateSectionDto.slug !== section.slug
-    ) {
+    if (updateSectionDto.slug && updateSectionDto.slug !== section.slug) {
       const existingSection = await this.sectionsRepository.findOne({
         where: { slug: updateSectionDto.slug },
       });
@@ -173,7 +168,10 @@ export class SectionsService {
   ): Promise<SectionItem> {
     const item = await this.findSectionItemById(id);
 
-    if (updateSectionItemDto.sectionId && updateSectionItemDto.sectionId !== item.sectionId) {
+    if (
+      updateSectionItemDto.sectionId &&
+      updateSectionItemDto.sectionId !== item.sectionId
+    ) {
       await this.findSectionById(updateSectionItemDto.sectionId);
     }
 
@@ -187,9 +185,7 @@ export class SectionsService {
   }
 
   // REORDER operations
-  async reorderSections(
-    sectionIds: UUID[],
-  ): Promise<Section[]> {
+  async reorderSections(sectionIds: UUID[]): Promise<Section[]> {
     const sections = await this.sectionsRepository.findBy({
       id: In(sectionIds),
     });
@@ -201,9 +197,7 @@ export class SectionsService {
     return this.sectionsRepository.save(sections);
   }
 
-  async reorderSectionItems(
-    itemIds: UUID[],
-  ): Promise<SectionItem[]> {
+  async reorderSectionItems(itemIds: UUID[]): Promise<SectionItem[]> {
     const items = await this.sectionItemsRepository.findBy({
       id: In(itemIds),
     });

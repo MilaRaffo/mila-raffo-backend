@@ -3,9 +3,14 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-  BadRequestException,
 } from '@nestjs/common';
 import { RoleName } from '../../roles/entities/role.entity';
+
+interface RequestWithUser {
+  user?: { role?: { name: RoleName } };
+  body?: { roleId?: string };
+  params?: { id?: string };
+}
 
 /**
  * Guard para prevenir que admins creen, actualicen o eliminen otros admins o superadmins
@@ -14,7 +19,7 @@ import { RoleName } from '../../roles/entities/role.entity';
 @Injectable()
 export class AdminUserManagementGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<RequestWithUser>();
     const currentUser = request.user;
 
     if (!currentUser || !currentUser.role) {
@@ -31,7 +36,6 @@ export class AdminUserManagementGuard implements CanActivate {
     // Para admins, verificar el roleId en el body o params
     if (userRole === RoleName.ADMIN) {
       const body = request.body;
-      const targetUserId = request.params?.id;
 
       // Si hay un roleId en el body (crear o actualizar)
       if (body && body.roleId) {

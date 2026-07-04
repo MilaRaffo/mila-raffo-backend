@@ -51,7 +51,12 @@ export class WishlistService {
   async getWishlist(userId: UUID): Promise<Record<string, unknown>> {
     const items = await this.wishlistRepository.find({
       where: { userId },
-      relations: ['variant', 'variant.product', 'variant.color', 'variant.images'],
+      relations: [
+        'variant',
+        'variant.product',
+        'variant.color',
+        'variant.images',
+      ],
       order: { createdAt: 'DESC' },
     });
 

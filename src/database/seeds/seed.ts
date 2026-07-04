@@ -48,8 +48,10 @@ export async function seedRolesAndSuperadmin(dataSource: DataSource) {
 
   // Create superadmin user if it doesn't exist
   console.log('👤 Creating superadmin user...');
-  const superadminEmail = process.env.SUPERADMIN_EMAIL || 'superadmin@email.com';
-  const superadminPassword = process.env.SUPERADMIN_PASSWORD || 'SuperAdmin123!';
+  const superadminEmail =
+    process.env.SUPERADMIN_EMAIL || 'superadmin@email.com';
+  const superadminPassword =
+    process.env.SUPERADMIN_PASSWORD || 'SuperAdmin123!';
   const existingSuperadmin = await usersRepository.findOne({
     where: { email: superadminEmail },
   });

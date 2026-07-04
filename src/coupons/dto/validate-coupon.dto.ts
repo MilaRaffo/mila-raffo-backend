@@ -7,7 +7,8 @@ export class ValidateCouponDto {
   @MinLength(3)
   @MaxLength(50)
   @Matches(/^[A-Z0-9_-]+$/, {
-    message: 'Code must contain only uppercase letters, numbers, hyphens and underscores',
+    message:
+      'Code must contain only uppercase letters, numbers, hyphens and underscores',
   })
   code: string;
 }

@@ -139,14 +139,20 @@ export class PaginationDto {
   @IsNumber()
   maxBasePrice?: number;
 
-  @ApiPropertyOptional({ example: 'uuid1,uuid2', description: 'Comma-separated color IDs (OR logic)' })
+  @ApiPropertyOptional({
+    example: 'uuid1,uuid2',
+    description: 'Comma-separated color IDs (OR logic)',
+  })
   @IsOptional()
   @IsArray()
   @IsUUID('4', { each: true })
-  @Transform(({ value }) => {
+  @Transform(({ value }: { value: unknown }): string[] | undefined => {
     if (!value) return undefined;
-    if (Array.isArray(value)) return value;
-    return String(value).split(',').filter(Boolean);
+    if (Array.isArray(value)) return value as string[];
+    if (typeof value === 'string' || typeof value === 'number') {
+      return String(value).split(',').filter(Boolean);
+    }
+    return undefined;
   })
   colorIds?: string[];
 }

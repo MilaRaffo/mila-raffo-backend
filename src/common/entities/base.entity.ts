@@ -4,7 +4,7 @@ import {
   DeleteDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import {type UUID } from 'crypto';
+import { type UUID } from 'crypto';
 
 export abstract class BaseEntity {
   @PrimaryGeneratedColumn('uuid')

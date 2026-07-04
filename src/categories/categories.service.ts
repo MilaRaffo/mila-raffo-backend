@@ -168,10 +168,7 @@ export class CategoriesService {
   ): Promise<Record<string, unknown>> {
     const category = await this.findOneEntity(id);
 
-    if (
-      updateCategoryDto.slug &&
-      updateCategoryDto.slug !== category.slug
-    ) {
+    if (updateCategoryDto.slug && updateCategoryDto.slug !== category.slug) {
       const existingCategory = await this.categoriesRepository.findOne({
         where: { slug: updateCategoryDto.slug },
       });

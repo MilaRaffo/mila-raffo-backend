@@ -65,7 +65,7 @@ export class UsersService {
     });
 
     return {
-      data: users.map(UserListItemDto.fromEntity),
+      data: users.map((user) => UserListItemDto.fromEntity(user)),
       pagination: {
         total,
         limit,
